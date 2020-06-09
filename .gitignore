@@ -30,3 +30,8 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### compiled ./class file and jar and project setting file ignore
+*.class
+*.jar
+*.project
