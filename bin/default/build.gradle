@@ -1,0 +1,53 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.0.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
+	//
+	id 'com.moowork.node' version '1.3.1'
+	id 'java'
+}
+
+//
+node {
+	version = '12.13.1'
+	npmVersion = '6.12.1'
+	workDir = file("./src/frontend")
+	npmWorkDir = file("./src/frontend")
+	nodeModulesDir = file("./src/frontend")
+}
+
+group = 'com.example'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	runtimeOnly 'org.postgresql:postgresql'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+//
+task setUp(type: NpmTask) {
+	description = "install Node.js packages"
+	args = ['install']
+	inputs.files file('package.json')
+	outputs.files file('node_modules')
+}
+
+//
+task buildFrontEnd(type: NpmTask, dependsOn: setUp) {
+	description = "Build vue.js"
+	args = ['run', 'build']
+}
+
+//
+processResources.dependsOn 'buildFrontEnd'
+
+test {
+	useJUnitPlatform()
+}
