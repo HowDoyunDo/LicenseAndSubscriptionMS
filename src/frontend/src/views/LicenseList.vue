@@ -1,7 +1,7 @@
 <template>
-  <div id="content">
-    <h3>제품 조회(로그인 전)</h3>
-      
+  <div id="licenseList">
+    <h3>라이센스 관리</h3>
+
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
 </script>
 
 <style>
-    #content {
+    #licenseList {
         width: 85%;
         text-align: center;
         border-left: 2px solid lightgray;

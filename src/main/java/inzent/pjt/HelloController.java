@@ -5,9 +5,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class HelloController {
-	@GetMapping("/api/hello")
-	public String hello() {
-		return "hello";
+	
+	@GetMapping("/category")
+	public String category() {
+		System.out.println("/category");
+		return "redirect:/http://localhost:8080/category";
 	}
-	// ぞしぞし
 }

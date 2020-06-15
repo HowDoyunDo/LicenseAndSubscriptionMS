@@ -1,7 +1,7 @@
 <template>
-  <div id="content">
-    <h3>제품 조회(로그인 전)</h3>
-      
+  <div id="batch">
+    <h3>배치 서비스</h3>
+
   </div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
 </script>
 
 <style>
-    #content {
+    #batch {
         width: 85%;
         text-align: center;
         border-left: 2px solid lightgray;
