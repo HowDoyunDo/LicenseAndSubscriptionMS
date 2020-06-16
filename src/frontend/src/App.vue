@@ -29,8 +29,8 @@ export default {
 </script>
 
 <style>
-@import "./css/contents.css";
-@import "./css/allList.css";
+@import "./assets/css/contents.css";
+@import "./assets/css/allList.css";
 
 
 #app {

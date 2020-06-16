@@ -1,38 +1,12 @@
 <template>
   <div class="contents">
-    <h2>구독 정책 등록</h2>
+    <h2>프로모션 등록</h2>
     <form class="form">
       <table class="table_add">
         <tr>
-          <th>구독 정책명</th>
+          <th>프로모션명</th>
           <td>
             <input type="text" />
-          </td>
-        </tr>
-        <tr>
-          <th>정책 공개 여부</th>
-          <td>
-            <input type="radio" name id checked="checked" /> 공개
-            <input type="radio" name id /> 비공개
-          </td>
-        </tr>
-        <tr>
-          <th>이용 기준</th>
-          <td>
-            <input type="radio" name id /> 사용자
-            <input type="radio" name id /> 에이전트
-          </td>
-        </tr>
-        <tr>
-          <th>최대 사용 수량</th>
-          <td>
-            <input type="number" name id min="1" /> 개
-          </td>
-        </tr>
-        <tr>
-          <th>가격</th>
-          <td>
-            <input type="text" name id min="0" style="width : 100px; text-align:center;" /> 원
           </td>
         </tr>
         <tr>
@@ -46,34 +20,62 @@
           </td>
         </tr>
       </table>
-      <br />
+      <br>
       <table class="table_add">
         <tr>
           <th>선택된 제품</th>
         </tr>
       </table>
-      <!-- 목록 컴포넌트 -->
+      <!-- 프로모션 목록 컴포넌트 -->
       <div class="select-product">
         선택한 것만 출력
-        <SubscribeOneList />
+        <PromotionOneList />
         <hr />
         <div>합계 : 원</div>
       </div>
+      <br>
+      <table class="table_add">
+        <tr>
+          <th>할인율</th>
+          <td>
+            <input type="text" name id min="0" style="width : 100px; text-align:center;" /> %
+          </td>
+        </tr>
+
+        <tr>
+          <th>사용 기간</th>
+          <td>
+            <input type="radio" name id checked="checked" /> 공개
+            <input type="radio" name id /> 비공개
+          </td>
+        </tr>
+        <tr>
+          <th>진행 여부</th>
+          <td>
+            <input type="radio" name id /> 진행함
+            <input type="radio" name id /> 진행안함
+          </td>
+        </tr>
+      </table>
+
+      <br />
+      
       <div class="submit_btn">
-        <button type="submit">구독 정책 등록</button>
+        <button type="submit">프로모션 등록</button>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import SubscribeOneList from "@/components/hyeran/subscribe/SubscribeOneList.vue";
+import PromotionOneList from "@/components/hyeran/promotion/PromotionOneList.vue";
 export default {
   components: {
-    SubscribeOneList
+    PromotionOneList
   }
 };
 </script>
+
 
 <style>
 .form {
@@ -101,7 +103,7 @@ export default {
 }
 .table_add td {
   width: 78%;
-  padding: 5px;
+  padding: 5px ;
 }
 .form input[type="text"],
 input[type="number"],

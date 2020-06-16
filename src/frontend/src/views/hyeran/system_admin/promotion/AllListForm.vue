@@ -4,22 +4,21 @@
     <div class="btnn">
       <button class="submit_btn">등록</button>
     </div>
-    <SubscribeAllList/>
+    <PromotionAllList />
   </div>
 </template>
 
 <script>
-import SubscribeAllList from '@/components/hyeran/subscribe/SubscribeAllList.vue';
+import PromotionAllList from "@/components/hyeran/promotion/PromotionAllList.vue";
 export default {
   components: {
-    SubscribeAllList,
-  },
+    PromotionAllList
+  }
 };
-</script> 
- 
+</script>
+
 <style>
 .btnn {
   text-align: right;
 }
-
 </style>

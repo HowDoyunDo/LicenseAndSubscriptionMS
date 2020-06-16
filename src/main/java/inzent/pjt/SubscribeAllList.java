@@ -4,11 +4,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class HelloController {
+public class SubscribeAllList {
 	
-	@GetMapping("/category")
+	@GetMapping("/categoryy")
 	public String category() {
-		System.out.println("/category");
-		return "hi";
+		System.out.println("alllist");
+		return "";
 	}
 }

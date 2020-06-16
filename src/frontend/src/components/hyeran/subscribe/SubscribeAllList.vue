@@ -40,7 +40,18 @@
 </template>
 
 <script>
-export default {};
+// import {subscribeAllList} from '@/api/shr/subscribe';
+
+// export default {
+//   methods : {
+//     async allList(){
+//       const {data} =  await subscribeAllList();
+      
+//     },
+
+//   }
+
+// };
 </script>
 
 <style>
