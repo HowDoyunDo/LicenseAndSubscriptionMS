@@ -56,6 +56,8 @@ export default {
         align-self: left;
         padding: 5px;
         font-size: 15px;
+        position: static;  
+        
     }
     #navigator ul {
         padding: 0 0 0 10px;

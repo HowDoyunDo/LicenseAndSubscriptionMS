@@ -1,0 +1,22 @@
+/*--- TABLE LIST - class="table_board" ---*/
+
+.table_board {
+    border-top: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
+    width: 100%;
+    max-width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    table-layout: fixed;
+    text-align: center;
+  }
+  .table_board th {
+    background: #eaeaea;
+    font-weight: bold;
+    border: none;
+    
+  }
+  .table_board tr {
+    border-bottom: 1px solid #ccc;
+  }
+  

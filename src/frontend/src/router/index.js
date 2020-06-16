@@ -1,10 +1,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
+import subscribe from './subscribe'
 
 Vue.use(VueRouter)
 
-  const routes = [
+const routes = [
+   ...subscribe ,
   {
     path: '/',
     name: 'Home',
