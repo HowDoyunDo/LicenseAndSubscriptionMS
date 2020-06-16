@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import SubscribeOneList from "@/components/subscribe/SubscribeOneList.vue";
+import SubscribeOneList from "@/components/hyeran/subscribe/SubscribeOneList.vue";
 export default {
   components: {
     SubscribeOneList

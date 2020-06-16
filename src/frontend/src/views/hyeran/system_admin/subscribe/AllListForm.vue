@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import SubscribeAllList from '@/components/subscribe/SubscribeAllList.vue';
+import SubscribeAllList from '@/components/hyeran/subscribe/SubscribeAllList.vue';
 export default {
   components: {
     SubscribeAllList,
