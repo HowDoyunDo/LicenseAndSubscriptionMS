@@ -15,6 +15,6 @@ export default {
     #categoryLogin {
         width: 85%;
         text-align: center;
-        border-left: 2px solid lightgray;
+        border-left: 1px solid lightgray;
     }
 </style>

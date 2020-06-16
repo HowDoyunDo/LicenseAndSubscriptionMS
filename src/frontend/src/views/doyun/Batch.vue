@@ -1,6 +1,6 @@
 <template>
-  <div id="analysisSales">
-    <h3>매출 분석</h3>
+  <div id="batch">
+    <h3>배치 서비스</h3>
 
   </div>
 </template>
@@ -12,9 +12,9 @@ export default {
 </script>
 
 <style>
-    #analysisSales {
+    #batch {
         width: 85%;
         text-align: center;
-        border-left: 2px solid lightgray;
+        border-left: 1px solid lightgray;
     }
 </style>

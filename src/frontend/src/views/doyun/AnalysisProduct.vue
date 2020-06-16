@@ -1,6 +1,6 @@
 <template>
-  <div id="licenseList">
-    <h3>라이센스 관리</h3>
+  <div id="analysisProduct">
+    <h3>상품 분석</h3>
 
   </div>
 </template>
@@ -12,9 +12,9 @@ export default {
 </script>
 
 <style>
-    #licenseList {
+    #analysisProduct {
         width: 85%;
         text-align: center;
-        border-left: 2px solid lightgray;
+        border-left: 1px solid lightgray;
     }
 </style>
