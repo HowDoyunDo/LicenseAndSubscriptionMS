@@ -1,5 +1,5 @@
 
-    #home {
+      #home {
         width: 85%;
         text-align: center;
         border-left: 1px solid lightgray;
@@ -26,13 +26,14 @@
         font-weight: bolder;
         height: 55px;
         text-align: left;
+        background-color: #d9edf7;
       }
       #home img {
         margin-right: 0;
         margin-left: auto;
       }
       #home .solutions {
-        width: 70px;
+        width: 80px;
         height: 70px;
       }
       #home p {

@@ -30,5 +30,10 @@ export default [
         path: '/analysis/product',
         name: 'AnalysisProduct',
         component: () => import('@/views/doyun/AnalysisProduct.vue')
+      },
+      {
+        path: '/product',
+        name: 'Product',
+        component: () => import('@/views/doyun/Product.vue')
       }
 ]
