@@ -9,10 +9,19 @@
 
 <script>
 import Products from '@/components/doyun/products';
+import axios from 'axios';
+
 export default {
   components: {
     Products,
+  },
+  beforeMount() {
+    axios.get('/api/category').then(res => { 
+      console.log(res.data) 
+    })
   }
+
+  
 }
 </script>
 

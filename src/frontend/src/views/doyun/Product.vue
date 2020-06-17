@@ -1,19 +1,17 @@
 <template>
     <div id="product" class="contents">
         <ul class="nav nav-tabs">
-            <li role="presentation" class="active"><a href="#">Home</a></li>
-            <li role="presentation"><a href="#">Profile</a></li>
-            <li role="presentation"><a href="#">Messages</a></li>
+            <li role="presentation" class="active"><a href="#">iWorks</a></li>
+            <li role="presentation"><a href="#">iXeb</a></li>
 
             <li role="presentation" class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                    Dropdown <span class="caret"></span>
+                    {{selected}}<span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu">
-                    <li><a href="#">Action</a></li>
+                    <li><a  v-on:click="select('UI/UX 솔루션')" href="#">UI/UX 솔루션</a></li>
                     <li><a href="#">Another action</a></li>
                     <li><a href="#">Something else here</a></li>
-                    <li class="divider"></li>
                     <li><a href="#">Separated link</a></li>
                 </ul>
             </li>
@@ -23,10 +21,17 @@
 </template>
 
 <script>
-        
-
 export default {
-
+    data() {
+        return {
+            selected: '',
+        }
+    },
+    methods: {
+        select(sol) {
+            this.selected = sol;
+        }
+    }
 }
 </script>
 
@@ -39,5 +44,8 @@ export default {
 }
 .btn-group {
     margin: 10px;
+}
+.nav-tabs li.active a {
+    background-color: #d9edf7;
 }
 </style>
