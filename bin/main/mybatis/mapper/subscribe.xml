@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="subscribe">
+	<select id="getSubAllList" resultType="subscribevo">
+	<![CDATA[
+		select * from subscription_policy
+		order by no;
+	]]>
+	</select>
+	
+	<select id="setSubAdd" resultType="subscribevo">
+	<![CDATA[
+		insert into subscription_policy(policy_title , standard , max_count , price ,visible ,url)
+		values(#{policy_title}, #{standard}, #{max_count}, #{price} ,#{visible} ,'http://url-test');
+	]]>
+	</select>
+	
+	<select id="getMaxNo" resultType="int">
+	<![CDATA[
+		select max(no) from subscription_policy;
+	]]>
+	</select>
+</mapper>

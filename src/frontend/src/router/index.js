@@ -10,7 +10,7 @@ const routes = [
   {
     path: '/',
     name: 'Home',
-    component: Home
+    component: Home,
   },
   {
     path: '/category/login',
@@ -45,4 +45,15 @@ const router = new VueRouter({
   routes
 })
 
+// router.beforeEach((to, from, next)=>{
+//   if( to.meta.auth ){
+//    console.log('인증이 필요합니다.') ;
+//    next('/');
+//    return;
+//   }
+//   // console.log(to);
+//   // console.log(from);
+//   // console.log(next);
+//   next();
+// });
 export default router

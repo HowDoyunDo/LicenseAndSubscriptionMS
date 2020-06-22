@@ -11,47 +11,58 @@
         <th>URL</th>
         <th>등록일</th>
       </tr>
-      <tr>
-        <td>1</td>
+      <tr v-for="(list, index) in subAllList" :key="list.no" @click="listClick(index)">
+        <td>{{ list.no }}</td>
         <td>
-          <span style="text-decoration-line: underline;">UI/UX 솔루션</span>
+          <span style="text-decoration-line: underline;">{{ list.policy_title }}</span>
         </td>
-        <td>사용자</td>
-        <td>100</td>
-        <td>280,000</td>
-        <td>공개</td>
-        <td>~~</td>
-        <td>2020-06-04</td>
-      </tr>
-      <tr>
-        <td>1</td>
-        <td>
-          <span style="text-decoration-line: underline;">UI/UX 솔루션</span>
-        </td>
-        <td>사용자</td>
-        <td>100</td>
-        <td>280,000</td>
-        <td>공개</td>
-        <td>~~</td>
-        <td>2020-06-04</td>
+        <td>{{ list.standard }}</td>
+        <td>{{ list.max_count | formatPrice}}</td>
+        <td>{{ list.price | formatPrice }}</td>
+        <td>{{ list.visible==true?'공개':'비공개'}}</td>
+        <td>{{ list.url }}</td>
+        <td>{{ list.reg_date | formatDate }}</td>
       </tr>
     </table>
   </div>
 </template>
 
 <script>
-// import {subscribeAllList} from '@/api/shr/subscribe';
+import { subscribeAllList } from "@/api/shr/subscribe";
+import moment from "moment";
 
-// export default {
-//   methods : {
-//     async allList(){
-//       const {data} =  await subscribeAllList();
-      
-//     },
+export default {
+  data() {
+    return {
+      subAllList: ""
+    };
+  },
+  created() {
+    this.listData();
+  },
+  methods: {
+    async listData() {
+      const { data } = await subscribeAllList();
+      this.subAllList = data;
+    },
+    listClick(index){
+      console.log('click');
+      const productNo = this.subAllList[index].no;
+      console.log('productno는 :' , productNo);
+      this.$router.push({name:'subscribeInfo' , params:{ product_no: productNo }});
 
-//   }
-
-// };
+    }
+  },
+  filters: {
+    formatDate: function(value) {
+      return moment(value).format("YYYY/MM/DD HH:mm:ss");
+    },
+    formatPrice: function(value) {
+      if (!value) return "";
+      return value.toFixed(0).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
+    }
+  }
+};
 </script>
 
 <style>

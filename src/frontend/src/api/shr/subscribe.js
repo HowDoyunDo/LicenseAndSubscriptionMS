@@ -1,14 +1,19 @@
-import axios from 'axios';
-
-
-const instance = axios.create({
-    baseURL: 'http://localhost:9000/'
-});
+import { instance } from '../index';
 
 // 시스템관리자 - 전체 구독 목록 조회
-function subscribeAllList(){
-    return instance.post('subscribeAllLis');
+function subscribeAllList() {
+    return instance.get('alllist');
 }
 
 
-export {subscribeAllList};
+// 시스템관리자 - 구독 정책 등록
+function subscribeAdd(addData) {
+    console.log('adddddddd data ')
+    console.log(addData.selectedList);
+    
+    return instance.post('/subscribeAdd',addData);
+}
+
+
+
+export { subscribeAllList, subscribeAdd };
