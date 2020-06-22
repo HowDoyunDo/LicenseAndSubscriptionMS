@@ -3,8 +3,10 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="inzent.pjt.vo.LoginVo" alias="loginvo"/>
+		<typeAlias type="inzent.pjt.vo.PolicyVo" alias="policyvo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mapper/login.xml" />
+		<mapper resource="inzent/pjt/config/app/db/mappers/policy.xml" />
 	</mappers>
 </configuration>

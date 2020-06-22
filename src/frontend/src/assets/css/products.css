@@ -1,48 +1,42 @@
 
-      #home {
-        width: 85%;
-        text-align: center;
-        border-left: 1px solid lightgray;
-        padding: 40px;
-      }
-      #home ul {
+      #products ul {
         list-style: none;
         margin-right: auto;
         margin-left: auto;
         width: 1050px;
       }
-      #home li {
+      #products li {
         float: left;
         padding: 10px;
         width: 500px;
       }
   
-      #home .panel {
+      #products .panel {
         width: 470px;
         margin: 0;
       }
-      #home .panel-heading {
+      #products .panel-heading {
         font-size: 25px;
         font-weight: bolder;
         height: 55px;
         text-align: left;
         background-color: #d9edf7;
       }
-      #home img {
+      #products img {
         margin-right: 0;
         margin-left: auto;
       }
-      #home .solutions {
+      #products .solutions {
         width: 80px;
         height: 70px;
       }
-      #home p {
+      #products p {
         color: aliceblue;
         font-size: 20px;
         font-weight: bolder;
       }
   
-      #home .panel-body1 {
+      #products .panel-body1 {
         background-image: url('../../assets/products/iworks.png');
         background-repeat: no-repeat;
         background-size: contain;
@@ -53,7 +47,7 @@
         color: aliceblue;
         text-align: left;
       }
-      #home .panel-body2 {
+      #products .panel-body2 {
         background-image: url('../../assets/products/ixeb.png');
         background-repeat: no-repeat;
         background-size: contain;
@@ -64,7 +58,7 @@
         color: aliceblue;
         text-align: left;
       }
-      #home .panel-body3 {
+      #products .panel-body3 {
         background-image: url('../../assets/products/igate.png');
         background-repeat: no-repeat;
         background-size: contain;
@@ -75,7 +69,7 @@
         color: aliceblue;
         text-align: left;
       }
-      #home .panel-body4 {
+      #products .panel-body4 {
         background-image: url('../../assets/products/apim.png');
         background-repeat: no-repeat;
         background-size: contain;
@@ -86,7 +80,7 @@
         color: aliceblue;
         text-align: left;
       }
-      #home .panel-body5 {
+      #products .panel-body5 {
         background-image: url('../../assets/products/ecross.png');
         background-repeat: no-repeat;
         background-size: contain;
@@ -97,7 +91,7 @@
         color: aliceblue;
         text-align: left;
       }
-      #home .panel-body6 {
+      #products .panel-body6 {
         background-image: url('../../assets/products/xtorm.png');
         background-repeat: no-repeat;
         background-size: contain;
@@ -108,7 +102,7 @@
         color: aliceblue;
         text-align: left;
       }
-      #home .panel-body7 {
+      #products .panel-body7 {
         background-image: url('../../assets/products/experdb.png');
         background-repeat: no-repeat;
         background-size: contain;
@@ -119,7 +113,7 @@
         color: aliceblue;
         text-align: left;
       }
-      #home .panel-body8 {
+      #products .panel-body8 {
         background-image: url('../../assets/products/libeka.png');
         background-repeat: no-repeat;
         background-size: contain;
@@ -130,7 +124,7 @@
         color: aliceblue;
         text-align: left;
       }
-      #home .panel-body9 {
+      #products .panel-body9 {
         background-image: url('../../assets/products/libekas4.png');
         background-repeat: no-repeat;
         background-size: contain;
@@ -141,7 +135,7 @@
         color: aliceblue;
         text-align: left;
       }
-      #home .panel-body10 {
+      #products .panel-body10 {
         background-image: url('../../assets/products/myguard.png');
         background-repeat: no-repeat;
         background-size: contain;
@@ -152,7 +146,7 @@
         color: aliceblue;
         text-align: left;
       }
-      #home .panel-body11 {
+      #products .panel-body11 {
         background-image: url('../../assets/products/centdoc.png');
         background-repeat: no-repeat;
         background-size: contain;

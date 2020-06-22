@@ -1,17 +1,16 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Storedy from './doyun/storedy'
+import createPersistedState from 'vuex-persistedstate';
 
 Vue.use(Vuex)
 
+import productStore from '@/store/doyun/productStore.js'
+
 export default new Vuex.Store({
-  ...Storedy,
-  state: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
   modules: {
-  }
+    productStore : productStore
+  },
+  plugins: [
+    createPersistedState()
+  ]
 })

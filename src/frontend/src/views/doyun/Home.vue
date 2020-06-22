@@ -8,15 +8,15 @@
 </template>
 
 <script>
-import Products from '@/components/doyun/products';
+import Products from '@/components/doyun/Products';
 import axios from 'axios';
 
 export default {
   components: {
     Products,
   },
-  beforeMount() {
-    axios.get('/api/category').then(res => { 
+  async beforeMount() {
+    await axios.get('/api/subscription_policy').then(res => { 
       console.log(res.data) 
     })
   }
@@ -26,4 +26,10 @@ export default {
 </script>
 
 <style>
+  #home {
+      width: 85%;
+      text-align: center;
+      border-left: 1px solid lightgray;
+      padding: 40px;
+  }
 </style>

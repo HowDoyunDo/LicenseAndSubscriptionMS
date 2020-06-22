@@ -15,10 +15,10 @@ public class HelloController {
 	@GetMapping("/category")
 	public String category() {
 		System.out.println("/category");
-		//System.out.println(logindao.loginList().get(0).getTitle());
-		for (LoginVo s : logindao.loginList()) {
-          System.out.println(s.getTitle());
-        }
+//		System.out.println(logindao.loginList().get(0).getTitle());
+//		for (LoginVo s : logindao.loginList()) {
+//          System.out.println(s.getTitle());
+//        }
 		return "476459486";
 	}
 }
