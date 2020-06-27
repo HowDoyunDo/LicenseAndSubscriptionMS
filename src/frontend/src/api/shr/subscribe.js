@@ -5,15 +5,26 @@ function subscribeAllList() {
     return instance.get('alllist');
 }
 
-
 // 시스템관리자 - 구독 정책 등록
 function subscribeAdd(addData) {
-    console.log('adddddddd data ')
-    console.log(addData.selectedList);
-    
-    return instance.post('/subscribeAdd',addData);
+    return instance.post('subscribeAdd', addData);
+}
+
+// 시스템관리자 - 구독 정책 상세보기
+function subscribeOneList(subscribeNo) {
+    return instance.post('subscribeOneList', subscribeNo);
+}
+
+// 시스템관리자 - 구독 정책 수정(일부 or 전체가능)
+function subscribeModify(subModifyData) {
+
+    return instance.post('subscribeModify', subModifyData);
 }
 
 
+// 시스템관리자 - 구독 정책 수정 시 라이선스 발급 여부 체크 
+function licenseCheck(subscribeNo) {
+    return instance.post('licenseCheck', { policy_no: subscribeNo });
+}
 
-export { subscribeAllList, subscribeAdd };
+export { subscribeAllList, subscribeAdd, subscribeOneList, subscribeModify, licenseCheck };

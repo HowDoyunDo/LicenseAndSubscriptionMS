@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="promotion">
+
+	<select id="getPromotionAllList" resultType="promotionvo">
+	<![CDATA[
+		select p.no as promotion_no, pd.no as product_no, pd.name as product_name, 
+			   title, discount, start_date, end_date, type, p.reg_date 
+			from promotion p, product pd 
+		 where p.product_no  = pd.no;
+	]]>
+	</select>
+
+</mapper>

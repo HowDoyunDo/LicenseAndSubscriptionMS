@@ -3,11 +3,21 @@ package inzent.pjt.vo;
 public class ProductVO {
 	private int no;
 	private int category_no;
+	private String category_title;
 	private String name;
 	private String comments;
 	private int price;
 	private String reg_date;
 	
+	
+	public String getCategory_title() {
+		return category_title;
+	}
+
+	public void setCategory_title(String category_title) {
+		this.category_title = category_title;
+	}
+
 	public int getNo() {
 		return no;
 	}

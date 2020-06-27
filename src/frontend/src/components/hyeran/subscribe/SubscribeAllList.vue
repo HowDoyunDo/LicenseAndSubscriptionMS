@@ -2,21 +2,28 @@
   <div>
     <table class="table_board">
       <tr>
-        <th>구독 정책 번호</th>
-        <th>구독 정책명</th>
-        <th>이용 기준</th>
-        <th>최대 사용 수량</th>
-        <th>가격</th>
-        <th>정책 공개 여부</th>
-        <th>URL</th>
-        <th>등록일</th>
+        <th style="width:6%;">번호</th>
+        <th style="width:25%;">구독 정책명</th>
+        <th style="width:10%;">이용 기준</th>
+        <th style="width:10%">수량</th>
+        <th style="width:8%;">가격</th>
+        <th style="width:9%;">공개여부</th>
+        <th style="width:19%;">URL</th>
+        <th style="width:15%;">등록일</th>
       </tr>
-      <tr v-for="(list, index) in subAllList" :key="list.no" @click="listClick(index)">
+      <tr
+        onmouseover="this.style.background='#CEECF5';"
+        onmouseout="this.style.background=''"
+        style="cursor:pointer"
+        v-for="(list, index) in subAllList"
+        :key="list.no"
+        @click="listClick(index)"
+      >
         <td>{{ list.no }}</td>
-        <td>
+        <td style="text-align: left;">
           <span style="text-decoration-line: underline;">{{ list.policy_title }}</span>
         </td>
-        <td>{{ list.standard }}</td>
+        <td>{{ list.standard=='U' ? '사용자' : '에이전트' }}</td>
         <td>{{ list.max_count | formatPrice}}</td>
         <td>{{ list.price | formatPrice }}</td>
         <td>{{ list.visible==true?'공개':'비공개'}}</td>
@@ -29,7 +36,6 @@
 
 <script>
 import { subscribeAllList } from "@/api/shr/subscribe";
-import moment from "moment";
 
 export default {
   data() {
@@ -45,23 +51,15 @@ export default {
       const { data } = await subscribeAllList();
       this.subAllList = data;
     },
-    listClick(index){
-      console.log('click');
-      const productNo = this.subAllList[index].no;
-      console.log('productno는 :' , productNo);
-      this.$router.push({name:'subscribeInfo' , params:{ product_no: productNo }});
-
+    listClick(index) {
+      // 클릭한 해당 구독정책번호
+      const subscribeNo = this.subAllList[index].no;
+      this.$router.push({
+        name: "subscribeInfo",
+        params: { subscribe_no: subscribeNo }
+      });
     }
   },
-  filters: {
-    formatDate: function(value) {
-      return moment(value).format("YYYY/MM/DD HH:mm:ss");
-    },
-    formatPrice: function(value) {
-      if (!value) return "";
-      return value.toFixed(0).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
-    }
-  }
 };
 </script>
 

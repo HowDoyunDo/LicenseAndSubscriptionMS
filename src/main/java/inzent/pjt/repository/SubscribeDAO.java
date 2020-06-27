@@ -17,15 +17,29 @@ public class SubscribeDAO {
 	public List<SubscribeVO> getSubList() {
 		return sqlSession.selectList("subscribe.getSubAllList");
 	}
-	
+
 	public int setSubAdd(SubscribeVO vo) {
 		return sqlSession.insert("subscribe.setSubAdd", vo);
 	}
-	
+
 	public int getMaxNo() {
 		return sqlSession.selectOne("subscribe.getMaxNo");
 	}
+
+	public List<SubscribeVO> getSubscribeOneList(int subscribeNo) {
+		return sqlSession.selectList("subscribe.getSubscribeOneList", subscribeNo);
+	}
+
+	public int setSubscribeModify(SubscribeVO vo) {
+		return sqlSession.insert("subscribe.setSubModify", vo);
+	}
 	
+	public int setSubscribeAllModify(SubscribeVO vo) {
+		return sqlSession.insert("subscribe.setSubAllModify", vo);
+	}
 	
-	
+	public int getLicenseCheck(int subscribeNo) {
+		return sqlSession.selectOne("subscribe.getLicenseCheck", subscribeNo);
+	}
+
 }

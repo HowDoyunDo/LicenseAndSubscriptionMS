@@ -11,8 +11,8 @@ function productOneList(productNo) {
 }
 
 // 시스템관리자 - 해당 제품번호 삭제
-function productDelete(productNo){
-    return instance.post('productDelete', productNo);
-}
+// function productDelete(productNo){
+//     return instance.post('productDelete', productNo);
+// }
 
-export { productOneList, productAllList, productDelete };
+export { productOneList, productAllList };

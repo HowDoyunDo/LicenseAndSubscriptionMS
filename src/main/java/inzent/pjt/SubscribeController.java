@@ -1,6 +1,8 @@
 package inzent.pjt;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import inzent.pjt.service.ProductService;
 import inzent.pjt.service.SubscribeService;
+import inzent.pjt.vo.ProductVO;
 import inzent.pjt.vo.SubscribeVO;
 
 @RestController
@@ -38,14 +41,12 @@ public class SubscribeController {
 	public int subscribeAdd(@RequestBody SubscribeVO subscribevo) {
 		System.out.println("/subscribeAdd");
 
-
 		// 구독 정책 추가
 		int resultSubAdd = service.setSubAdd(subscribevo);
 
 		// subscribe_policy의 max(no) 추출
 		// 같은 정책 번호로 insert하기 위해
 		int policy_no = service.getMaxNo();
-
 		// 정책 추가 시 선택한 제품목록 추가
 		subscribevo.setPolicy_no(policy_no);
 		int resultSubProduct = p_service.setSubscribeProduct(subscribevo);
@@ -57,6 +58,36 @@ public class SubscribeController {
 			result = 0;
 		}
 
+		return result;
+	}
+
+	@PostMapping("/subscribeOneList")
+	public List<SubscribeVO> subscribeOneList(@RequestBody Map<String, Integer> map) {
+		System.out.println("/subscribeOneList");
+		int subscribeNo = map.get("subscribeNo");
+
+		// 해당 구독정책 출력
+		List<SubscribeVO> list = service.getSubscribeOneList(subscribeNo);
+
+		// 해당 구독정책의 제품 출력
+		ArrayList<ProductVO> p_list = (ArrayList<ProductVO>) p_service.getProductList(subscribeNo);
+		list.get(0).setSelectedList(p_list);
+
+		return list;
+	}
+
+	@PostMapping("/subscribeModify")
+	public int subscribeModify(@RequestBody SubscribeVO subscribevo) {
+		System.out.println("/subscribeModify");
+		int result = service.setSubscribeModify(subscribevo);
+		return result;
+	}
+
+	@PostMapping("/licenseCheck")
+	public int licenseCheck(@RequestBody SubscribeVO subscribevo) {
+		System.out.println("/licenseCheck");
+
+		int result = service.getLicenseCheck(subscribevo.getPolicy_no());
 		return result;
 	}
 

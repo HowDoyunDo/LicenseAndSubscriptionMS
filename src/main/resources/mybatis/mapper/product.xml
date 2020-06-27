@@ -12,8 +12,10 @@
 	<select id="getProductOneList" resultType="productvo"
 		parameterType="int">
 	<![CDATA[
-		select no, category_no, name, comments, price, reg_date  from product
-		where no = #{productno};	
+	select p.no as no, category_no, c.title as category_title, name, comments, price, p.reg_date as reg_date  
+		from product p , category c 
+	 where p.category_no = c.no
+	  and p.no = #{productno} ;
 	]]>
 	</select>
 
@@ -23,4 +25,19 @@
 			values(#{item.no} , #{policy_no}, #{item.name});
 		</foreach>
 	</insert>
+
+	<select id="getProductList" resultType="productvo"
+		parameterType="int">
+
+		select p.*, c.title as category_title 
+			 from product p, category c
+ 			where p.no in (
+							 select product_no 
+								 from policy_product
+ 	   						   where policy_no=#{subscribeNo}
+ 	   						)
+   			and p.category_no = c.no;
+  		 
+   
+	</select>
 </mapper>

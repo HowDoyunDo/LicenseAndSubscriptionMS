@@ -1,77 +1,51 @@
 <template>
   <div>
-  <form id="app" @submit="checkForm" action="/something" method="post" novalidate="true">
-    
-    <p v-if="errors.length">
-      <b>아래 오류를 수정하세요.:</b>
-      <ul>
-        <li v-for="error in errors" :key="error.id">{{ error }}</li>
-      </ul>
-    </p>
-    
-    <p>
-      <label for="name">이름</label>
-      <input type="text" name="name" id="name" v-model="name">
-    </p>
+    <h1>TABLE PAGINATION</h1>
+    <paginated-list :list-array="pageArray" />
 
-    <p>
-      <label for="email">이메일</label>
-      <input type="email" name="email" id="email" v-model="email">
-    </p>
-
-    <p>
-      <label for="movie">최애 영화</label>
-      <select name="movie" id="movie" v-model="movie">
-        <option>토이스토리</option>
-        <option>알라딘</option>
-        <option>겨울왕국</option>
-      </select>
-    </p>
-
-    <p>
-      <input type="submit" value="Submit">  
-    </p>
-
-  </form>
-
-
+    <paginate
+      :page-count="5"
+      :click-handler="functionName"
+      :prev-text="'Prev'"
+      :next-text="'Next'"
+      :container-class="'className'"
+    ></paginate>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import PaginatedList from "./PaginatedList";
+import Paginate from "vuejs-paginate";
+
 export default {
-data() {
-  return {
-   errors: [],
-    name: null,
-    email: null,
-    movie: null
+  name: "simple-pagination",
+  components: {
+    PaginatedList,
+    Paginate
+  },
+  data() {
+    return {
+      pageArray: []
+    };
+  },
+  created() {
+    axios
+      .get("http://sample.bmaster.kro.kr/contacts")
+      .then(response => {
+        console.log(response);
+        this.pageArray = response.data.contacts;
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
-},
-  methods: {
-    checkForm(e) {
-      e.preventDefault();
-      this.errors = [];
-      if (!this.name) {
-        this.errors.push("이름은 필수입니다.");
-      }
-      if (!this.email) {
-        this.errors.push("이메일은 필수입니다.");
-      } else if (!this.validEmail(this.email)) {
-        this.errors.push("이메일 형식을 확인하세요.");
-      }
-      if (!this.errors.length) return true;
-    },
-    // validEmail: function(email) {
-    //   var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    //   return re.test(email);
-    // }
-  }
-
-
-}
+};
 </script>
 
 <style>
-
+h1 {
+  color: #454545;
+  text-align: center;
+}
 </style>

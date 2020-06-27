@@ -21,4 +21,36 @@
 		select max(no) from subscription_policy;
 	]]>
 	</select>
+	
+	<select id="getSubscribeOneList" resultType="subscribevo" parameterType="int">
+	<![CDATA[
+		select * from subscription_policy
+		where no=#{subscribeNo};
+	]]>
+	</select>
+	
+	<update id="setSubModify" parameterType="subscribevo">
+	<![CDATA[
+		update subscription_policy 
+		  set policy_title = #{policy_title} , visible = #{visible} 
+		 where no = #{no};
+	]]>
+	</update>
+	
+	<update id="setSubAllModify" parameterType="Object">
+	<![CDATA[
+		update subscription_policy 
+		  set policy_title = #{policy_title} , visible = #{visible} ,
+		  standard = #{standard}, max_count = #{max_count}, 
+		  price = #{price}, url = #{url}
+		 where no = #{no};
+	]]>
+	</update>
+	
+	<select id="getLicenseCheck" resultType="int" parameterType="int">
+	<![CDATA[
+  		select count(*) from license
+ 		 where policy_no = #{subscribeNo};
+  	]]>
+	</select>
 </mapper>

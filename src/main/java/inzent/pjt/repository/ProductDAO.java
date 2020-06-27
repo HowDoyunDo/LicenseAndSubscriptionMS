@@ -26,4 +26,7 @@ public class ProductDAO {
 		return sqlSession.insert("product.setSubscribeProduct", vo);
 	}
 
+	public List<ProductVO> getProductList(int subscribeNo) {
+		return sqlSession.selectList("product.getProductList", subscribeNo);
+	}
 }
