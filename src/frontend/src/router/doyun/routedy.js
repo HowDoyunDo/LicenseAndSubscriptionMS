@@ -1,7 +1,7 @@
 import Home from '@/views/doyun/Home.vue'
 
 export default [
-    {
+      {
         path: '/',
         name: 'Home',
         component: Home
@@ -35,5 +35,15 @@ export default [
         path: '/product',
         name: 'Product',
         component: () => import('@/views/doyun/Product.vue')
-      }
+      },
+      {
+        path: '/subscribe/order/:policyidx/:policytype',
+        name: 'SubscribeOrder',
+        component: () => import('@/views/doyun/SubscribeOrder.vue')
+      },
+      {
+        path: '/license/info/:licenseno/:licensetype',
+        name: 'LicenseInfo',
+        component: () => import('@/views/doyun/LicenseInfo.vue')
+      },
 ]

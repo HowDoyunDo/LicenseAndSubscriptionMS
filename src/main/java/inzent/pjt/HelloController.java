@@ -10,11 +10,10 @@ import inzent.pjt.vo.LoginVo;
 @RestController
 public class HelloController {
 	@Autowired
-	private LoginDao logindao;
+//	private LoginDao logindao;
 	
 	@GetMapping("/category")
 	public String category() {
-		System.out.println("/category");
 //		System.out.println(logindao.loginList().get(0).getTitle());
 //		for (LoginVo s : logindao.loginList()) {
 //          System.out.println(s.getTitle());

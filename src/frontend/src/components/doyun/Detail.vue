@@ -1,5 +1,5 @@
 <template>
-    <div id="detail" class="contents">
+    <div id="detail">
         <ul class="nav nav-tabs">
 
             <li role="presentation" class="dropdown">
@@ -7,7 +7,7 @@
                     {{ solution }} 
                     <span class="caret"></span>
                 </a>
-                <ul class="dropdown-menu" role="menu">
+                <ul class="dropdown-menu" role="menu" style="width:300px;">
                     <li>
                         <a @click="detail('iworks', 'UI/UX 솔루션')">
                             <router-link to='/product'>
@@ -159,10 +159,12 @@
             </template>
         </ul>
 
-        <!-- 구독 정책 내용 삽입 -->
-        <slot></slot>
-
         <img :src="imgsrc" />
+        <br><br>
+
+        <!-- 구독 정책 내용 삽입 -->
+        <h2>구독 신청하기</h2>
+        <slot></slot>
     </div>
 </template>
 
@@ -170,24 +172,31 @@
 import axios from 'axios';
 
 export default {
-    data() {
-        return {
-        }
-    },
     methods: {
-        detail(pdt, sol) {
+        async detail(pdt, sol) {
             this.$store.commit('productStore/CHANGE_PDT', pdt);
             this.$store.commit('productStore/CHANGE_SEL', sol);
             this.$store.commit('productStore/ACTIVE_TAB', pdt);
-            // solution store와 일치하는 구독정책 table에서 검색
-            axios.get('/api/policylist', {
+
+            // solution store와 일치하는 User구독정책 table에서 검색
+            await axios.get('/api/userpolicylist', {
                 params: {
                     sol : this.solution
                 }
             }).then(res => { 
                 this.$store.commit('productStore/CHANGE_UPLCY', res.data);
-                console.log(this.$store.state.productStore.uPolicies);
-            })
+                
+            });
+
+            // solution store와 일치하는 Agent구독정책 table에서 검색
+            await axios.get('/api/agentpolicylist', {
+                params: {
+                    sol : this.solution
+                }
+            }).then(res => { 
+                this.$store.commit('productStore/CHANGE_APLCY', res.data);
+
+            });
         }
     },
     computed: {
@@ -200,6 +209,10 @@ export default {
         imgsrc: function() {
             return require('@/assets/details/'+ this.$store.state.productStore.product +'.png');
         },
+        polno: function() {
+            return this.$store.state.productStore.polno;
+        },
+
 
         iworks: function() {
             return this.$store.state.productStore.iworks;
@@ -234,18 +247,11 @@ export default {
         centdoc: function() {
             return this.$store.state.productStore.centdoc;
         },
-    }
+    },
 }
 </script>
 
 <style>
-#product { 
-    width: 85%;
-    border-left: 1px solid lightgray;
-    padding: 40px;
-    min-height: 426px;
-    text-align: center;
-}
 .btn-group {
     margin: 10px;
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="license">
+	<select id="getLicenseList" parameterType="int" resultType="licensevo">
+		<![CDATA[
+			select lc.*, sp.policy_title, sp.standard 
+			 from license lc, subscription_policy sp 
+			 where lc.policy_no = sp.no 
+			 and lc.user_admin_no = #{adminNo}
+		]]>
+	</select>
+</mapper>

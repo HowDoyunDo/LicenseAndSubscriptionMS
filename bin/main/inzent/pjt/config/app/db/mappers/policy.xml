@@ -7,6 +7,26 @@
 		  FROM subscription_policy
 		  WHERE policy_title LIKE '${_parameter}%'
 		  AND standard = 'U'
+		  ORDER BY price ASC;
+	]]>
+	</select>
+	
+	<select id="getAgentPolicyList" parameterType="string" resultType="policyvo">
+	<![CDATA[
+		SELECT *
+		  FROM subscription_policy
+		  WHERE policy_title LIKE '${_parameter}%'
+		  AND standard = 'A'
+		  ORDER BY price ASC;
+	]]>
+	</select>
+	
+	<select id="getPromotionList" parameterType="map" resultType="promotionvo">
+	<![CDATA[
+		select * from promotion where product_no in (select product_no from policy_product where policy_no=#{policyno})
+		  and type = true
+		  and to_timestamp(#{startdate}, 'YYYY-MM-DD HH24:MI:SS')
+		  between start_date and end_date
 	]]>
 	</select>
 </mapper>

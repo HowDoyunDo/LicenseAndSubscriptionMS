@@ -16,7 +16,7 @@ export default {
     Products,
   },
   async beforeMount() {
-    await axios.get('/api/subscription_policy').then(res => { 
+    await axios.get('/api/category').then(res => { 
       console.log(res.data) 
     })
   }

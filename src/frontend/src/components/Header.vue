@@ -1,6 +1,6 @@
 <template>
     <div id="header">
-        <router-link to="/"><img src="../../public/header_logo_2.png"/></router-link>
+        <router-link to="/"><img src="../../public/inzent_logo.png" style="width:155px; height:25px; margin-left:16px"/></router-link>
         
         <ul>
             <li>SIGN IN</li> 
@@ -20,6 +20,7 @@ export default {
     div #header {
         height: 100px;
         background-color: #103366;
+        /* background-color: #b0544f; */
         margin:0
     }
     div #header h4 {
