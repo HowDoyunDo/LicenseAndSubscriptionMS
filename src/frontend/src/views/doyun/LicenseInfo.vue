@@ -40,7 +40,7 @@
                         <button style="width:90px; margin: 10px; float:right">개별 추가</button>
                     </span>
                 </h4>
-                <table class="info-table">
+                <table class="info-table" style="text-align: center">
                     <tr>
                         <th style="width:10%">번호</th>
                         <th style="width:15%">사용자 이름</th>

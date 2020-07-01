@@ -3,17 +3,18 @@
 <mapper namespace="license">
 	<select id="getLicenseList" parameterType="int" resultType="licensevo">
 		<![CDATA[
-			select lc.*, sp.policy_title, sp.standard 
-			 from license lc, subscription_policy sp 
+			select lc.*, sp.policy_title, sp.standard, ol.reg_date
+			 from license lc, subscription_policy sp, order_list ol 
 			 where lc.policy_no = sp.no 
 			 and lc.user_admin_no = #{adminNo}
+			 and lc.order_no = ol.no
 		]]>
 	</select>
 	
 	<select id="getUserList" parameterType="int" resultType="generaluservo">
 		<![CDATA[
-			select gu.*, ag.last_login 
-			 from agent ag, general_user gu 
+			select gu.*, ag.last_login
+			 from agent ag, general_user gu
 			 where ag.license_no = #{licenseNo}
 			 and ag.user_no = gu.no
 		]]>
@@ -22,7 +23,7 @@
 	<select id="getSearch1" parameterType="map" resultType="generaluservo">
 		<![CDATA[
 			select gu.*, ag.last_login 
-			 from agent ag, general_user gu 
+			 from agent ag, general_user gu
 			 where ag.license_no = #{licenseNo} 
 			 and ag.user_no = gu.no
 			 and gu.email like CONCAT('%', #{email}, '%')

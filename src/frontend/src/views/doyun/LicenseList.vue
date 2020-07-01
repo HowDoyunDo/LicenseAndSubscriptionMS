@@ -4,13 +4,15 @@
         <table class="info-table">
             <tr>
                 <th style="width:5%">번호</th>
-                <th style="width:25%">구독 정책명(라이센스 상세)</th>
+                <th style="width:20%">구독 정책명(라이센스 상세)</th>
                 <th style="width:10%">이용 기준</th>
                 <th style="width:10%">현재/최대<br>사용 수량</th>
                 <th style="width:10%">시작일</th>
                 <th style="width:10%">종료일</th>
                 <th style="width:10%">결제 현황</th>
                 <th style="width:20%">라이센스 키</th>
+                <th style="width:10%">주문일</th>
+                <th style="width:10%">변경 / 취소</th>
             </tr>
             <tr v-for='(license, idx) in licenses' v-bind:key='license.no' @mouseenter="mouseenter()" @mouseleave="mouseleave()" @click="mouseclick(idx, license.standard)" :style="{background: indexcolor}" >
                     <td>{{ idx+1 }}</td>
@@ -20,8 +22,13 @@
                     <td>{{ license.current_count }} / {{ license.max_count }}</td>
                     <td>{{ license.start_date }}</td>
                     <td>{{ license.end_date }}</td>
-                    <td>일반 결제 완료</td>
+                    <td>일반 결제 <br>완료</td>
                     <td>{{ license.license_key }}</td>
+                    <td>{{ date_to_str(license.reg_date) }}</td>
+                    <td>
+                        <a href="/">변경</a> /
+                        <a href="#">취소</a> 
+                    </td>
             </tr>
         </table>
 
@@ -60,7 +67,18 @@ export default {
             console.log(this.licenses[idx].policy_title);
             this.$store.commit('licenseStore/SELECT_LIC', this.licenses[idx]);
             this.$router.push({ name: "LicenseInfo", params: { licenseno: idx, licensetype: standard }});
-        }
+        },
+        date_to_str(format) {
+            format = new Date(format);
+            var year = format.getFullYear(); var month = format.getMonth() + 1;
+            if(month<10) month = '0' + month; var date = format.getDate();
+            if(date<10) date = '0' + date; var hour = format.getHours();
+            if(hour<10) hour = '0' + hour; var min = format.getMinutes();
+            if(min<10) min = '0' + min; var sec = format.getSeconds();
+            if(sec<10) sec = '0' + sec;
+
+            return year + "-" + month + "-" + date + " " + hour + ":" + min + ":" + sec;
+        },
     }
 }
 </script>
@@ -98,5 +116,8 @@ export default {
     }
     .info-table input {
         width: 100px;
+    }
+    .info-table a:not(href){
+         color: gray;
     }
 </style>
