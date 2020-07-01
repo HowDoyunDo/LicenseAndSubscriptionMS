@@ -102,8 +102,6 @@
                     </button>
                 </div>
                 <br>
-
-                <monthlyPay v-if="paytab === false" />
             </template> 
 
             <template v-if="type === 'A'">
@@ -211,12 +209,7 @@
 var IMP = window.IMP; // 생략해도 괜찮습니다.
 IMP.init("imp67730889"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
 
-import monthlyPay from '@/components/doyun/MonthlyPay.vue'
-
 export default {
-    components: {
-        monthlyPay
-    },
     data() {
         return {
             usemonth: 1,

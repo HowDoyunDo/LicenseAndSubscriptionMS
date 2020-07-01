@@ -9,4 +9,38 @@
 			 and lc.user_admin_no = #{adminNo}
 		]]>
 	</select>
+	
+	<select id="getUserList" parameterType="int" resultType="generaluservo">
+		<![CDATA[
+			select gu.*, ag.last_login 
+			 from agent ag, general_user gu 
+			 where ag.license_no = #{licenseNo}
+			 and ag.user_no = gu.no
+		]]>
+	</select>
+	
+	<select id="getSearch1" parameterType="map" resultType="generaluservo">
+		<![CDATA[
+			select gu.*, ag.last_login 
+			 from agent ag, general_user gu 
+			 where ag.license_no = #{licenseNo} 
+			 and ag.user_no = gu.no
+			 and gu.email like CONCAT('%', #{email}, '%')
+			 and gu.name like CONCAT('%', #{name}, '%')
+			 and gu.dept_name like CONCAT('%', #{dept}, '%')
+			 and last_login between to_timestamp(#{start}, 'YYYY-MM-DD HH24:MI:SS') and to_timestamp(#{end}, 'YYYY-MM-DD HH24:MI:SS')
+		]]>
+	</select>
+	
+	<select id="getSearch2" parameterType="map" resultType="generaluservo">
+		<![CDATA[
+			select gu.*, ag.last_login 
+			 from agent ag, general_user gu 
+			 where ag.license_no = #{licenseNo} 
+			 and ag.user_no = gu.no
+			 and gu.email like CONCAT('%', #{email}, '%')
+			 and gu.name like CONCAT('%', #{name}, '%')
+			 and gu.dept_name like CONCAT('%', #{dept}, '%')
+		]]>
+	</select>
 </mapper>

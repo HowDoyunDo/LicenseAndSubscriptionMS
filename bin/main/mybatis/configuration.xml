@@ -6,6 +6,7 @@
 		<typeAlias type="inzent.pjt.vo.PolicyVo" alias="policyvo"/>
 		<typeAlias type="inzent.pjt.vo.PromotionVo" alias="promotionvo"/>
 		<typeAlias type="inzent.pjt.vo.LicenseVo" alias="licensevo"/>
+		<typeAlias type="inzent.pjt.vo.GeneralUserVo" alias="generaluservo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mapper/login.xml" />

@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import inzent.pjt.service.LicenseService;
+import inzent.pjt.vo.GeneralUserVo;
 import inzent.pjt.vo.LicenseVo;
 
 @RestController
@@ -23,10 +24,22 @@ public class LicenseController {
 		return licenseService.getLicenseList(adminNo);
 	}
 	
-	@GetMapping("/license/info")
-	public LicenseVo getLicenseInfo(
-			@RequestParam(value = "policyNo") int policyNo
+	@GetMapping("/license/userlist")
+	public List<GeneralUserVo> getUserList(
+			@RequestParam(value = "licenseNo") int licenseNo
 			) {
-		return licenseService.getLicenseInfo(policyNo);
+		return licenseService.getUserList(licenseNo);
+	}
+
+	@GetMapping("/license/search")
+	public List<GeneralUserVo> getSearch(
+			@RequestParam(value = "licenseNo") int licenseNo,
+			@RequestParam(value = "email") String email,
+			@RequestParam(value = "name") String name,
+			@RequestParam(value = "dept") String dept,
+			@RequestParam(value = "start") String start,
+			@RequestParam(value = "end") String end
+			) {
+		return licenseService.getSearch(licenseNo, email, name, dept, start, end);
 	}
 }

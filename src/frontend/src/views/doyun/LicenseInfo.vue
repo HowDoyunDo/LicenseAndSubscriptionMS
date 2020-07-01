@@ -2,16 +2,62 @@
     <div id="licenseinfo" class="contents">
         <template v-if="type === 'U'">
             <h2>사용자 관리 <code style="color:#3498db; font-size:20px;"> "{{ license.policy_title }}"</code></h2>
-            <table class="info-table">
-                <tr>
-                    <th>이메일</th>
-                    <td>...</td>
-                </tr>
-                <tr>
-                    <th>이메일</th>
-                    <td>...</td>
-                </tr>
-            </table>
+            <br>
+            <div class="inner">
+                <h4 style="color:gray">보유 사용자 조회</h4>
+                <table class="info-table">
+                    <tr>
+                        <th>이메일</th>
+                        <td><input type="text" style="width:300px" v-model="useremail"/></td>
+                    </tr>
+                    <tr>
+                        <th>사용자 이름</th>
+                        <td><input type="text" style="width:300px" v-model="username"/></td>
+                    </tr>
+                    <tr>
+                        <th>사용자 부서</th>
+                        <td><input type="text" style="width:300px" v-model="userdept"/></td>
+                    </tr>
+                    <tr>
+                        <th>마지막 로그인 날짜</th>
+                        <td><input type="datetime-local" style="width:200px" v-model="startdate"/> ~ 
+                        <input type="datetime-local" style="width:200px" v-model="enddate"/></td> 
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align:center">
+                            <button @click="search_user()">
+                                검색
+                            </button>
+                        </td>
+                    </tr>
+                </table>
+                <br>
+                
+                <h4 style="color:gray">사용자 목록
+                    <span>
+                        <button style="width:90px; margin: 10px; float:right">삭제</button>
+                        <button style="width:90px; margin: 10px; float:right">일괄 추가</button>
+                        <button style="width:90px; margin: 10px; float:right">개별 추가</button>
+                    </span>
+                </h4>
+                <table class="info-table">
+                    <tr>
+                        <th style="width:10%">번호</th>
+                        <th style="width:15%">사용자 이름</th>
+                        <th style="width:30%">이메일</th>
+                        <th style="width:15%">사용자 부서명</th>
+                        <th style="width:30%">마지막 로그인</th>
+                    </tr>
+                    <tr v-for="(gu, idx) in generalusers" v-bind:key="gu.no">
+                        <td>{{ idx+1 }}</td>
+                        <td>{{ gu.name }}</td>
+                        <td>{{ gu.email }}</td>
+                        <td>{{ gu.dept_name }}</td>
+                        <td>{{ date_to_str(gu.last_login) }}</td>
+                    </tr>
+                </table>
+            </div>
+
         </template>
         <template v-if="type === 'A'">
             <h2>에이전트 관리</h2>
@@ -26,7 +72,18 @@
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
+    data() {
+        return {
+            useremail: '',
+            username: '',
+            userdept: '',
+            startdate: '',
+            enddate: '',
+        }
+    },
     computed: {
         idx: function() {
             return this.$route.params.licenseno;
@@ -35,9 +92,59 @@ export default {
             return this.$route.params.licensetype;
         },
         license: function() {
-            return this.$store.state.productStore.solution;
+            return this.$store.state.licenseStore.selectedlicense;
+        },
+        generalusers: function() {
+            return this.$store.state.licenseStore.generalusers;
         }
-    }
+    },
+    methods: {
+        date_to_str(format) {
+            format = new Date(format);
+            var year = format.getFullYear(); var month = format.getMonth() + 1;
+            if(month<10) month = '0' + month; var date = format.getDate();
+            if(date<10) date = '0' + date; var hour = format.getHours();
+            if(hour<10) hour = '0' + hour; var min = format.getMinutes();
+            if(min<10) min = '0' + min; var sec = format.getSeconds();
+            if(sec<10) sec = '0' + sec;
+
+            return year + "-" + month + "-" + date + " " + hour + ":" + min + ":" + sec;
+        },
+        search_user() {
+            if(this.startdate !== '' && this.enddate === '') {
+                alert('검색 날짜 범위를 올바르게 입력해주세요.');
+                return;
+            }
+
+            axios.get('/api/license/search', {
+                params: {
+                    licenseNo: 1,
+                    email: this.useremail,
+                    name: this.username,
+                    dept: this.userdept,
+                    start: this.startdate,
+                    end: this.enddate
+                }
+            }).then(res => { 
+                if(res.data.length === 0) {
+                    alert('검색 결과가 없습니다.');
+                    return;
+                }
+                console.log(res.data);
+                this.$store.commit('licenseStore/SELECT_USR', res.data);
+            });
+        }
+    },
+    async created() {
+        await axios.get('/api/license/userlist', {
+                params: {
+                    licenseNo: 1
+                }
+        }).then(res => { 
+            console.log(res.data);
+            this.$store.commit('licenseStore/SELECT_USR', res.data);
+        });
+    },
 }
 </script>
 
@@ -66,9 +173,11 @@ export default {
     .info-table td {
         padding: 15px;
         font-weight: bold;
-        text-align: center;
     }
     .info-table input {
         width: 100px;
+    }
+    .inner {
+        margin-left:20px;
     }
 </style>

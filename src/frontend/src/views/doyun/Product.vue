@@ -182,9 +182,6 @@ export default {
             return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
         },
         subBtn() {
-            // var divId = document.getElementById('product');
-            // divId.scrollTop = divId.scrollHeight;
-            
             document.documentElement.scrollTop = document.body.scrollHeight;
         }
     },
