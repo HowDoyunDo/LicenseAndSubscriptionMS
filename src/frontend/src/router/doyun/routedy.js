@@ -14,7 +14,7 @@ export default [
       {
         path: '/license/list',
         name: 'LicenseList',
-        component: () => import('@/views/doyun/LicenseList.vue')
+        component: () => import('@/views/doyun/license/LicenseList.vue')
       },
       {
         path: '/batch',
@@ -44,6 +44,6 @@ export default [
       {
         path: '/license/info/:licenseno/:licensetype',
         name: 'LicenseInfo',
-        component: () => import('@/views/doyun/LicenseInfo.vue')
+        component: () => import('@/views/doyun/license/LicenseInfo.vue')
       },
 ]

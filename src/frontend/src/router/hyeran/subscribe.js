@@ -1,3 +1,4 @@
+
 export default [
     {
         path: '/subscribe/alllist',
@@ -10,3 +11,4 @@ export default [
         component: () => import('@/views/hyeran/system_admin/subscribe/AddForm.vue'),
     },
 ]
+

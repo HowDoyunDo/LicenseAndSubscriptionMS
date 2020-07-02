@@ -1,10 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="login">
-	<select id="getLoginList" resultType="loginvo">
-	<![CDATA[
-		select *
-		 from category
-	]]>
+	<select id="signUp" resultType="int">
+		 select count(*) from user_admin where co_number = #{co_number}
+	</select>
+	<select id="signUpM">
+		insert into user_admin (email, password, name, co_name, co_location, co_tel, co_number, manager_type) 
+		values(#{email}, #{password}, #{name}, #{co_name}, #{co_location}, #{co_tel}, #{co_number}, 'M')
+	</select>
+	<select id="signUpS">
+		insert into user_admin (email, password, name, co_name, co_location, co_tel, co_number, manager_type) 
+		values(#{email}, #{password}, #{name}, #{co_name}, #{co_location}, #{co_tel}, #{co_number}, 'S')
+	</select>
+	<select id="emailChk" resultType="int">
+		select count(*) from user_admin where email = #{email}
+	</select>
+	<select id="emailChk2" resultType="int">
+		select count(*) from system_admin where email = #{email}
+	</select>
+	<select id="loginChk" parameterType="map" resultType="uservo">
+		select * from user_admin where email = #{email} and password = #{password}
+	</select>
+	<select id="adminloginChk" parameterType="map" resultType="adminvo">
+		select * from system_admin where email = #{email} and password = #{password}
 	</select>
 </mapper>
