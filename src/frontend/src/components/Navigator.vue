@@ -14,6 +14,30 @@
           <br />
         </template>
       </ul>
+      <h4 @click="toggleSubscription">구독 관리</h4>
+      <ul>
+        <template v-if="subscriptionMenu">
+          <li>
+            <router-link to="/subscribe/alllist">구독 목록</router-link>
+          </li>
+          <li>
+            <router-link to="/subscribe/add">구독 등록</router-link>
+          </li>
+          <br />
+        </template>
+      </ul>
+      <h4 @click="togglePromotion">프로모션 관리</h4>
+      <ul>
+        <template v-if="promotionMenu">
+          <li>
+            <router-link to="/promotion">프로모션 목록</router-link>
+          </li>
+            <li>
+            <router-link to="/promotion/add">프로모션 등록</router-link>
+          </li>
+          <br />
+        </template>
+      </ul>
       <h4 @click="toggleOrder">주문 관리</h4>
       <ul>
         <template v-if="orderMenu">
@@ -38,15 +62,7 @@
           <br />
         </template>
       </ul>
-      <h4 @click="togglePromotion">프로모션 관리</h4>
-      <ul>
-        <template v-if="promotionMenu">
-          <li>
-            <router-link to="/">프로모션 목록</router-link>
-          </li>
-          <br />
-        </template>
-      </ul>
+
       <h4 @click="toggleAnalysis">통계 분석</h4>
       <ul>
         <template v-if="analysisMenu">
@@ -63,7 +79,7 @@
       <ul>
         <template v-if="licenseMenu">
           <li>
-            <router-link to="/">라이선스 현황</router-link>
+            <router-link to="/license/alllist">라이선스 현황</router-link>
           </li>
           <li>
             <router-link to="/">라이선스 배치 서비스</router-link>
@@ -81,49 +97,41 @@
       </h4>
       <ul>
         <template v-if="listMenu">
-        <li>
-          <router-link to="/">제품 조회</router-link>
-        </li>
-        <br />
+          <li>
+            <router-link to="/">제품 조회</router-link>
+          </li>
+          <br />
         </template>
       </ul>
-      <h4 @click="toggleSubscription">구독 관리</h4>
-      <ul>
-        <template v-if="subscriptionMenu">
-        <li>
-          <router-link to="/">구독 목록</router-link>
-        </li>
-        <br />
-        </template>
-      </ul>
+
       <h4 @click="toggleUlicense">라이선스 관리</h4>
       <ul>
         <template v-if="ulicenseMenu">
-        <li>
-          <router-link to="/license/list">라이선스 관리</router-link>
-        </li>
-        <br />
+          <li>
+            <router-link to="/license/list">라이선스 관리</router-link>
+          </li>
+          <br />
         </template>
       </ul>
       <h4 @click="toggleSetting">관리자 설정</h4>
       <ul>
         <template v-if="settingMenu">
-        <li>
-          <router-link to="/">관리자 목록</router-link>
-        </li>
-        <li>
-          <router-link to="/">관리자 정보수정</router-link>
-        </li>
-        <br />
+          <li>
+            <router-link to="/">관리자 목록</router-link>
+          </li>
+          <li>
+            <router-link to="/">관리자 정보수정</router-link>
+          </li>
+          <br />
         </template>
       </ul>
       <h4 @click="toggleQna">견적 문의</h4>
       <ul>
         <template v-if="qnaMenu">
-        <li>
-          <router-link to="/">견적 신청</router-link>
-        </li>
-        <br />
+          <li>
+            <router-link to="/">견적 신청</router-link>
+          </li>
+          <br />
         </template>
       </ul>
     </div>
@@ -135,10 +143,10 @@
       </h4>
       <ul>
         <template v-if="nlistMenu">
-        <li>
-          <router-link to="/">제품 조회</router-link>
-        </li>
-        <br />
+          <li>
+            <router-link to="/">제품 조회</router-link>
+          </li>
+          <br />
         </template>
       </ul>
     </div>
@@ -160,7 +168,7 @@ export default {
       ulicenseMenu: false,
       settingMenu: false,
       qnaMenu: false,
-      nlistMenu: false,
+      nlistMenu: false
     };
   },
   methods: {
@@ -191,15 +199,15 @@ export default {
     toggleUlicense() {
       this.ulicenseMenu = !this.ulicenseMenu;
     },
-    toggleSetting(){
+    toggleSetting() {
       this.settingMenu = !this.settingMenu;
     },
-    toggleQna(){
+    toggleQna() {
       this.qnaMenu = !this.qnaMenu;
     },
-    toggleNlist(){
+    toggleNlist() {
       this.nlistMenu = !this.nlistMenu;
-    },
+    }
   },
   computed: {
     userInfo: function() {

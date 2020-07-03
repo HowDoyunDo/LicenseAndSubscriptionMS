@@ -25,12 +25,12 @@ public class LicenseController {
 	@Autowired
 	LicenseService licenseService;
 	
-	@GetMapping("/license/list")
-	public List<LicenseVo> getLicenseList(
-			@RequestParam(value = "adminNo") int adminNo
-			) {
-		return licenseService.getLicenseList(adminNo);
-	}
+//	@GetMapping("/license/list")
+//	public List<LicenseVo> getLicenseList(
+//			@RequestParam(value = "adminNo") int adminNo
+//			) {
+//		return licenseService.getLicenseList(adminNo);
+//	}
 	
 	@GetMapping("/license/userlist")
 	public List<GeneralUserVo> getUserList(

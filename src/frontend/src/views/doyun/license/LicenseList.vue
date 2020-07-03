@@ -1,6 +1,6 @@
 <template>
     <div id="licenselist" class="contents">
-        <h2>라이센스 관리</h2>
+        <h2>라이센스 관리 -- 안씀</h2>
         <table class="info-table">
             <tr>
                 <th style="width:5%">번호</th>

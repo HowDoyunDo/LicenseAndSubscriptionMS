@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import inzent.pjt.repository.LicenseDao;
 import inzent.pjt.vo.GeneralUserVo;
+import inzent.pjt.vo.LicenseVO2;
 import inzent.pjt.vo.LicenseVo;
+import inzent.pjt.vo.UserVo;
 
 @Service
 public class LicenseService {
@@ -41,5 +43,22 @@ public class LicenseService {
 
 	public boolean delUser(String delUsrs, int licenseNo) {
 		return licenseDao.delUser(delUsrs, licenseNo);
+	}
+	
+	//add
+	public  List<LicenseVO2> getLicenseAllList() {
+		return licenseDao.getLicenseAllList();
+	}
+	public  List<LicenseVO2> getLicenseOneList(LicenseVO2 vo) {
+		return licenseDao.getLicenseOneList(vo);
+	}
+	public UserVo pwCheck(UserVo vo) {
+		return licenseDao.pwCheck(vo);
+	}
+	public int setLicenseCancel(LicenseVO2 vo) {
+		return licenseDao.setLicenseCancel(vo);
+	}
+	public  List<LicenseVO2> getLicenseUserList(UserVo vo) {
+		return licenseDao.getLicenseUserList(vo);
 	}
 }
