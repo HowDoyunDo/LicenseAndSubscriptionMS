@@ -23,7 +23,7 @@ export const productAddMixin = {
       // 선택 제품 출력
       async addProduct() {
         // 제품 포함 여부
-        const result = await this.$store.state.subscribeStore.productNoList.includes(
+        const result = await this.$store.state.productStore.productNoList.includes(
           this.selected
         );
   
@@ -31,17 +31,19 @@ export const productAddMixin = {
           alert("이미 선택한 제품입니다.");
         } else {
           await this.$store.commit(
-            "subscribeStore/productIncludes",
+            "productStore/productIncludes",
             this.selected
           );
           await this.$store.dispatch(
-            "subscribeStore/selectOneProduct",
+            "productStore/selectOneProduct",
             this.selected
           );
           this.productSum = await this.$store.getters[
-            "subscribeStore/getProductSum"
+            "productStore/getProductSum"
           ];
         }
-      }
+      },
+
+
     },
 };

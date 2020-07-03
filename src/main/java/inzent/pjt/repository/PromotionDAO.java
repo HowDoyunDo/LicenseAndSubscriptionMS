@@ -16,5 +16,17 @@ public class PromotionDAO {
 	public List<PromotionVO> getPromotionAllList() {
 		return sqlSession.selectList("promotion.getPromotionAllList");
 	}
+	public int setPromotionAdd(PromotionVO vo) {
+		return sqlSession.insert("promotion.setPromotionAdd", vo);
+	}
+	public List<PromotionVO> getPromotionOneList(PromotionVO vo){
+		return sqlSession.selectList("promotion.getPromotionOneList", vo);
+	}
 
+	public int setPromotionModify(PromotionVO vo) {
+		return sqlSession.insert("promotion.setPromotionModify", vo);
+	}
+	public int setPromotionDelete(PromotionVO vo) {
+		return sqlSession.insert("promotion.setPromotionDelete", vo);
+	}
 }

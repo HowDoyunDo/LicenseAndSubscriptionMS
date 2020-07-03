@@ -89,8 +89,11 @@ export default {
       visible: "true"
     };
   },
+  destroyed () {
+    // 선택제품된 제품목록 초기화
+    this.$store.commit('productStore/productAllDelete');
+  },
   methods: {
-    
     // 전송, 구독 정책 등록
     async subscribeAdd() {
       // 폼 유효성 검사
@@ -102,7 +105,7 @@ export default {
           standard: this.standard,
           max_count: this.max_count,
           price: this.uncomma(this.format),
-          selectedList: this.$store.getters["subscribeStore/getProductList"]
+          selectedList: this.$store.getters["productStore/getProductList"]
         };
 
         if (subscribeAddData.selectedList.length == 0) {
@@ -110,7 +113,7 @@ export default {
         } else {
           // submit
           const { data } = await subscribeAdd(subscribeAddData);
-
+      
           if (data == 1) {
             alert("등록 완료");
             this.$router.push("/subscribe/alllist");

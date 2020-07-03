@@ -6,11 +6,15 @@
 		<typeAlias type="inzent.pjt.vo.SubscribeVO" alias="subscribevo"/>
 		<typeAlias type="inzent.pjt.vo.ProductVO" alias="productvo"/>
 		<typeAlias type="inzent.pjt.vo.PromotionVO" alias="promotionvo"/>
+		<typeAlias type="inzent.pjt.vo.UserVo" alias="uservo"/>
+		<typeAlias type="inzent.pjt.vo.OrderListVO" alias="orderlistvo"/>
+		<typeAlias type="inzent.pjt.vo.LicenseVO" alias="licensevo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="mybatis/mapper/login.xml" />
 		<mapper resource="mybatis/mapper/subscribe.xml" />
 		<mapper resource="mybatis/mapper/product.xml" />
 		<mapper resource="mybatis/mapper/promotion.xml" />
+		<mapper resource="mybatis/mapper/license.xml" />
 	</mappers>
 </configuration>

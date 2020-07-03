@@ -1,6 +1,6 @@
 <template>
   <div>
-    <form class="form" @submit.prevent="promotionAdd" >
+    <form class="form" @submit.prevent="promotionAddSubmit">
       <table class="table_add">
         <tr>
           <th>프로모션명</th>
@@ -32,7 +32,7 @@
           </tr>
         </table>
         <div class="select-product">
-          <ProductOneList :sumToogle="'promotioProduct'" />
+          <ProductOneList :discountPrice="discountPrice" :pageType="true"/>
         </div>
       </div>
 
@@ -42,7 +42,14 @@
         <tr>
           <th>할인율</th>
           <td>
-            <input type="number" min="1" max="100" v-model="discount" @keyup="numberFormat" /> %
+            <input
+              type="number"
+              min="0"
+              max="100"
+              v-model.number="discount"
+              @keyup="discountPriceForm"
+              @blur="discountPriceForm"
+            /> %
             <!--v-model.number="maxCount" -->
           </td>
         </tr>
@@ -74,50 +81,27 @@
 </template>
 
 <script>
-import { subscribeAdd } from "@/api/shr/subscribe";
-import {productAddMixin} from "../mixins/productAdd"
+import { productAddMixin } from "../mixins/productAdd";
+import { promotionMixin } from "../mixins/promotionAdd";
+import { promotionAdd } from "@/api/shr/promotion";
 
 export default {
-  mixins : [productAddMixin],
+  mixins: [productAddMixin, promotionMixin],
   data() {
     return {
-      title: "",
-      discount: "",
-      start_date: "",
-      start_date_time: "",
-      end_date: "",
-      end_date_time: "",
-      type: "true"
+      type: "true",
+      discountPrice: ""
     };
   },
   methods: {
-    numberFormat(event) { //남겨, 겹쳐서 local 에 있는게 실행됨
-      var regexp = /[^0-9]/gi;
-      let num = event.target.value;
-      event.target.value = num.replace(regexp, "");
-      // this.discount = this.comma(this.uncomma(num));
-    },
-
     // 전송, 프로모션 등록
-    async promotionAdd() {
+    async promotionAddSubmit() {
       // 폼 유효성 검사
-      if (
-        this.title == "" ||
-        this.productList == "" ||
-        this.selected == "" ||
-        this.discount == "" ||
-        this.start_date == "" ||
-        this.start_date_time == "" ||
-        this.end_date == "" ||
-        this.end_date_time == "" ||
-        this.type == ""
-      ) {
-        alert("필수 입력 값을 입력해주세요");
-      } else {
+      if (!this.promotionFormValidation()) {
         // 등록할 데이터
-        const subscribeAddData = {
+        const promotionAddData = { 
           title: this.title,
-          selectedList: this.$store.getters["subscribeStore/getProductList"],
+          selectedList: this.$store.getters["productStore/getProductList"],
           discount: this.discount,
           start_date: this.start_date,
           start_date_time: this.start_date_time,
@@ -126,14 +110,11 @@ export default {
           type: this.type
         };
 
-        console.log(subscribeAddData);
-
-        if (subscribeAddData.selectedList.length == 0) {
+        if (promotionAddData.selectedList.length == 0) {
           alert("제품을 선택해주세요");
         } else {
-          // submit
-          const { data } = await subscribeAdd(subscribeAddData);
-
+          // 프로모션 submit 등록
+          const { data } = await promotionAdd(promotionAddData);
           if (data == 1) {
             alert("등록 완료");
             this.$router.push("/promotion");
@@ -143,6 +124,11 @@ export default {
         }
       }
     },
+
+  },
+  destroyed() {
+    // 선택제품된 제품목록 초기화
+    this.$store.commit("productStore/productAllDelete");
   }
 };
 </script>

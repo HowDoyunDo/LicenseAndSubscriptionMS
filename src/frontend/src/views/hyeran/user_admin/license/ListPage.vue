@@ -1,13 +1,13 @@
 <template>
   <div class="contents">
-    <h2>{{userInfo.name}} 님의 구독 정책 목록</h2>
-    <br>
-    <SubscribeUserList :userInfo="userInfo" />
+    <h2>{{userInfo.name}} 님의 라이선스 현황</h2>
+    <br />
+    <LicenseUserList :userInfo="userInfo" />
   </div>
 </template>
 
 <script>
-import SubscribeUserList from "@/components/hyeran/subscribe/SubscribeUserList.vue";
+import LicenseUserList from "@/components/hyeran/license/LicenseUserList.vue";
 export default {
   data() {
     return {
@@ -15,7 +15,7 @@ export default {
     };
   },
   components: {
-    SubscribeUserList
+    LicenseUserList
   },
   created() {
     // 로그인 한 사용자 정보

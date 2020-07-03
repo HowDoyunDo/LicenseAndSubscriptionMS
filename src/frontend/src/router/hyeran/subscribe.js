@@ -10,7 +10,7 @@ export default [
         path: '/subscribe/alllist',
         name: 'subscribeAllList',
         component: () => import('@/views/hyeran/system_admin/subscribe/AllListPage.vue'),
-        mata : {auth : true}
+        mata: { auth: true }
 
     },
     // 시스템 관리자 - 구독 정책 등록
@@ -19,8 +19,8 @@ export default [
         name: 'subscribeAdd',
         component: () => import('@/views/hyeran/system_admin/subscribe/AddPage.vue'),
     },
-     // 시스템 관리자 - 구독 정책 상세보기
-     {
+    // 시스템 관리자 - 구독 정책 상세보기
+    {
         path: '/subscribe/info/:subscribe_no',
         name: 'subscribeInfo',
         component: () => import('@/views/hyeran/system_admin/subscribe/InfoPage.vue'),
@@ -41,6 +41,13 @@ export default [
         name: 'promotionAdd',
         component: () => import('@/views/hyeran/system_admin/promotion/AddPage.vue'),
     },
+    // 시스템 관리자 - 프로모션 상세보기
+    {
+        path: '/promotion/info/:promotion_no',
+        name: 'promotionInfo',
+        component: () => import('@/views/hyeran/system_admin/promotion/InfoPage.vue'),
+    },
+
 
     // 고객관리자 구독 내역
     //     /subscribe/list
@@ -53,5 +60,31 @@ export default [
         name: 'subscribeList',
         component: () => import('@/views/hyeran/user_admin/subscribe/ListPage.vue'),
     },
+    // 시스템 관리자 - 구독 정책 상세보기
+    {
+        path: '/subscribe/info/:subscribe_no',
+        name: 'subscribeInfo',
+        component: () => import('@/views/hyeran/system_admin/subscribe/InfoPage.vue'),
+    },
 
+
+    // 시스템관리자 - 라이선스 현황 
+    // /license/alllist
+    {
+        path: '/license/alllist',
+        name: 'licneseAllList',
+        component: () => import('@/views/hyeran/system_admin/license/ListPage.vue'),
+    },
+    // 고객관리자 - 라이선스 현황 
+    {
+        path: '/license/list',
+        name: 'licneseList',
+        component: () => import('@/views/hyeran/user_admin/license/ListPage.vue'),
+    },
+    // 고객관리자 - 해당 라이선스의 구독정책 상세보기 
+    {
+        path: '/license/policy/info/:license_no/:policy_no',
+        name: 'licnesePolicyInfo',
+        component: () => import('@/views/hyeran/user_admin/license/InfoPage.vue'),
+    },
 ]

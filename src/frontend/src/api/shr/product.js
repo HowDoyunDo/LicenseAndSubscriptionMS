@@ -15,4 +15,6 @@ function productOneList(productNo) {
 //     return instance.post('productDelete', productNo);
 // }
 
+
+
 export { productOneList, productAllList };

@@ -4,7 +4,7 @@ module.exports = {
     node: true
   },
   'extends': [
-    'plugin:vue/recommended',
+    'plugin:vue/essential',
     'eslint:recommended'
   ],
   parserOptions: {
@@ -15,3 +15,4 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
   }
 }
+ 

@@ -2,14 +2,13 @@
   <div>
     <table class="table_board">
       <tr>
-        <th style="width:8%;">번호</th>
+        <th style="width:10%;">번호</th>
         <th style="width:21%;">프로모션명</th>
         <th style="width:12%;">제품명(번호)</th>
-        <th style="width:8%;">할인률</th>
+        <th style="width:10%;">할인율</th>
         <th style="width:15%;">프로모션 기간</th>
         <th style="width:10%;">진행여부</th>
         <th style="width:15%;">프로모션 등록일</th>
-        <th style="width:10%;">수정/삭제</th>
       </tr>
       <tr
         onmouseover="this.style.background='#CEECF5';"
@@ -28,10 +27,7 @@
         <td>{{ list.start_date | formatDate}} ~ {{ list.end_date | formatDate}}</td>
         <td>{{ list.type == true ? '진행중' : '진행안함'}}</td>
         <td>{{ list.reg_date | formatDate }}</td>
-        <td>
-          <a href>수정</a> /
-          <a href>삭제</a>
-        </td>
+       
       </tr>
     </table>
   </div>
@@ -51,9 +47,16 @@ export default {
     this.promotionAllList = data;
   },
   methods: {
+    // 상세보기
     listClick(index) {
-      console.log(index);
-    }
+     // 클릭한 해당 프로모션번호
+      const promotionNo = this.promotionAllList[index].promotion_no;
+      this.$router.push({
+        name: "promotionInfo",
+        params: { promotion_no: promotionNo }
+      });
+    },
+
   }
 };
 </script>

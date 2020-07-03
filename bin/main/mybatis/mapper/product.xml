@@ -5,7 +5,8 @@
 
 	<select id="getProductAllList" resultType="productvo">
 	<![CDATA[
-		select no, category_no, name, comments, price, reg_date  from product;	
+		select no, category_no, name, comments, price, reg_date  
+		 from product;	
 	]]>
 	</select>
 

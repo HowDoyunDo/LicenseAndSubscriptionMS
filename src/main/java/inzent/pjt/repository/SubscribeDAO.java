@@ -6,7 +6,9 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import inzent.pjt.vo.OrderListVO;
 import inzent.pjt.vo.SubscribeVO;
+import inzent.pjt.vo.UserVo;
 
 @Repository
 public class SubscribeDAO {
@@ -42,4 +44,7 @@ public class SubscribeDAO {
 		return sqlSession.selectOne("subscribe.getLicenseCheck", subscribeNo);
 	}
 
+	public List<OrderListVO> getUserSubscribeList(UserVo vo){
+		return sqlSession.selectList("subscribe.getUserSubscribeList",vo);
+	}
 }

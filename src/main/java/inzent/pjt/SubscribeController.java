@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import inzent.pjt.service.ProductService;
 import inzent.pjt.service.SubscribeService;
+import inzent.pjt.vo.OrderListVO;
 import inzent.pjt.vo.ProductVO;
 import inzent.pjt.vo.SubscribeVO;
+import inzent.pjt.vo.UserVo;
 
 @RestController
 @CrossOrigin("*")
@@ -89,6 +91,18 @@ public class SubscribeController {
 
 		int result = service.getLicenseCheck(subscribevo.getPolicy_no());
 		return result;
+	}
+
+	/*
+	 * 고객관리자
+	 * 
+	 */
+
+	@PostMapping("/userSubscribeList")
+	public List<OrderListVO> userSubscribeList(@RequestBody UserVo uservo) {
+		System.out.println("/userSubscribeList");
+		List<OrderListVO> list = service.getUserSubscribeList(uservo);
+		return list;
 	}
 
 }

@@ -146,15 +146,15 @@ export default {
   async created() {
     this.subscribe_no = this.$route.params.subscribe_no;
 
-    //  정책번호로 해당 정책 list 출력
+    //  정책번호로 해당 정책 list setting 위한 스토어 저장
     await this.$store.dispatch(
       "subscribeStore/selectOneSubscribe",
       this.subscribe_no
     );
+    // 초기값 세팅
     this.defaultSetting();
   },
   methods: {
-    
     // 수정완료 submit
     async subscribeModifySubmit() {
      if(!this.formValidation()){

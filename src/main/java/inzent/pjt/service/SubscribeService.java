@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import inzent.pjt.repository.SubscribeDAO;
+import inzent.pjt.vo.OrderListVO;
 import inzent.pjt.vo.SubscribeVO;
+import inzent.pjt.vo.UserVo;
 
 @Service
 public class SubscribeService {
@@ -52,6 +54,14 @@ public class SubscribeService {
 		} else {
 			return 0;
 		}
+	}
+
+	/*
+	 * 고객관리자
+	 * 
+	 */
+	public List<OrderListVO> getUserSubscribeList(UserVo vo) {
+		return dao.getUserSubscribeList(vo);
 	}
 
 }
