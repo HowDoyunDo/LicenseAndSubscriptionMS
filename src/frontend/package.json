@@ -12,7 +12,7 @@
     "bootstrap": "^4.5.0",
     "bootstrap-vue": "^2.15.0",
     "core-js": "^3.6.5",
-    "moment": "^2.26.0",
+    "moment": "^2.27.0",
     "path": "^0.12.7",
     "request": "^2.88.2",
     "vue": "^2.6.11",
