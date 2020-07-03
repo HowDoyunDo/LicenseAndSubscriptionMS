@@ -16,18 +16,29 @@ public class LicenseDao {
 	SqlSession sqlSession;
 
 	public List<LicenseVo> getLicenseList(int adminNo) {
-		return sqlSession.selectList("getLicenseList", adminNo);
+		return sqlSession.selectList("license.getLicenseList", adminNo);
 	}
 
 	public List<GeneralUserVo> getUserList(int licenseNo) {
-		return sqlSession.selectList("getUserList", licenseNo);
+		return sqlSession.selectList("license.getUserList", licenseNo);
 	}
 
 	public List<GeneralUserVo> getSearch1(Map<String, Object> map) {
-		return sqlSession.selectList("getSearch1", map);
+		return sqlSession.selectList("license.getSearch1", map);
 	}
 	
 	public List<GeneralUserVo> getSearch2(Map<String, Object> map) {
-		return sqlSession.selectList("getSearch2", map);
+		return sqlSession.selectList("license.getSearch2", map);
+	}
+
+	public boolean delUser(String delUsrs, int licenseNo) {
+		if(delUsrs != "(") {
+			int del1 = sqlSession.delete("license.delUser1", delUsrs);
+			int del2 = sqlSession.delete("license.delUser2", delUsrs);
+			sqlSession.update("license.downCurrentCount", licenseNo);
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

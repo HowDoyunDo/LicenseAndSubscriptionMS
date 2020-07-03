@@ -8,7 +8,7 @@
             <h4 style="color:gray">일괄 추가 양식 다운로드</h4>
             <a href="" @click="addUsersForm()">
                 <span id="downfile">
-                    <img src="@/assets/icons/download.png" style="width:50px; height:50px;"/>
+                    <img src="@/assets/icons/download.png" style="width:30px; height:30px;"/>
                     사용자 일괄 추가 양식
                 </span>
             </a>
@@ -19,7 +19,7 @@
 
             <h4 style="color:gray">일괄 추가 파일 업로드</h4>
             <span id="upfile">
-                <img src="@/assets/icons/upload.png" style="width:55px; height:50px;"/>
+                <img src="@/assets/icons/upload.png" style="width:33px; height:30px;"/>
                 파일 업로드
             </span>
             <br><br>

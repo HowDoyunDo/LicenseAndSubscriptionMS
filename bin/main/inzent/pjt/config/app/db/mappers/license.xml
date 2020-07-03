@@ -44,4 +44,29 @@
 			 and gu.dept_name like CONCAT('%', #{dept}, '%')
 		]]>
 	</select>
+	
+	<delete id="delUser1" parameterType="string">
+		<![CDATA[
+			delete 
+			 from general_user
+			 where no in ${_parameter} 
+		]]>
+	</delete>
+
+	<delete id="delUser2" parameterType="string">
+		<![CDATA[
+			delete 
+			 from agent
+			 where user_no in ${_parameter} 
+		]]>
+	</delete>
+	
+	<update id="downCurrentCount" parameterType="string">
+		<![CDATA[
+			update license 
+			 set current_count = current_count-1
+			 where no = 1;
+		]]>
+	</update>
+	
 </mapper>

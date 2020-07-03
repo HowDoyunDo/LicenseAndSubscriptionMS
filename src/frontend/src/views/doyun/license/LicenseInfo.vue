@@ -186,21 +186,25 @@ export default {
             if (confirm("정말 다음 사용자를 삭제하시겠습니까?") == true){    //확인
                 // TODO
                 // 1. general_user 내의 delUsrNos를 삭제
+                // 2. agent delUsrNos를 포함한 컬럼 삭제
                 var str = '(';
                 for(var i = 0; i<this.delUsrNos.length; i++) {
                     if(i == this.delUsrNos.length-1) str += this.delUsrNos[i]+')'
                     else str += this.delUsrNos[i]+', '
                 }
+                console.log(str)
 
                 await axios.get('/api/deluser', {
                         params: {
-                            delUsrs: str
+                            delUsrs: str,
+                            licenseNo: this.license.no
                         }
                 }).then(res => { 
                     console.log(res.data)
                 });
 
-                // 2. agent delUsrNos를 포함한 컬럼 삭제
+                // 3. license -> current_count --
+
                 
             } else {   //취소
                 return;

@@ -38,5 +38,8 @@ public class LicenseService {
 		else
 			return licenseDao.getSearch1(map);
 	}
-	
+
+	public boolean delUser(String delUsrs, int licenseNo) {
+		return licenseDao.delUser(delUsrs, licenseNo);
+	}
 }

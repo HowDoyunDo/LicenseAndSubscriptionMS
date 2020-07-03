@@ -9,7 +9,7 @@ export default [
       {
         path: '/category/login',
         name: 'CategoryLogin',
-        component: () => import('@/views/doyun/CategoryLogin.vue')
+        component: () => import('@/views/doyun/product/CategoryLogin.vue')
       },
       {
         path: '/license/list',
@@ -34,16 +34,26 @@ export default [
       {
         path: '/product',
         name: 'Product',
-        component: () => import('@/views/doyun/Product.vue')
+        component: () => import('@/views/doyun/product/Product.vue')
       },
       {
         path: '/subscribe/order/:policyidx/:policytype',
         name: 'SubscribeOrder',
-        component: () => import('@/views/doyun/SubscribeOrder.vue')
+        component: () => import('@/views/doyun/product/SubscribeOrder.vue')
       },
       {
         path: '/license/info/:licenseno/:licensetype',
         name: 'LicenseInfo',
         component: () => import('@/views/doyun/license/LicenseInfo.vue')
+      },
+      {
+        path: '/adduser',
+        name: 'AddUser',
+        component: () => import('@/views/doyun/license/AddUser.vue')
+      },
+      {
+        path: '/addusers',
+        name: 'AddUsers',
+        component: () => import('@/views/doyun/license/AddUsers.vue')
       },
 ]
