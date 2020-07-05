@@ -17,6 +17,7 @@
 		<typeAlias type="inzent.pjt.vo.UserVo" alias="uservo"/>
 		<typeAlias type="inzent.pjt.vo.OrderListVO" alias="orderlistvo"/>
 		<typeAlias type="inzent.pjt.vo.LicenseVO2" alias="licensevo2"/>
+		<typeAlias type="inzent.pjt.vo.SubscribeChangeVO" alias="subchangevo"/>
 		
 	</typeAliases>
 	<mappers>

@@ -1,18 +1,17 @@
 <template>
   <div class="contents">
-    <InfoAndModify />
+    <LicenseChange />
   </div>
 </template>
 
 <script>
-import InfoAndModify from "@/components/hyeran/subscribe/SubscribeInfoAndModify.vue";
+import LicenseChange from "@/components/hyeran/license/LicenseChange.vue";
 
 export default {
   components: {
-    InfoAndModify
+    LicenseChange
   }
 };
 </script>
 <style>
-
 </style>

@@ -11,11 +11,11 @@ export default [
         name: 'CategoryLogin',
         component: () => import('@/views/doyun/product/CategoryLogin.vue')
       },
-      // {
-      //   path: '/license/list',
-      //   name: 'LicenseList',
-      //   component: () => import('@/views/doyun/license/LicenseList.vue')
-      // },
+      {
+        path: '/license/list',
+        name: 'LicenseList',
+        component: () => import('@/views/doyun/license/LicenseList.vue')
+      },
       {
         path: '/batch',
         name: 'Batch',

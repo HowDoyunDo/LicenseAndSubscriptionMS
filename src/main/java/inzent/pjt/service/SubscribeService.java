@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import inzent.pjt.repository.SubscribeDAO;
 import inzent.pjt.vo.OrderListVO;
+import inzent.pjt.vo.SubscribeChangeVO;
 import inzent.pjt.vo.SubscribeVO;
 import inzent.pjt.vo.UserVo;
 
@@ -18,6 +19,9 @@ public class SubscribeService {
 
 	public List<SubscribeVO> getSubAllList() {
 		return dao.getSubList();
+	}
+	public List<SubscribeVO> getSubAllList_P() {
+		return dao.getSubList_P();
 	}
 
 	public int setSubAdd(SubscribeVO vo) {
@@ -64,4 +68,7 @@ public class SubscribeService {
 		return dao.getUserSubscribeList(vo);
 	}
 
+	public int setSubscribeChange(SubscribeChangeVO vo) {
+		return dao.setSubscribeChange(vo);
+	}
 }

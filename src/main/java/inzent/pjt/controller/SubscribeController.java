@@ -15,6 +15,7 @@ import inzent.pjt.service.ProductService;
 import inzent.pjt.service.SubscribeService;
 import inzent.pjt.vo.OrderListVO;
 import inzent.pjt.vo.ProductVO;
+import inzent.pjt.vo.SubscribeChangeVO;
 import inzent.pjt.vo.SubscribeVO;
 import inzent.pjt.vo.UserVo;
 
@@ -38,6 +39,14 @@ public class SubscribeController {
 		return allList;
 	}
 
+	@PostMapping("/alllist_P")
+	public List<SubscribeVO> subscribeAllList_P() {
+		System.out.println("/alllist_P");
+
+		List<SubscribeVO> allList = service.getSubAllList_P();
+		return allList;
+	}
+	
 	@PostMapping("/subscribeAdd")
 	public int subscribeAdd(@RequestBody SubscribeVO subscribevo) {
 		System.out.println("/subscribeAdd");
@@ -102,6 +111,12 @@ public class SubscribeController {
 		System.out.println("/userSubscribeList");
 		List<OrderListVO> list = service.getUserSubscribeList(uservo);
 		return list;
+	}
+	@PostMapping("/subscribeChange")
+	public int subscribeChange(@RequestBody SubscribeChangeVO changevo) {
+		System.out.println("/subscribeChange");
+		int result = service.setSubscribeChange(changevo);
+		return result;
 	}
 
 }

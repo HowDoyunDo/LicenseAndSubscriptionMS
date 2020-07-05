@@ -33,7 +33,7 @@
           <div v-if="list.activation=='A'">활성화</div>
           <div v-if="list.activation=='F'">수량 가득참</div>
           <div v-if="list.activation=='E'">기간종료</div>
-          <div v-if="list.activation=='C'">취소</div>
+          <div v-if="list.activation=='C'">취소 신청</div>
         </td>
         <td>{{list.license_key}}</td>
         <td>
@@ -44,7 +44,7 @@
           >관 리</button>
         </td>
         <td onclick="event.cancelBubble=true">
-          <a @click="licneseChange">변경</a> /
+          <a @click="licneseChange(list.no, list.policy_no, list.policy_title)">변경</a> /
           <a @click="licneseCancel(list.no, list.order_no, list.user_admin_no,list.end_date)">취소</a>
           <modal2 v-if="showModal" @closeee2="showModal=false" :modalData="modalData" />
         </td>
@@ -67,10 +67,13 @@ export default {
     modal2: LicenseModal
   },
   methods: {
-    licneseChange() {
+    licneseChange(license_no, policy_no, policy_title) {
       this.$router.push({
-        name: "",
-        params: {}
+        name: "licenseChange",
+        params: {
+          license_no: license_no,
+          policy_title: policy_title
+        }
       });
     },
     // 라이선스(구독 정책) 상세보기
@@ -80,6 +83,7 @@ export default {
         params: { license_no: licenseNo, policy_no: policyNo }
       });
     },
+    
     licneseCancel(licenseNo, orderNo, userAdminNo, endDate) {
       this.showModal = true;
       this.modalData = {

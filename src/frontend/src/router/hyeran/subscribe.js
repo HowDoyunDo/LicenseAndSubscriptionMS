@@ -90,4 +90,10 @@ export default [
         name: 'licnesePolicyInfo',
         component: () => import('@/views/hyeran/user_admin/license/InfoPage.vue'),
     },
+    // 고객관리자 - 구독 변경
+    {
+        path: '/license/change/:license_no:policy_title',
+        name: 'licenseChange',
+        component: () => import('@/views/hyeran/user_admin/license/ChangePage.vue'),
+    },
 ]

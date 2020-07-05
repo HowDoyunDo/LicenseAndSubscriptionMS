@@ -26,4 +26,7 @@ export default {
 .btnn {
   text-align: right;
 }
+button {
+  width: 80px;
+}
 </style>

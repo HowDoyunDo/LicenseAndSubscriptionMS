@@ -8,7 +8,13 @@
 		order by no;
 	]]>
 	</select>
-
+	<select id="getSubAllList_P" resultType="subscribevo">
+	<![CDATA[
+		select * from subscription_policy
+		where visible=true 
+		order by no;
+	]]>
+	</select>
 
 	<select id="setSubAdd" resultType="subscribevo">
 	<![CDATA[
@@ -70,4 +76,28 @@
 			and user_no=#{no};
 	]]>
 	</select>
+	<insert id="setSubscribeChange" parameterType="subchangevo">
+	<![CDATA[
+		insert into subscription_change(
+				license_no,
+				policy_no,
+				month_count,
+				start_date,
+				end_date,
+				status
+				) 
+		values(#{license_no}, #{policy_no},#{month_count},
+		TO_TIMESTAMP(concat(#{start_date}, ' 00:00:00'), 'YYYY-MM-DD HH24:MI:SS'),
+		TO_TIMESTAMP(concat(#{end_date}, ' 23:59:59'), 'YYYY-MM-DD HH24:MI:SS'),
+		'W'
+		);
+	]]>
+	</insert>
+
 </mapper>
+
+
+
+
+
+

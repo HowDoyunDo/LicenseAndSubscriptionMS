@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import inzent.pjt.vo.OrderListVO;
+import inzent.pjt.vo.SubscribeChangeVO;
 import inzent.pjt.vo.SubscribeVO;
 import inzent.pjt.vo.UserVo;
 
@@ -18,6 +19,9 @@ public class SubscribeDAO {
 
 	public List<SubscribeVO> getSubList() {
 		return sqlSession.selectList("subscribe.getSubAllList");
+	}
+	public List<SubscribeVO> getSubList_P() {
+		return sqlSession.selectList("subscribe.getSubAllList_P");
 	}
 
 	public int setSubAdd(SubscribeVO vo) {
@@ -46,5 +50,9 @@ public class SubscribeDAO {
 
 	public List<OrderListVO> getUserSubscribeList(UserVo vo){
 		return sqlSession.selectList("subscribe.getUserSubscribeList",vo);
+	}
+	
+	public int setSubscribeChange(SubscribeChangeVO vo) {
+		return sqlSession.insert("subscribe.setSubscribeChange", vo);
 	}
 }

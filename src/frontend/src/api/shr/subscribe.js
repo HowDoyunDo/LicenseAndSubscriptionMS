@@ -31,5 +31,15 @@ function userSubscribeList(userInfo){
     return instance.post('userSubscribeList',userInfo);
 }
 
+//고객관리자 - 정책 전체 목록, 공개정책만
+function subscribeAllList_P() {
+    return instance.post('alllist_P');
+}
+
+//고객관리자 - 정책 변경 신청
+function subscribeChange(changeData) {
+    return instance.post('subscribeChange',changeData);
+}
+
 export { subscribeAllList, subscribeAdd, subscribeOneList, subscribeModify, licenseCheck, 
-         userSubscribeList };
+         userSubscribeList, subscribeAllList_P, subscribeChange };

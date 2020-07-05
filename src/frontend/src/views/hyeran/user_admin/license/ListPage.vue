@@ -29,4 +29,7 @@ export default {
 </script>
 
 <style>
+button {
+  width: 80px;
+}
 </style>

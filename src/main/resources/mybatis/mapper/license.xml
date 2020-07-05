@@ -41,7 +41,7 @@
 	<update id="updateCancel" parameterType="licensevo2">
 	<![CDATA[
 		update license 
-			set activation = 'E',
+			set activation = 'C',
 			end_date = TO_TIMESTAMP(#{end_date}, 'YYYY-MM-DD HH24:MI:SS')
 		 where no=#{no} ;
 	]]>

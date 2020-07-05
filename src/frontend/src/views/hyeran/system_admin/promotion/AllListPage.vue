@@ -14,9 +14,9 @@ export default {
   components: {
     PromotionAllList
   },
-  methods:{
-    promotionAdd(){
-      this.$router.push('/promotion/add');
+  methods: {
+    promotionAdd() {
+      this.$router.push("/promotion/add");
     }
   }
 };
@@ -25,5 +25,8 @@ export default {
 <style>
 .btnn {
   text-align: right;
+}
+button {
+  width: 80px;
 }
 </style>
