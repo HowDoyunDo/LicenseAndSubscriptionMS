@@ -113,7 +113,7 @@ export default {
           alert("변경 신청이 완료되었습니다.");
           this.$router.push("/license/list");
         } else {
-          alert("변경 신청 실패");
+          alert("변경 신청 실패"); 
         }
       }
     }
