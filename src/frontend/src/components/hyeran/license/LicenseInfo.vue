@@ -1,9 +1,14 @@
 <template>
   <div>
     <div>
-      <h2 v-if="modifyToggle==true || modifyAllToggle==true">구독 정책 수정</h2>
-      <h2 v-else>라이선스 상세보기</h2>
+      <h2>상세보기</h2>
       <br />
+      <div v-if="pageT==true">
+        <h4>관리자 정보</h4>
+        <LicenseUserInfo :license_no="license_no"/>
+        <br />
+        <h4>라이선스 및 구독 정보</h4>
+      </div>
       <form class="form">
         <table class="table_add">
           <tr>
@@ -20,6 +25,7 @@
               <div v-if="licenseList.activation=='A'">활성화</div>
               <div v-if="licenseList.activation=='F'">수량 가득참</div>
               <div v-if="licenseList.activation=='E'">기간종료</div>
+              <div v-if="licenseList.activation=='C'">취소신청</div>
             </td>
           </tr>
           <tr>
@@ -62,6 +68,7 @@
         <div class="select-product">
           <ProductOneList :promotionProduct="productList" :pageType="'license'" />
         </div>
+        <br />
 
         <div class="submit_btn">
           <button type="button" @click="listClick">목록</button>
@@ -75,6 +82,7 @@
 import ProductOneList from "@/components/hyeran/product/ProductOneList.vue";
 import { subscribeMixin } from "../mixins/subscribeInfo";
 import { licenseOneList } from "@/api/shr/license";
+import LicenseUserInfo from "@/components/hyeran/license/LicenseUserInfo.vue";
 
 export default {
   mixins: [subscribeMixin],
@@ -83,15 +91,19 @@ export default {
       license_no: "",
       policy_no: "",
       productList: "",
-      licenseList: ""
+      licenseList: "",
+      pageType: "",
+      pageTypeAdmin:'',
     };
   },
   components: {
-    ProductOneList
+    ProductOneList,
+    LicenseUserInfo
   },
   async created() {
     this.license_no = this.$route.params.license_no;
     this.policy_no = this.$route.params.policy_no;
+    this.pageTypeAdmin = this.$route.params.pageTypeAdmin;
 
     // 구독정책번호로 해당 정책 list setting 위한 스토어 저장
     await this.$store.dispatch(
@@ -108,10 +120,23 @@ export default {
     const { data } = await licenseOneList({ no: this.license_no });
     this.licenseList = data[0];
   },
+  computed: {
+    pageT(){
+      if(this.$route.params.pageTypeAdmin){
+        return true;
+      }else{
+        return false;
+      }
+    }
+  },
   methods: {
     // 목록
     listClick() {
-      this.$router.push({ name: "licneseList" });
+      if (this.pageTypeAdmin) {
+        this.$router.push({ name: "licneseAllList" });
+      } else {
+        this.$router.push({ name: "licneseList" });
+      }
     },
     //상세보기
     openInfo(productNo) {

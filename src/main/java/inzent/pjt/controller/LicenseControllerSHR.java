@@ -61,4 +61,11 @@ public class LicenseControllerSHR {
 		
 		return list;
 	}
+	@PostMapping("/licenseAdminUser")
+	public List<UserVo> licenseAdminUser(@RequestBody LicenseVO2 vo) {
+		System.out.println("/licenseAdminUser");
+		List<UserVo> list = service.getLicenseAdminUser(vo);
+		
+		return list;
+	}
 }

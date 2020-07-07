@@ -1,47 +1,44 @@
 <template>
   <div>
-    <h1> 시스템관리자용, </h1>
+    A : 활성화
+    F : 수량 가득참
+    E : 기간종료
+    C : 취소
+    
     <table class="table_board">
       <tr>
         <th style="width:5%">번호</th>
-        <th style="width:17%">구독 정책명(라이센스 상세)</th>
+        <th style="width:17%">구독 정책명</th>
+        <th style="width:20%">라이선스 키</th>
         <th style="width:7%">이용 기준</th>
         <th style="width:8%">
           현재/최대
           <br />사용 수량
         </th>
         <th style="width:13%">사용 기간</th>
-
-        <th style="width:10%">결제 현황</th>
-        <th style="width:20%">라이센스 키</th>
-        <th style="width:10%">주문일</th>
-        <th style="width:10%">변경 / 취소</th>
+        <th style="width:10%">기업명 [관리자]</th>
+        <th style="width:10%">상태</th>
       </tr>
       <tr
         onmouseenter="this.style.background='#CEECF5';"
         onmouseleave="this.style.background=''"
-        style="cursor:pointer"
+        style="cursor:pointer;"
         v-for="(list, index) in licenses"
         :key="list.no"
-        @click="listClick(index)"
+        @click="licneseChange(index, list.no, list.policy_no)"
       >
         <td>{{list.no}}</td>
-        <td
-          onclick="event.cancelBubble=true"
-          @click="licenseInfoForm(list.policy_no)"
-          onmouseenter="this.style.color='blue';"
-          onmouseleave="this.style.color=''"
-           style="text-decoration: underline"
-        >{{list.policy_title}}[{{list.policy_no}}]</td>
-        <td>에이전트</td>
-        <td>30/100</td>
-        <td>{{list.start_date | formatDate }} ~ {{list.end_date | formatDate}}</td>
-        <td>일반 결제 <br>완료</td>
+        <td style=" text-decoration: underline">{{list.policy_title}}[{{list.policy_no}}]</td>
         <td>{{list.license_key}}</td>
-        <td>2020-07-01</td>
-        <td onclick="event.cancelBubble=true">
-          <a @click="test">변경</a> /
-          <a>취소</a>
+        <td>{{list.standard == 'A' ? '사용자' : ' 에이전트'}}</td>
+        <td>{{ list.current_count }} / {{ list.max_count }}</td>
+        <td>{{list.start_date | formatDate }} ~ {{list.end_date | formatDate}}</td>
+        <td>{{list.co_name}} [{{list.name}}]</td>
+        <td>
+          <div v-if="list.activation=='A'">활성화</div>
+          <div v-if="list.activation=='F'">수량 가득참</div>
+          <div v-if="list.activation=='E'">기간종료</div>
+          <div v-if="list.activation=='C'">취소 신청</div>
         </td>
       </tr>
     </table>
@@ -62,18 +59,15 @@ export default {
     this.licenses = data;
   },
   methods: {
-    listClick() {
-      console.log("클릭");
-      this.$router.push("/subscribe/alllist");
+    // userShow() {
+    //   this.$router.push("/license/useradmin");
+    // },
+     licneseChange(index, licenseNo, policyNo) {
+       this.$router.push({
+        name: "licnesePolicyInfo",
+        params: { license_no: licenseNo, policy_no: policyNo, pageTypeAdmin : true }
+      });
     },
-    test() {
-      console.log("testestesteste");
-    },
-    // 라이선스(구독 정책) 상세보기
-    licenseInfoForm(policyNo) {
-      console.log("dlicenseInfoForm", policyNo);
-      
-    }
   }
 };
 </script>

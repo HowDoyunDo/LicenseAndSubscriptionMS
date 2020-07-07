@@ -206,6 +206,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 var IMP = window.IMP; // 생략해도 괜찮습니다.
 IMP.init("imp67730889"); // "imp00000000" 대신 발급받은 "가맹점 식별코드"를 사용합니다.
 
@@ -264,28 +265,59 @@ export default {
                     pay_method : this.paymethod,
                     merchant_uid : 'INZENT_Solutions' + new Date().getTime(),
                     name : this.type == 'U' ? (this.uPolicies[this.idx].policy_title + '/mxc' + this.uPolicies[this.idx].max_count) : (this.aPolicies[this.idx].policy_title + '/mxc' + this.aPolicies[this.idx].max_count),
-                    amount : this.type == 'U' ? (this.uPolicies[this.idx].price * this.usemonth) - this.alldiscount : (this.aPolicies[this.idx].price * this.usemonth) - this.alldiscount,
+                    amount : 100,// this.type == 'U' ? (this.uPolicies[this.idx].price * this.usemonth) - this.alldiscount : (this.aPolicies[this.idx].price * this.usemonth) - this.alldiscount,
                     buyer_email : 'iamport@siot.do',
                     buyer_name : '구매자이름',
                     buyer_tel : '010-1234-5678',
                     buyer_addr : '서울특별시 강남구 삼성동',
                     buyer_postcode : '123-456'
-                }, rsp => { // callback
+                }, async rsp => { // callback
                     var msg = '';
                     // 결제 성공 시 로직,
                     if ( rsp.success ) {
-                        msg = '결제가 완료되었습니다.\n';
-                        msg += '고유ID : ' + rsp.imp_uid + '\n';
-                        msg += '상점 거래ID : ' + rsp.merchant_uid + '\n';
-                        msg += '결제 금액 : ' + rsp.paid_amount + '\n';
-                        msg += '카드 승인번호 : ' + rsp.apply_num;
+                        // TODO
+                        // 1. 주문내역 추가
+                        await axios.get('/api/addOrderList', {
+                            params: {
+                                policyNo: this.type === 'U' ? this.uPolicies[this.idx].no : this.aPolicies[this.idx].no,
+                                userNo: this.userInfo.no,
+                                monthCount: this.usemonth,
+                                startDate: this.startdate,
+                                endDate: this.enddate,
+                                orgPrice: this.type === 'U' ? this.uPolicies[this.idx].price * this.usemonth : this.aPolicies[this.idx].price * this.usemonth,
+                                dcPrice: this.alldiscount,
+                                totalPrice: this.type === 'U' ? (this.uPolicies[this.idx].price * this.usemonth) - this.alldiscount 
+                                    : (this.aPolicies[this.idx].price * this.usemonth) - this.alldiscount,
+                                monthPay: false,
+                            }
+                        }).then(res => { 
+                            console.log(res.data);
+                        });
+                        
+                        // 2. 라이센스 추가
+                        await axios.get('/api/addLicense', {
+                            params: {
+                                userAdminNo: this.userInfo.no,
+                                policyNo: this.type === 'U' ? this.uPolicies[this.idx].no : this.aPolicies[this.idx].no,
+                                licenseKey: 'INZENTS' + this.startdate.toISOString(),
+                                currentCount: 0,
+                                maxCount: this.type === 'U' ? this.uPolicies[this.idx].max_count : this.aPolicies[this.idx].max_count,
+                                startDate: this.startdate,
+                                endDate: this.enddate,
+                            }
+                        }).then(res => { 
+                            console.log(res.data);
+                        });
+
+                        alert('구독 신청이 완료되었습니다.')
+                        this.$router.push("/license/list");
+
                     // 결제 실패 시 로직,
                     } else {
                         msg = '결제에 실패하였습니다.\n';
-                        msg += '에러내용 : ' + rsp.error_msg;
+                        msg += '내용 : ' + rsp.error_msg;
+                        alert(msg);
                     }
-
-                    alert(msg);
                 });
             }
         },
@@ -328,16 +360,19 @@ export default {
 
             if(this.type === 'U') {
                 for(var i = 0; i < this.promotions.length; i++) {
-                    this.$store.commit('productStore/ADD_ALLDC', ((this.uPolicies[this.idx].price/2) * (this.promotions[i].discount/100)) * this.usemonth);
+                    this.$store.commit('productStore/ADD_ALLDC', this.promotions[i].price * (this.promotions[i].discount/100) * this.usemonth);
                 }
-            } else {
+            } else if(this.type === 'A') {
                 for(i = 0; i < this.promotions.length; i++) {
-                    this.$store.commit('productStore/ADD_ALLDC', ((this.aPolicies[this.idx].price/2) * (this.promotions[i].discount/100)) * this.usemonth);
+                    this.$store.commit('productStore/ADD_ALLDC', this.promotions[i].price * (this.promotions[i].discount/100) * this.usemonth);
                 }
             }
 
             return this.$store.state.productStore.alldiscount;
         },
+        userInfo: function() {
+            return this.$store.state.userinfo.userInfo;
+        }
     },
     created() {
         // 구독 시작일, 종료일 설정

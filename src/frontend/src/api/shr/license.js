@@ -19,5 +19,10 @@ function licenseCancel(licenseData){
 function licenseUserList(userNo){
     return instance.post('licenseUserList', userNo);
 }
+// 시스템 관리자 - 라이선스의 해당 유저 정보
+function licenseAdminUser(licenseNo){
+    return instance.post('licenseAdminUser', licenseNo);
+}
 
-export { licenseAllList, licenseOneList, licenseCancel, licenseUserList };
+export { licenseAllList, licenseOneList, licenseCancel, licenseUserList,
+        licenseAdminUser };

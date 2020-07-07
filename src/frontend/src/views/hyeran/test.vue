@@ -4,7 +4,7 @@
     <paginated-list :list-array="pageArray" />
 
     <paginate
-      :page-count="5"
+      :page-count="10"
       :click-handler="functionName"
       :prev-text="'Prev'"
       :next-text="'Next'"

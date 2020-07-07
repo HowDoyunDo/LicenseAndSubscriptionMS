@@ -35,22 +35,22 @@
                 
                 <h4 style="color:gray">사용자 목록
                     <span v-if="this.delete === false">
-                        <button style="width:90px; margin: 10px; float:right" @click="deleteUsr()">삭제</button>
+                        <button style="width:106px; margin: 10px; float:right" @click="deleteUsr()">삭제</button>
                         <router-link to="/addusers">
-                            <button style="width:90px; margin: 10px; float:right">
+                            <button style="width:106px; margin: 10px; float:right">
                                 일괄 추가
                             </button>
                         </router-link>
                         <router-link to="/adduser">
-                            <button style="width:90px; margin: 10px; float:right">
+                            <button style="width:106px; margin: 10px; float:right">
                                 개별 추가
                             </button>
                         </router-link>
                     </span>
                     <!-- 삭제 버튼 누를 시 -->
                     <span v-if="this.delete === true">
-                        <button style="width:90px; margin: 10px; float:right" @click="deleteUsr()">취소</button>
-                        <button style="width:90px; margin: 10px; float:right" @click="deleteCom()">삭제 완료</button>
+                        <button style="width:106px; margin: 10px; float:right" @click="deleteUsr()">취소</button>
+                        <button style="width:106px; margin: 10px; float:right" @click="deleteCom()">삭제 완료</button>
                     </span>
                 </h4>
                 <template v-if="this.delete === false">

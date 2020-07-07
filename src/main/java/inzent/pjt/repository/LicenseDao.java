@@ -71,4 +71,7 @@ public class LicenseDao {
 	public List<LicenseVO2> getLicenseUserList(UserVo vo) {
 		return sqlSession.selectList("license.getLicenseUserList", vo);
 	}
+	public List<UserVo> getLicenseAdminUser(LicenseVO2 vo) {
+		return sqlSession.selectList("license.getLicenseAdminUser", vo);
+	}
 }

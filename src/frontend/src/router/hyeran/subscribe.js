@@ -1,3 +1,13 @@
+import store from '@/store/index';
+
+const requireAuth = () => (to, from, next) => {
+    console.log('라우터 인덱스', to, from);
+    if (store.state.userinfo.userInfo !== '') {
+        return next();
+    }
+    next('/login');
+};
+
 export default [
     {
         path: '/test',
@@ -86,7 +96,7 @@ export default [
     },
     // 고객관리자 - 해당 라이선스의 구독정책 상세보기 
     {
-        path: '/license/policy/info/:license_no/:policy_no',
+        path: '/license/policy/info/:license_no/:policy_no/:pageTypeAdmin',
         name: 'licnesePolicyInfo',
         component: () => import('@/views/hyeran/user_admin/license/InfoPage.vue'),
     },
@@ -96,4 +106,19 @@ export default [
         name: 'licenseChange',
         component: () => import('@/views/hyeran/user_admin/license/ChangePage.vue'),
     },
+    // 시스템관리자 - 해당 라이선스를 구독하고있는 관리자 목록
+    // -> LicenseInfo.vue 사용 , pageTypeAdmin=true 이면 시스템 관리자
+
+    // 시스템관리자 - 구독정책url 신청서 작성
+    {
+        path: '/subscribe/order-url/:policy_no/:usemonth/:start_date/:promotion_type',
+        name: 'subscribeOrderUrl',
+        component: () => import('@/components/hyeran/subscribe/SubscribeUrlOrder.vue'),
+        beforeEnter: requireAuth(),
+    }
+
+
 ]
+
+
+

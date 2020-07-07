@@ -2,6 +2,7 @@ package inzent.pjt.vo;
 
 public class LicenseVO2 {
 	private String name; // 관리자 이름
+	private String co_name; // 회사명
 	private String policy_title; //정책명
 	private int no;
 	private int order_no;
@@ -19,6 +20,13 @@ public class LicenseVO2 {
 	private int total_price;
 	
 	
+	
+	public String getCo_name() {
+		return co_name;
+	}
+	public void setCo_name(String co_name) {
+		this.co_name = co_name;
+	}
 	public int getTotal_price() {
 		return total_price;
 	}

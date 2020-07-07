@@ -5,7 +5,7 @@
 
 	<select id="getLicenseAllList" resultType="licensevo2">
 	<![CDATA[
-		select ua.name , sp.policy_title , l.*
+		select ua.name ,ua.co_name, sp.policy_title , l.*
 			 from license l, user_admin ua , subscription_policy sp 
 		 where l.user_admin_no = ua.no 
 			and l.policy_no = sp.no;	
@@ -14,7 +14,7 @@
 	<select id="getLicenseOneList" resultType="licensevo2"
 		parameterType="licensevo2">
 	<![CDATA[
-		select 	ua.name , 
+		select 	ua.name ,
 				sp.policy_title , sp.standard, 
 				ol.reg_date, ol.total_price, ol.month_payment, 
 				l.*
@@ -22,7 +22,8 @@
 		 where l.user_admin_no = ua.no 
 			and l.policy_no = sp.no
 			and l.order_no = ol.no
-			and l.no = #{no};
+			and l.no = #{no}
+			 ;
 	]]>
 	</select>
 	<select id="pwCheck" parameterType="uservo" resultType="uservo">
@@ -53,7 +54,19 @@
 		 where 	l.user_admin_no = ua.no 
 				and l.policy_no = sp.no
 				and user_admin_no = #{no}
+				and now() between l.start_date and l.end_date 
 		 order by l.no;	
+	]]>
+	</select>
+	<select id="getLicenseAdminUser" resultType="uservo">
+	<![CDATA[
+		  select  a.last_login ,ua.*
+				from license l , user_admin ua , agent a
+		    where l.user_admin_no = ua.no
+				  and a.user_admin_no =ua.no
+			 	  and l.no= #{no}
+		   order by last_login desc 
+			limit 1;
 	]]>
 	</select>
 </mapper>

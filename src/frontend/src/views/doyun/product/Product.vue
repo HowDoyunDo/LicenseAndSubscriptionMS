@@ -55,7 +55,7 @@
                             </template>
 
                             <router-link :to='{ name: "SubscribeOrder", params: { policyidx: i, policytype: upolicy.standard }}'>
-                                <button style="width:90px; margin-bottom:10px" @click="getPromotion(i, upolicy.standard)">
+                                <button style="margin-bottom:10px" @click="getPromotion(i, upolicy.standard)">
                                     구독 신청
                                     </button>
                             </router-link>
@@ -118,7 +118,7 @@
                             </template>
 
                             <router-link :to='{ name: "SubscribeOrder", params: { policyidx: i, policytype: apolicy.standard }}'>
-                                <button style="width:90px" @click="getPromotion(i, apolicy.standard)">
+                                <button  @click="getPromotion(i, apolicy.standard)">
                                     구독 신청
                                 </button>
                             </router-link>

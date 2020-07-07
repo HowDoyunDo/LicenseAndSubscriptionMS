@@ -1,4 +1,5 @@
 package inzent.pjt.controller;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -46,17 +47,18 @@ public class SubscribeController {
 		List<SubscribeVO> allList = service.getSubAllList_P();
 		return allList;
 	}
-	
+
 	@PostMapping("/subscribeAdd")
 	public int subscribeAdd(@RequestBody SubscribeVO subscribevo) {
 		System.out.println("/subscribeAdd");
-
+		
 		// 구독 정책 추가
 		int resultSubAdd = service.setSubAdd(subscribevo);
-
+		
 		// subscribe_policy의 max(no) 추출
 		// 같은 정책 번호로 insert하기 위해
 		int policy_no = service.getMaxNo();
+
 		// 정책 추가 시 선택한 제품목록 추가
 		subscribevo.setPolicy_no(policy_no);
 		int resultSubProduct = p_service.setSubscribeProduct(subscribevo);
@@ -112,6 +114,7 @@ public class SubscribeController {
 		List<OrderListVO> list = service.getUserSubscribeList(uservo);
 		return list;
 	}
+
 	@PostMapping("/subscribeChange")
 	public int subscribeChange(@RequestBody SubscribeChangeVO changevo) {
 		System.out.println("/subscribeChange");

@@ -7,7 +7,7 @@
     </div>
     -->
     <Header />
-
+  
     <div id="bottom-part">
       <Navigator />
       <router-view />
@@ -24,6 +24,13 @@ export default {
   components: {
     Header,
     Navigator
+  },
+  beforeUpdate() {
+    switch (document.location.pathname) {
+      case "subscribeOrderUrl":
+        this.isChecked = true;
+        break;
+    }
   }
 };
 </script>

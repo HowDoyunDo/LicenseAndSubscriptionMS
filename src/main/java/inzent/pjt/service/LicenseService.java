@@ -61,4 +61,7 @@ public class LicenseService {
 	public  List<LicenseVO2> getLicenseUserList(UserVo vo) {
 		return licenseDao.getLicenseUserList(vo);
 	}
+	public  List<UserVo> getLicenseAdminUser(LicenseVO2 vo) {
+		return licenseDao.getLicenseAdminUser(vo);
+	}
 }

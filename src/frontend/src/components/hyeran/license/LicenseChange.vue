@@ -15,10 +15,16 @@
             <th>변경할 구독 선택</th>
             <td>
               <select v-model="selected" class="select-box" style="width:400px">
+                <option disabled value>이용기준을 선택해주세요</option>
+                <option v-for="(list) in policyList" :value="list.standard" :key="list.no">
+                  {{list.standard}}
+                </option>
+              </select>
+              <select v-model="selected" class="select-box" style="width:400px">
                 <option disabled value>정책을 선택해주세요</option>
                 <option v-for="(list) in policyList" :value="list.no" :key="list.no">
-                  <div style>{{list.policy_title}}&nbsp;&nbsp;</div>
-                  [ ￦{{list.price | formatPrice}} ]
+                  {{list.policy_title}}&nbsp;&nbsp; [ ￦{{list.price | formatPrice}} ]
+                  사용수 : {{list.max_count}}
                 </option>
               </select>
             </td>

@@ -1,6 +1,6 @@
 <template>
   <div class="contents">
-    <h2> 라이선스 현황 </h2>
+    <h2> 전체 라이선스 현황 </h2>
     <br />
     <LicenseAllList />
   </div>

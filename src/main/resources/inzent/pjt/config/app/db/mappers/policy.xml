@@ -22,11 +22,14 @@
 	</select>
 	
 	<select id="getPromotionList" parameterType="map" resultType="promotionvo">
-	<![CDATA[
-		select * from promotion where product_no in (select product_no from policy_product where policy_no=#{policyno})
-		  and type = true
-		  and to_timestamp(#{startdate}, 'YYYY-MM-DD HH24:MI:SS')
-		  between start_date and end_date
-	]]>
-	</select>
+   <![CDATA[
+     	 select pm.*, pd.price 
+       from promotion pm, product pd 
+       where pm.product_no in (select product_no from policy_product where policy_no=#{policyno})
+       and pm.product_no = pd.no
+       and type = true
+       and to_timestamp(#{startdate}, 'YYYY-MM-DD HH24:MI:SS')
+       between start_date and end_date
+   ]]>
+   </select>
 </mapper>
