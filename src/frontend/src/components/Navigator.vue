@@ -231,4 +231,7 @@ export default {
   list-style: none;
   border-bottom: 2px solid lightgray;
 }
+#navigator h4 {
+  cursor: pointer;
+}
 </style>
