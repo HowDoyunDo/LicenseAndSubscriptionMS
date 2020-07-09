@@ -1,3 +1,4 @@
+
 export default [
     {
         path: '/signup',
@@ -7,7 +8,13 @@ export default [
     {
         path: '/login',
         name: 'login',
-        component: () => import('@/views/wheesung/Login.vue')
+        component: () => import('@/views/wheesung/Login.vue'),
+        children: [
+            {
+                path: ':policy_no/:usemonth/:promotion_type/:visible',
+                component: () => import('@/views/wheesung/Login.vue'),
+            },
+        ]
     },
     {
         path: '/adminlogin',

@@ -41,5 +41,9 @@ function subscribeChange(changeData) {
     return instance.post('subscribeChange',changeData);
 }
 
+// 시스템관리자 - 구독 정책 삭제
+function subscribeDelete(subscribeNo){
+    return instance.post('subscribeDelete',subscribeNo);
+}
 export { subscribeAllList, subscribeAdd, subscribeOneList, subscribeModify, licenseCheck, 
-         userSubscribeList, subscribeAllList_P, subscribeChange };
+         userSubscribeList, subscribeAllList_P, subscribeChange, subscribeDelete };

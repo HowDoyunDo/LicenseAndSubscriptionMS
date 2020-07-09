@@ -20,6 +20,7 @@ public class SubscribeDAO {
 	public List<SubscribeVO> getSubList() {
 		return sqlSession.selectList("subscribe.getSubAllList");
 	}
+
 	public List<SubscribeVO> getSubList_P() {
 		return sqlSession.selectList("subscribe.getSubAllList_P");
 	}
@@ -39,20 +40,34 @@ public class SubscribeDAO {
 	public int setSubscribeModify(SubscribeVO vo) {
 		return sqlSession.insert("subscribe.setSubModify", vo);
 	}
-	
+
 	public int setSubscribeAllModify(SubscribeVO vo) {
 		return sqlSession.insert("subscribe.setSubAllModify", vo);
 	}
-	
+
 	public int getLicenseCheck(int subscribeNo) {
 		return sqlSession.selectOne("subscribe.getLicenseCheck", subscribeNo);
 	}
 
-	public List<OrderListVO> getUserSubscribeList(UserVo vo){
-		return sqlSession.selectList("subscribe.getUserSubscribeList",vo);
+	public int getSubscribeDelete(SubscribeVO vo) {
+		// 정책과 해당정책제품들 삭제
+		int x = sqlSession.delete("subscribe.getSubscribeDelete", vo);
+		int y = sqlSession.delete("subscribe.getSubscribeProductDelete", vo);
+
+		if (x != 0 && y != 0) {
+			return 1;
+		} else {
+			return 0;
+		}
+
 	}
-	
+
+	public List<OrderListVO> getUserSubscribeList(UserVo vo) {
+		return sqlSession.selectList("subscribe.getUserSubscribeList", vo);
+	}
+
 	public int setSubscribeChange(SubscribeChangeVO vo) {
 		return sqlSession.insert("subscribe.setSubscribeChange", vo);
 	}
+	
 }

@@ -47,7 +47,7 @@
                                 <li v-for="promotion in promotions" v-bind:key="promotion.no" style="margin-bottom:10px">
                                     프로모션 명 : {{ promotion.title }} <br>
                                     할인률 : {{ promotion.discount }}% <br>
-                                    할인액 : <span style="color: red">{{ numberWithCommas(((uPolicies[idx].price/2) * (promotion.discount/100)) * usemonth) }}원</span>
+                                    할인액 : <span style="color: red">{{ numberWithCommas(promotion.price * (promotion.discount/100) * usemonth) }}원</span>
                                 </li>
                             </ul>
                             </template>
@@ -145,7 +145,7 @@
                                     <li v-for="promotion in promotions" v-bind:key="promotion.no" style="margin-bottom:10px">
                                         프로모션 명 : {{ promotion.title }} <br>
                                         할인률 : {{ promotion.discount }}% <br>
-                                        할인액 : <span style="color: red">{{ numberWithCommas(((aPolicies[idx].price/2) * (promotion.discount/100)) * usemonth) }}원</span>
+                                        할인액 : <span style="color: red">{{ numberWithCommas(promotion.price * (promotion.discount/100) * usemonth) }}원</span>
                                     </li>
                                 </ul>
                             </template>
@@ -265,7 +265,7 @@ export default {
                     pay_method : this.paymethod,
                     merchant_uid : 'INZENT_Solutions' + new Date().getTime(),
                     name : this.type == 'U' ? (this.uPolicies[this.idx].policy_title + '/mxc' + this.uPolicies[this.idx].max_count) : (this.aPolicies[this.idx].policy_title + '/mxc' + this.aPolicies[this.idx].max_count),
-                    amount : 100,// this.type == 'U' ? (this.uPolicies[this.idx].price * this.usemonth) - this.alldiscount : (this.aPolicies[this.idx].price * this.usemonth) - this.alldiscount,
+                    amount : 100,// this.type == 'U' ? this.promotions[i].price * (this.promotions[i].discount/100) * this.usemonth : this.promotions[i].price * (this.promotions[i].discount/100) * this.usemonth,
                     buyer_email : 'iamport@siot.do',
                     buyer_name : '구매자이름',
                     buyer_tel : '010-1234-5678',
@@ -360,10 +360,16 @@ export default {
 
             if(this.type === 'U') {
                 for(var i = 0; i < this.promotions.length; i++) {
+                    console.log('pdt_price: ' + this.promotions[i].price);
+                    console.log('pdt_dc: ' + this.promotions[i].discount/100);
+                    console.log('use_month: ' + this.usemonth);
                     this.$store.commit('productStore/ADD_ALLDC', this.promotions[i].price * (this.promotions[i].discount/100) * this.usemonth);
                 }
             } else if(this.type === 'A') {
                 for(i = 0; i < this.promotions.length; i++) {
+                    console.log('pdt_price: ' + this.promotions[i].price);
+                    console.log('pdt_dc: ' + this.promotions[i].discount/100);
+                    console.log('use_month: ' + this.usemonth);
                     this.$store.commit('productStore/ADD_ALLDC', this.promotions[i].price * (this.promotions[i].discount/100) * this.usemonth);
                 }
             }

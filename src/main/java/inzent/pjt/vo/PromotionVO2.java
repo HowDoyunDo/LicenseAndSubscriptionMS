@@ -15,6 +15,16 @@ public class PromotionVO2 {
 	private boolean type;
 	private String reg_date;
 	private ArrayList<ProductVO> selectedList; // 프로모션 등록 시 선택한 제품들
+	private int product_price; // 제품가격
+	
+	
+	public int getProduct_price() {
+		return product_price;
+	}
+
+	public void setProduct_price(int product_price) {
+		this.product_price = product_price;
+	}
 
 	public int getPromotion_no() {
 		return promotion_no;

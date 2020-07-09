@@ -13,8 +13,17 @@ public class SubscribeVO {
 	private String reg_date;
 	private ArrayList<ProductVO> selectedList; // 정책 등록 시 선택한 제품들
 	private int policy_no; // 정책 등록 시 필요한 정책번호
-
+	private String error_message ;
 	
+	
+	public String getError_message() {
+		return error_message;
+	}
+
+	public void setError_message(String error_message) {
+		this.error_message = error_message;
+	}
+
 	public int getPolicy_no() {
 		return policy_no;
 	}

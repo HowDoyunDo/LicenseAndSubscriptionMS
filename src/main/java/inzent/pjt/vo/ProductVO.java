@@ -3,7 +3,7 @@ package inzent.pjt.vo;
 public class ProductVO {
 	private int no;
 	private int category_no;
-	private String category_title;
+	private String category_title; //추카
 	private String name;
 	private String comments;
 	private int price;

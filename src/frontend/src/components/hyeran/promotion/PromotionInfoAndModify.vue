@@ -150,6 +150,7 @@ export default {
     async deleteClick() {
       if (confirm("삭제하시겠습니까?")) {
         confirm("관리자 비밀번호 입력");
+        
         const { data } = await promotionDelete({
           promotion_no: this.promotionNo
         });

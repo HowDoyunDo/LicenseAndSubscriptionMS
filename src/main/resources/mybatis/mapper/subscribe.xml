@@ -94,6 +94,18 @@
 	]]>
 	</insert>
 
+	<delete id="getSubscribeDelete" parameterType="subscribevo">
+		<![CDATA[
+	  		delete from subscription_policy
+	 		 where no = #{no};
+	  	]]>
+	</delete>
+	<delete id="getSubscribeProductDelete"  parameterType="subscribevo">
+		<![CDATA[
+	  		delete from policy_product
+	 		 where policy_no = #{no};
+	  	]]>
+	</delete>
 </mapper>
 
 

@@ -1,4 +1,5 @@
 package inzent.pjt.controller;
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,14 @@ public class PromotionController {
 	public int promotionDelete(@RequestBody PromotionVO2 PromotionVO2) {
 		System.out.println("/promotionDelete");
 		int result = service.setPromotionDelete(PromotionVO2);
+		return result;
+	}
+	
+	@PostMapping("/promotionCheckPNo")
+	public List<PromotionVO2> promotionCheckPNo(@RequestBody HashMap<String,Object> map) {
+		System.out.println("/promotionCheckPNo");
+		//promotionProduct
+		List<PromotionVO2> result = service.getPromotionCheckPNo(map);
 		return result;
 	}
 

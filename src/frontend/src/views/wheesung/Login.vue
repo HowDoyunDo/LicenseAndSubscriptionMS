@@ -65,7 +65,16 @@ export default {
           }
           sessionStorage.setItem("license-token", result.data);
           this.parseJwt(result.data);
-          this.$router.push("/");
+          //:policy_no:usemonth:start_date:promotion_type:visible
+          if(this.$route.params !== undefined || this.$route.params !== '' ){
+            this.$router.push("/subscribe/order-url/"
+             +this.$route.params.policy_no +this.$route.params.usemonth 
+             + this.$route.params.promotion_type 
+             + this.$route.params.visible
+            )
+          }else{
+            this.$router.push("/");
+          }
         });
     },
     parseJwt(token) {

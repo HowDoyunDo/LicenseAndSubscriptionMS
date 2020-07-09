@@ -53,4 +53,15 @@
 		 where no=#{promotion_no};
 	]]>
 	</delete>
+	
+	<select id="getPromotionCheckPNo"  resultType="promotionvo2">
+		select p.*, p2.price as product_price from promotion p, product p2 
+			where p.product_no = p2.no
+				and p.type = true
+				and p.product_no in
+		<foreach collection="promotionProduct" item="item" open="(" close=")" separator=",">			
+				  #{item}
+ 		</foreach>
+			order by p.no;
+	</select>
 </mapper>

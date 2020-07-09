@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import inzent.pjt.service.LicenseService;
 import inzent.pjt.vo.GeneralUserVo;
-import inzent.pjt.vo.LicenseVo;
+
 
 @RestController
 public class LicenseController {

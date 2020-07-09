@@ -111,7 +111,8 @@
           <button type="button" @click="cancel">취소</button>
         </div>
         <div v-else>
-          <button type="button" @click="modifyClick">수정하기</button>
+          <button type="button" @click="modifyClick">수정</button>
+          <button type="button" @click="deleteClick">삭제</button>
           <button type="button" @click="listClick">목록</button>
         </div>
       </div>
@@ -120,14 +121,13 @@
 </template>
 
 <script>
-import { subscribeModify, licenseCheck } from "@/api/shr/subscribe";
+import { subscribeModify, licenseCheck, subscribeDelete } from "@/api/shr/subscribe";
 import ProductModal from "@/components/hyeran/product/ProductModal.vue";
-import {formatMixin} from "../mixins/numberFormat"
+import { formatMixin } from "../mixins/numberFormat";
 import { subscribeMixin } from "../mixins/subscribeInfo";
 
-
 export default {
-  mixins: [ formatMixin, subscribeMixin ],
+  mixins: [formatMixin, subscribeMixin],
   data() {
     return {
       subscribe_no: "",
@@ -157,36 +157,36 @@ export default {
   methods: {
     // 수정완료 submit
     async subscribeModifySubmit() {
-     if(!this.formValidation()){
-       let res = null;
-       if (this.modifyToggle == true) {
-         // 라이선스 발급된 정책 수정
-         const subModifyData = {
-           no: this.subscribe_no,
-           policy_title: this.policy_title,
-           visible: this.visible
-         };
-         res = await subscribeModify(subModifyData);
-       } else if (this.modifyAllToggle == true) {
-         const sunModifyData = {
-           no: this.subscribe_no,
-           policy_title: this.policy_title,
-           standard: this.standard,
-           max_count: this.max_count,
-           price: this.uncomma(this.format),
-           visible: this.visible,
-           url: this.url
-         };
-         res = await subscribeModify(sunModifyData);
-       }
-       if (res.data == 1) {
-         alert("수정 완료");
-         location.reload();
-       } else {
-         alert("수정 실패");
-         this.cancel();
-       }
-     }
+      if (!this.formValidation()) {
+        let res = null;
+        if (this.modifyToggle == true) {
+          // 라이선스 발급된 정책 수정
+          const subModifyData = {
+            no: this.subscribe_no,
+            policy_title: this.policy_title,
+            visible: this.visible
+          };
+          res = await subscribeModify(subModifyData);
+        } else if (this.modifyAllToggle == true) {
+          const sunModifyData = {
+            no: this.subscribe_no,
+            policy_title: this.policy_title,
+            standard: this.standard,
+            max_count: this.max_count,
+            price: this.uncomma(this.format),
+            visible: this.visible,
+            url: this.url
+          };
+          res = await subscribeModify(sunModifyData);
+        }
+        if (res.data == 1) {
+          alert("수정 완료");
+          location.reload();
+        } else {
+          alert("수정 실패");
+          this.cancel();
+        }
+      }
     },
     // 목록
     listClick() {
@@ -206,7 +206,30 @@ export default {
           // 라이선스 존재 -> 일부 수정
           this.modifyToggle = true;
         } else {
+          // 라이선스 존재 X -> 전체 수정 가능
           this.modifyAllToggle = true;
+        }
+      }
+    },
+    // 삭제 버튼
+    async deleteClick() {
+      if (confirm("삭제하시겠습니까?")) {
+        // 1. 해당 구독정책번호가 라이선스발급이 되었는지 체크
+        const licenseCount = await licenseCheck(this.subscribe_no);
+        if (licenseCount.data == 1) {
+          // 라이선스 존재 -> 삭제 불가
+          alert("삭제 불가 - 라이선스가 발급되어 있습니다. ");
+        } else {
+          const { data } = await subscribeDelete({
+            no: this.subscribe_no
+          });
+          console.log('dadta!!!!!!!!!!!!', data);
+          if (data == 1) {
+            alert("삭제 완료");
+            this.$router.push("/subscribe/alllist");
+          } else {
+            alert("삭제 실패");
+          }
         }
       }
     },

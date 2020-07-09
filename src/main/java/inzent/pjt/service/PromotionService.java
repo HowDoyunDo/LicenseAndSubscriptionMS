@@ -1,5 +1,6 @@
 package inzent.pjt.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,9 @@ public class PromotionService {
 	}
 	public int setPromotionDelete(PromotionVO2 vo) {
 		return dao.setPromotionDelete(vo);
+	}
+	public List<PromotionVO2> getPromotionCheckPNo(HashMap<String,Object> map) {
+		return dao.getPromotionCheckPNo(map);
 	}
 }
 

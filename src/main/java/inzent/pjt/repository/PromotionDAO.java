@@ -1,5 +1,6 @@
 package inzent.pjt.repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -22,11 +23,14 @@ public class PromotionDAO {
 	public List<PromotionVO2> getPromotionOneList(PromotionVO2 vo){
 		return sqlSession.selectList("promotion.getPromotionOneList", vo);
 	}
-
 	public int setPromotionModify(PromotionVO2 vo) {
 		return sqlSession.insert("promotion.setPromotionModify", vo);
 	}
 	public int setPromotionDelete(PromotionVO2 vo) {
 		return sqlSession.insert("promotion.setPromotionDelete", vo);
 	}
+	public List<PromotionVO2> getPromotionCheckPNo(HashMap<String,Object> map) {
+		return sqlSession.selectList("promotion.getPromotionCheckPNo",map);
+	}
+
 }

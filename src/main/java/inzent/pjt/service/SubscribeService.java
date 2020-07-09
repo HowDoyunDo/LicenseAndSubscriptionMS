@@ -59,7 +59,10 @@ public class SubscribeService {
 			return 0;
 		}
 	}
-
+	public int getSubscribeDelete(SubscribeVO vo) {
+		return dao.getSubscribeDelete(vo);
+		
+	}
 	/*
 	 * 고객관리자
 	 * 

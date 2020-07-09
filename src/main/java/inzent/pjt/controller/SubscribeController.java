@@ -77,15 +77,25 @@ public class SubscribeController {
 	public List<SubscribeVO> subscribeOneList(@RequestBody Map<String, Integer> map) {
 		System.out.println("/subscribeOneList");
 		int subscribeNo = map.get("subscribeNo");
-
-		// 해당 구독정책 출력
-		List<SubscribeVO> list = service.getSubscribeOneList(subscribeNo);
-
-		// 해당 구독정책의 제품 출력
-		ArrayList<ProductVO> p_list = (ArrayList<ProductVO>) p_service.getProductList(subscribeNo);
-		list.get(0).setSelectedList(p_list);
-
+		List<SubscribeVO> list = null;
+	
+		try {
+			// 해당 구독정책 출력
+			list = service.getSubscribeOneList(subscribeNo);
+			
+			// 해당 구독정책의 제품 출력
+			ArrayList<ProductVO> p_list = (ArrayList<ProductVO>) p_service.getProductList(subscribeNo);
+			list.get(0).setSelectedList(p_list);
+			
+		}catch (Exception e) {
+			// TODO: handle exception
+			SubscribeVO vo = new SubscribeVO();
+			vo.setError_message(e.toString());
+			list.set(0, vo);
+		}
+		
 		return list;
+
 	}
 
 	@PostMapping("/subscribeModify")
@@ -102,7 +112,15 @@ public class SubscribeController {
 		int result = service.getLicenseCheck(subscribevo.getPolicy_no());
 		return result;
 	}
+	
+	@PostMapping("/subscribeDelete")
+	public int subscribeDelete(@RequestBody SubscribeVO subscribevo) {
+		System.out.println("/subscribeDelete");
 
+		int result = service.getSubscribeDelete(subscribevo);
+		return result;
+	}
+	
 	/*
 	 * 고객관리자
 	 * 

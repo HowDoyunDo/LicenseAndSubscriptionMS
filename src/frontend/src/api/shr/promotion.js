@@ -21,4 +21,9 @@ function promotionModify(promotionData){
 function promotionDelete(promotionNo){
     return instance.post('promotionDelete',promotionNo)
 }
-export {promotionAllList, promotionAdd, promotionOneList, promotionModify, promotionDelete} ;
+// 정책번호로 프로모션 진행 체크
+function promotionCheckPNo(productNoList){
+    return instance.post('promotionCheckPNo', productNoList)
+}
+export {promotionAllList, promotionAdd, promotionOneList, promotionModify, promotionDelete,
+        promotionCheckPNo} ;

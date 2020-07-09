@@ -1,11 +1,24 @@
 import store from '@/store/index';
 
-const requireAuth = () => (to, from, next) => {
-    console.log('라우터 인덱스', to, from);
+const requireAuthURL = () => (to, from, next) => {
+    // console.log('라우터 인덱스', to, from);
+    /* 
+        url 순서 
+        /:policy_no
+        /:usemonth
+        /:start_date
+        /:promotion_type',
+        /:visible
+     */
+
     if (store.state.userinfo.userInfo !== '') {
         return next();
     }
-    next('/login');
+    next('/login/' 
+            + to.params.policy_no + to.params.usemonth 
+            + to.params.promotion_type + to.params.visible
+        );
+
 };
 
 export default [
@@ -110,11 +123,12 @@ export default [
     // -> LicenseInfo.vue 사용 , pageTypeAdmin=true 이면 시스템 관리자
 
     // 시스템관리자 - 구독정책url 신청서 작성
+    // :policy_no:usemonth:start_date:promotion_type:visible
     {
-        path: '/subscribe/order-url/:policy_no/:usemonth/:start_date/:promotion_type',
+        path: '/subscribe/order-url/:policy_no/:usemonth/:promotion_type/:visible',
         name: 'subscribeOrderUrl',
         component: () => import('@/components/hyeran/subscribe/SubscribeUrlOrder.vue'),
-        beforeEnter: requireAuth(),
+        beforeEnter: requireAuthURL(),
     }
 
 

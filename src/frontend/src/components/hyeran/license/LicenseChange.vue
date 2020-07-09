@@ -14,17 +14,36 @@
           <tr>
             <th>변경할 구독 선택</th>
             <td>
-              <select v-model="selected" class="select-box" style="width:400px">
+              <select
+                v-model="standardBoth"
+                class="select-box"
+                style="width:400px"
+                @change="changeSubList"
+              >
                 <option disabled value>이용기준을 선택해주세요</option>
-                <option v-for="(list) in policyList" :value="list.standard" :key="list.no">
-                  {{list.standard}}
-                </option>
+                <option value="U">사용자</option>
+                <option value="A">에이전트</option>
               </select>
+              <br />
               <select v-model="selected" class="select-box" style="width:400px">
                 <option disabled value>정책을 선택해주세요</option>
-                <option v-for="(list) in policyList" :value="list.no" :key="list.no">
+                <option v-for="list in policyList" :value="list.no" :key="list.no">
+                  <!-- <h4> {{list | activePolicyList}} </h4> -->
                   {{list.policy_title}}&nbsp;&nbsp; [ ￦{{list.price | formatPrice}} ]
                   사용수 : {{list.max_count}}
+                  <!-- <template v-if="standardBoth=='A'">
+                    <div v-if="list.standard=='A'">
+                      {{list.policy_title}}&nbsp;&nbsp; [ ￦{{list.price | formatPrice}} ]
+                      사용수 : {{list.max_count}}
+                    </div>
+                  </template>
+                  <template v-else-if="standardBoth=='U'">
+                    <div v-if="list.standard=='U'">
+                      {{list.policy_title}}&nbsp;&nbsp; [ ￦{{list.price | formatPrice}} ]
+                      사용수 : {{list.max_count}}
+                    </div>
+                  </template>
+                  <template v-else></template>-->
                 </option>
               </select>
             </td>
@@ -44,7 +63,7 @@
           <tr>
             <th>이용 개월 수</th>
             <td>
-              <input type="number" min="1" v-model="usemonth" /> 개월
+              <input type="number" min="1" max="36" v-model="usemonth" /> 개월
               <div style="font-size:12px; color:red;">* 개월 수는 30일로 계산됩니다.</div>
             </td>
           </tr>
@@ -73,14 +92,16 @@ export default {
       enddate: "",
       usemonth: "",
       policyList: "",
-      selected: ""
+      policyAllList :'',
+      selected: "",
+      standardBoth: ""
     };
   },
   async created() {
     this.license_no = this.$route.params.license_no;
     this.policy_title = this.$route.params.policy_title;
     const { data } = await subscribeAllList_P();
-    this.policyList = data;
+    this.policyAllList = data;
   },
   computed: {
     getEndDate: function() {
@@ -88,6 +109,19 @@ export default {
         .add(this.usemonth * 30, "d")
         .format("YYYY-MM-DD");
       return enddatee;
+    }
+  },
+  filters: {
+    activePolicyList(value) {
+      if (value.standard == "A") {
+        console.log(value);
+        return "";
+      }
+      // return this.policyList.filter(function(standard) {
+      //   console.log(standard);
+      // return value ;
+
+      // });
     }
   },
   methods: {
@@ -102,7 +136,7 @@ export default {
         this.usemonth == "" ||
         this.startdate == "" ||
         this.getEndDate == "" ||
-        this.selected=="" 
+        this.selected == ""
       ) {
         alert("필수 입력사항을 입력해주세요");
       } else {
@@ -119,8 +153,22 @@ export default {
           alert("변경 신청이 완료되었습니다.");
           this.$router.push("/license/list");
         } else {
-          alert("변경 신청 실패"); 
+          alert("변경 신청 실패");
         }
+      }
+    },
+    // 이용기준 선택에 따른 정책 출력
+    changeSubList() {
+      if (this.standardBoth == "A") {
+        const x = this.policyAllList.filter(x => {
+          return x.standard == "A";
+        });
+        this.policyList = x;
+      } else if (this.standardBoth == "U") {
+        const x = this.policyAllList.filter(x => {
+          return x.standard == "U";
+        });
+        this.policyList = x;
       }
     }
   }
