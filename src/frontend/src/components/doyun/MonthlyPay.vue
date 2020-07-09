@@ -75,7 +75,8 @@ export default {
         async monthlyPay() {
 
                 try {
-
+                    // 정기 결제 구현 중 중단
+                    
                     // await axios({
                     //     url: "/api/subscription/issue-billing",
                     //     method: "post", // POST method

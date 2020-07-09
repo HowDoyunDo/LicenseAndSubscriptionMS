@@ -9,10 +9,26 @@
 		<typeAlias type="inzent.pjt.vo.PromotionVo" alias="promotionvo"/>
 		<typeAlias type="inzent.pjt.vo.LicenseVo" alias="licensevo"/>
 		<typeAlias type="inzent.pjt.vo.GeneralUserVo" alias="generaluservo"/>
+		<typeAlias type="inzent.pjt.vo.AgentVo" alias="agentvo"/>
+		
+		<!-- add -->
+		<typeAlias alias="subscribevo" type="inzent.pjt.vo.SubscribeVO"/>
+		<typeAlias alias="productvo" type="inzent.pjt.vo.ProductVO"/>
+		<typeAlias alias="promotionvo2" type="inzent.pjt.vo.PromotionVO2"/>
+		<typeAlias alias="uservo" type="inzent.pjt.vo.UserVo"/>
+		<typeAlias alias="orderlistvo" type="inzent.pjt.vo.OrderListVO"/>
+		<typeAlias alias="licensevo2" type="inzent.pjt.vo.LicenseVO2"/>
+		<typeAlias alias="subchangevo" type="inzent.pjt.vo.SubscribeChangeVO"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="inzent/pjt/config/app/db/mappers/policy.xml" />
 		<mapper resource="inzent/pjt/config/app/db/mappers/license.xml" />
+		<mapper resource="inzent/pjt/config/app/db/mappers/batch.xml" />
 		<mapper resource="mybatis/mapper/login.xml" />
+		<mapper resource="mybatis/mapper/login.xml"/>
+		<mapper resource="mybatis/mapper/subscribe.xml"/>
+		<mapper resource="mybatis/mapper/product.xml"/>
+		<mapper resource="mybatis/mapper/promotion.xml"/>
+		<mapper resource="mybatis/mapper/license.xml"/>
 	</mappers>
 </configuration>

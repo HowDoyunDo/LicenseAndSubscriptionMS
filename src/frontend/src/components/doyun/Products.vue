@@ -11,7 +11,7 @@
             </div>
             <div class="panel-body1">
               <p>
-                <img class="solutions" src="../../assets/solutions/uxui.png" align="right"/>
+                <!-- <img class="solutions" src="../../assets/solutions/uxui.png" align="right"/> -->
                 <br><br>
                 UX/UI 솔루션
                 <br>

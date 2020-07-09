@@ -1,10 +1,19 @@
 package inzent.pjt.vo;
 
+import com.github.ckpoint.toexcel.annotation.ExcelHeader;
+
 public class GeneralUserVo {
 	int no;
+	
+	@ExcelHeader(headerName = "이메일(접속 ID)")
 	String email;
+	@ExcelHeader(headerName = "비밀번호")
+	String password;
+	@ExcelHeader(headerName = "이름")
 	String name;
+	@ExcelHeader(headerName = "부서명")
 	String dept_name;
+	
 	String last_login;
 	
 	public int getNo() {
@@ -25,6 +34,12 @@ public class GeneralUserVo {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public String getDept_name() {
 		return dept_name;
 	}
@@ -38,5 +53,10 @@ public class GeneralUserVo {
 		this.last_login = last_login;
 	}
 	
+	@Override
+	public String toString() {
+		return "GeneralUserVo [no=" + no + ", email=" + email + ", password=" + password + ", name=" + name
+				+ ", dept_name=" + dept_name + ", last_login=" + last_login + "]";
+	}
 	
 }

@@ -1,6 +1,6 @@
 <template>
   <div id="home" class="contents">
-    <h2>제품 조회(로그인 전)</h2>
+    <h2>제품 조회</h2>
     <br>
     
     <Products />
@@ -9,19 +9,11 @@
 
 <script>
 import Products from '@/components/doyun/Products';
-import axios from 'axios';
 
 export default {
   components: {
     Products,
-  },
-  async beforeMount() {
-    await axios.get('/api/category').then(res => { 
-      console.log(res.data) 
-    })
   }
-
-  
 }
 </script>
 

@@ -14,6 +14,7 @@ public class JwtUtil {
   public String createKey(UserVo vo) {
     String token = Jwts.builder()
                   .setHeaderParam("typ", "JWT")
+                  .claim("no", vo.getNo())
                   .claim("email", vo.getEmail())
                   .claim("name", vo.getName())
                   .claim("co_name", vo.getCo_name())
@@ -31,12 +32,13 @@ public class JwtUtil {
   public String createKey(AdminVo vo) {
     String token = Jwts.builder()
         .setHeaderParam("typ", "JWT")
+        .claim("no", vo.getNo())
         .claim("email", vo.getEmail())
         .claim("name", vo.getName())
         .claim("co_number", vo.getCo_number())
         .signWith(pkey)
         .compact();
 
-return token;
+    return token;
   }
 }

@@ -19,7 +19,8 @@
                     <td style="color:#3498db">{{ license.policy_title }}</td>
                     <td v-if="license.standard === 'U'">사용자 정책</td>
                     <td v-if="license.standard === 'A'">에이전트 정책</td>
-                    <td>{{ license.current_count }} / {{ license.max_count }}</td>
+                    <td v-if="license.max_count === 0">{{ license.current_count }} / 제한 없음</td>
+                    <td v-else>{{ license.current_count }} / {{ license.max_count }}</td>
                     <td>{{ license.start_date }}</td>
                     <td>{{ license.end_date }}</td>
                     <td>일반 결제 <br>완료</td>
@@ -48,12 +49,11 @@ export default {
     async created() {
         await axios.get('/api/license/list', {
                 params: {
-                    adminNo: 1
+                    adminNo: this.userInfo.no
                 }
         }).then(res => { 
             console.log(res.data);
             this.licenses = res.data;
-
         });
     },
     methods: {
@@ -79,6 +79,11 @@ export default {
 
             return year + "-" + month + "-" + date + " " + hour + ":" + min + ":" + sec;
         },
+    },
+    computed: {
+        userInfo: function() {
+            return this.$store.state.userinfo.userInfo;
+        }
     }
 }
 </script>

@@ -20,9 +20,5 @@ button {
     border-bottom-left-radius: 4px;
     background-color: rgb(52, 152, 219);
     border: none;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
   }
-
-h2 {
-    align-self: left;
-}

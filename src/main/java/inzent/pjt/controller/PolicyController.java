@@ -1,18 +1,13 @@
 package inzent.pjt.controller;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import inzent.pjt.service.PolicyService;
-import inzent.pjt.vo.CardVo;
 import inzent.pjt.vo.PolicyVo;
 import inzent.pjt.vo.PromotionVo;
 
@@ -44,14 +39,15 @@ public class PolicyController {
 		return policyService.getPromotionList(startdate, policyno);
 	}
 	
-	@PostMapping("/subscription/issue-billing")
-	public CardVo getBillingInfo(
-			@RequestBody CardVo cardvo
-			) {
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		System.out.println("hello");
-		
-		return cardvo;
-	}
+	// 정기 결제 구현 중 중단
+//	@PostMapping("/subscription/issue-billing")
+//	public CardVo getBillingInfo(
+//			@RequestBody CardVo cardvo
+//			) {
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		
+//		System.out.println("hello");
+//		
+//		return cardvo;
+//	}
 }

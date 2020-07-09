@@ -8,8 +8,15 @@ public class PromotionVo {
 	String start_date;
 	String end_date;
 	boolean type;
+	int price;
 	String reg_date;
 	
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
 	public int getNo() {
 		return no;
 	}
@@ -62,7 +69,8 @@ public class PromotionVo {
 	@Override
 	public String toString() {
 		return "PromotionVo [no=" + no + ", product_no=" + product_no + ", title=" + title + ", discount=" + discount
-				+ ", start_date=" + start_date + ", end_date=" + end_date + ", type=" + type + ", reg_date=" + reg_date
-				+ "]";
+				+ ", start_date=" + start_date + ", end_date=" + end_date + ", type=" + type + ", price=" + price
+				+ ", reg_date=" + reg_date + "]";
 	}
+	
 }

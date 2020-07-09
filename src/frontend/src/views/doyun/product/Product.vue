@@ -20,45 +20,45 @@
                                     <td>{{ numberWithCommas(upolicy.price) }}원</td>
                                 </tr>
                             </table>
+                            <br>
 
+                            <label>포함제품</label>
                             <template v-if="solution === 'UI/UX 솔루션'">
-                                <p style="margin: 10px 0 10px">iWorks<br>
-                                iXeb<br></p>
+                                <p>iWorks<br>
+                                iXeb<br><br></p>
                             </template>
 
                             <template v-if="solution === '채널통합 솔루션'">
-                                <p style="margin: 10px 0 10px">iGate<br>
+                                <p>iGate<br>
                                 APIM<br>
-                                eCross<br></p>
+                                eCross<br><br></p>
                             </template>
 
                             <template v-if="solution === '컨텐츠 통합관리'">
-                                <p style="margin: 10px 0 10px">Xtorm<br></p>
+                                <p>Xtorm<br><br></p>
                             </template>
 
                             <template v-if="solution === '오픈소스 데이터 플랫폼'">
-                                <p style="margin: 10px 0 10px">eXperDB<br></p>
+                                <p>eXperDB<br><br></p>
                             </template>
 
                             <template v-if="solution === '통합도서관시스템'">
-                                <p style="margin: 10px 0 10px">Libeka<br>
-                                Libeka S4<br></p>
+                                <p>Libeka<br>
+                                Libeka S4<br><br></p>
                             </template>
 
                             <template v-if="solution === '정보 보안'">
-                                <p style="margin: 10px 0 10px">MyGuard<br></p>
+                                <p>MyGuard<br><br></p>
                             </template>
 
                             <template v-if="solution === '문서중앙화'">
-                                <p style="margin: 10px 0 10px">Xtorm<br>
-                                MyGuard<br></p>
+                                <p>Xtorm<br>
+                                MyGuard<br><br></p>
                             </template>
 
-                            <router-link :to='{ name: "SubscribeOrder", params: { policyidx: i, policytype: upolicy.standard }}'>
-                                <button style="width:90px; margin-bottom:10px" @click="getPromotion(i, upolicy.standard)">
-                                    구독 신청
-                                    </button>
-                            </router-link>
+                            <button style="width:90px; margin-bottom:10px" @click="getPromotionAndOrder(i, upolicy.standard)">
+                                구독 신청
+                            </button>
                         </div>
                     </div>
                 </li>
@@ -83,45 +83,45 @@
                                     <td>{{ numberWithCommas(apolicy.price) }}원</td>
                                 </tr>
                             </table>
+                            <br>
 
+                            <label>포함제품</label>
                             <template v-if="solution === 'UI/UX 솔루션'">
-                                <p style="margin: 10px 0 10px">iWorks<br>
-                                iXeb<br></p>
+                                <p>iWorks<br>
+                                iXeb<br><br></p>
                             </template>
 
                             <template v-if="solution === '채널통합 솔루션'">
-                                <p style="margin: 10px 0 10px">iGate<br>
+                                <p>iGate<br>
                                 APIM<br>
-                                eCross<br></p>
+                                eCross<br><br></p>
                             </template>
 
                             <template v-if="solution === '컨텐츠 통합관리'">
-                                <p style="margin: 10px 0 10px">Xtorm<br></p>
+                                <p>Xtorm<br><br></p>
                             </template>
 
                             <template v-if="solution === '오픈소스 데이터 플랫폼'">
-                                <p style="margin: 10px 0 10px">eXperDB<br></p>
+                                <p>eXperDB<br><br></p>
                             </template>
 
                             <template v-if="solution === '통합도서관시스템'">
-                                <p style="margin: 10px 0 10px">Libeka<br>
-                                Libeka S4<br></p>
+                                <p>Libeka<br>
+                                Libeka S4<br><br></p>
                             </template>
 
                             <template v-if="solution === '정보 보안'">
-                                <p style="margin: 10px 0 10px">MyGuard<br></p>
+                                <p>MyGuard<br><br></p>
                             </template>
 
                             <template v-if="solution === '문서중앙화'">
-                                <p style="margin: 10px 0 10px">Xtorm<br>
-                                MyGuard<br></p>
+                                <p>Xtorm<br>
+                                MyGuard<br><br></p>
                             </template>
-
-                            <router-link :to='{ name: "SubscribeOrder", params: { policyidx: i, policytype: apolicy.standard }}'>
-                                <button style="width:90px" @click="getPromotion(i, apolicy.standard)">
-                                    구독 신청
-                                </button>
-                            </router-link>
+                            
+                            <button style="width:90px" @click="getPromotionAndOrder(i, apolicy.standard)">
+                                구독 신청
+                            </button>
                         </div>
                     </div>
                 </li>
@@ -130,6 +130,10 @@
 
         <button id="subBtn" @click="subBtn()">
             바로 구독 신청
+        </button>
+
+        <button id="upBtn" @click="upBtn()">
+            <img src="../../../../public/moveup.png" style="width:50px; height:50px"/>
         </button>
     </div>
 </template>
@@ -140,28 +144,38 @@ import axios from 'axios';
 
 export default {
     methods: {
-        getPromotion(idx, type) {
-            // 프로모션 정보를 가져와 store에 저장
-            if(type === 'U') {
-                axios.get('/api/promotion', {
-                params: {
-                    startdate : this.date_to_str(new Date()),
-                    policyno : this.uPolicies[idx].no
-                }
-                }).then(res => { 
-                    this.$store.commit('productStore/SET_PROMOTION', res.data);
-                });
+        async getPromotionAndOrder(idx, type) {
+            if(this.userInfo.co_number !== undefined) { // 고객관리자 로그인이라면
+                // 프로모션 정보를 가져와 store에 저장
+                if(type === 'U') {
+                    await axios.get('/api/promotion', {
+                    params: {
+                        startdate : this.date_to_str(new Date()),
+                        policyno : this.uPolicies[idx].no
+                    }
+                    }).then(res => { 
+                        this.$store.commit('productStore/SET_PROMOTION', res.data);
+                    });
 
-            } else if (type === 'A') {
-                axios.get('/api/promotion', {
-                params: {
-                    startdate : this.date_to_str(new Date()),
-                    policyno : this.aPolicies[idx].no
+                } else if (type === 'A') {
+                    axios.get('/api/promotion', {
+                    params: {
+                        startdate : this.date_to_str(new Date()),
+                        policyno : this.aPolicies[idx].no
+                    }
+                    }).then(res => { 
+                        this.$store.commit('productStore/SET_PROMOTION', res.data);
+                    });
                 }
-                }).then(res => { 
-                    this.$store.commit('productStore/SET_PROMOTION', res.data);
-                });
+                this.$router.push({ name: "SubscribeOrder", params: { policyidx: idx, policytype: type }});
+
+            } else if (this.userInfo.name === undefined) {  // 비로그인 상태라면
+                alert('구독 신청을 위해 로그인을 해주세요.')
+                this.$router.push("/login");
             }
+
+
+
         },
         date_to_str(format) {
             var year = format.getFullYear();
@@ -183,6 +197,9 @@ export default {
         },
         subBtn() {
             document.documentElement.scrollTop = document.body.scrollHeight;
+        },
+        upBtn() {
+            document.documentElement.scrollTop = 0;
         }
     },
     components: {
@@ -200,6 +217,9 @@ export default {
         },
         aPolicies: function() {
             return this.$store.state.productStore.aPolicies;
+        },
+        userInfo: function() {
+            return this.$store.state.userinfo.userInfo
         },
     },
 }
@@ -258,5 +278,16 @@ export default {
       right:50px;
       bottom:50px;
       z-index:1000
+  }
+
+  #upBtn {
+      font-size: 20px;
+      width:70px;
+      height:70px;
+      position:fixed;
+      right:50px;
+      bottom:130px;
+      z-index:1000;
+      background-color: #ccc;
   }
 </style>

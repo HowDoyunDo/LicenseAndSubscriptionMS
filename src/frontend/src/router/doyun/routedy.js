@@ -6,11 +6,11 @@ export default [
         name: 'Home',
         component: Home
       },
-      {
-        path: '/category/login',
-        name: 'CategoryLogin',
-        component: () => import('@/views/doyun/product/CategoryLogin.vue')
-      },
+      // {
+      //   path: '/category/login',
+      //   name: 'CategoryLogin',
+      //   component: () => import('@/views/doyun/product/CategoryLogin.vue')
+      // },
       {
         path: '/license/list',
         name: 'LicenseList',
@@ -55,5 +55,10 @@ export default [
         path: '/addusers',
         name: 'AddUsers',
         component: () => import('@/views/doyun/license/AddUsers.vue')
+      },
+      {
+        path: '/addagent',
+        name: 'AddAgent',
+        component: () => import('@/views/doyun/license/AddAgent.vue')
       },
 ]

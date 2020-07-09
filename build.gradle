@@ -42,6 +42,7 @@ dependencies {
 	compile("org.springframework.boot:spring-boot-starter-mail")
 	compile "org.springframework:spring-context-support"
 	compile "com.sun.mail:javax.mail"
+	compile group: 'com.github.ckpoint', name: 'toexcel', version: '1.0.3'
 }
 
 //

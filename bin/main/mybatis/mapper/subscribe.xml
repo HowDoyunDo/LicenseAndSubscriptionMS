@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="subscribe">
+	<select id="getSubAllList" resultType="subscribevo">
+	<![CDATA[
+		select * from subscription_policy
+		order by no;
+	]]>
+	</select>
+	<select id="getSubAllList_P" resultType="subscribevo">
+	<![CDATA[
+		select * from subscription_policy
+		where visible=true 
+		order by no;
+	]]>
+	</select>
+
+	<select id="setSubAdd" resultType="subscribevo">
+	<![CDATA[
+		insert into subscription_policy(policy_title , standard , max_count , price ,visible ,url)
+		values(#{policy_title}, #{standard}, #{max_count}, #{price} ,#{visible} ,'http://url-test');
+	]]>
+	</select>
+
+	<select id="getMaxNo" resultType="int">
+	<![CDATA[
+		select max(no) from subscription_policy;
+	]]>
+	</select>
+
+	<select id="getSubscribeOneList" resultType="subscribevo"
+		parameterType="int">
+	<![CDATA[
+		select * from subscription_policy
+		where no=#{subscribeNo};
+	]]>
+	</select>
+
+	<update id="setSubModify" parameterType="subscribevo">
+	<![CDATA[
+		update subscription_policy 
+		  set policy_title = #{policy_title} , visible = #{visible} 
+		 where no = #{no};
+	]]>
+	</update>
+
+	<update id="setSubAllModify" parameterType="Object">
+	<![CDATA[
+		update subscription_policy 
+		  set policy_title = #{policy_title} , visible = #{visible} ,
+		  standard = #{standard}, max_count = #{max_count}, 
+		  price = #{price}, url = #{url}
+		 where no = #{no};
+	]]>
+	</update>
+
+	<select id="getLicenseCheck" resultType="int"
+		parameterType="int">
+	<![CDATA[
+  		select count(*) from license
+ 		 where policy_no = #{subscribeNo};
+  	]]>
+	</select>
+
+	<select id="getUserSubscribeList" resultType="orderlistvo"
+		parameterType="uservo">
+	<![CDATA[
+		 select sp.policy_title, sp.standard ,
+		 		o.no, o.policy_no , o.user_no , o.month_count ,
+		 		o.start_date , o.end_date ,
+		 		o.org_price , o.dc_price , o.total_price ,
+		 		o.reg_date, o.month_payment
+			from order_list o, subscription_policy sp 
+		 where o.policy_no = sp.no 
+			and user_no=#{no};
+	]]>
+	</select>
+	<insert id="setSubscribeChange" parameterType="subchangevo">
+	<![CDATA[
+		insert into subscription_change(
+				license_no,
+				policy_no,
+				month_count,
+				start_date,
+				end_date,
+				status
+				) 
+		values(#{license_no}, #{policy_no},#{month_count},
+		TO_TIMESTAMP(concat(#{start_date}, ' 00:00:00'), 'YYYY-MM-DD HH24:MI:SS'),
+		TO_TIMESTAMP(concat(#{end_date}, ' 23:59:59'), 'YYYY-MM-DD HH24:MI:SS'),
+		'W'
+		);
+	]]>
+	</insert>
+
+	<delete id="getSubscribeDelete" parameterType="subscribevo">
+		<![CDATA[
+	  		delete from subscription_policy
+	 		 where no = #{no};
+	  	]]>
+	</delete>
+	<delete id="getSubscribeProductDelete"  parameterType="subscribevo">
+		<![CDATA[
+	  		delete from policy_product
+	 		 where policy_no = #{no};
+	  	]]>
+	</delete>
+</mapper>
+
+
+
+
+
+

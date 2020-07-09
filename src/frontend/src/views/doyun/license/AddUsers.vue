@@ -1,6 +1,6 @@
 <template>
     <div id="addusers" class="contents">
-        <h2>사용자 일괄 추가 <code style="color:#3498db; font-size:20px;"> "{{ license.policy_title }}"</code></h2>
+        <h2>사용자 일괄 추가 <code style="color:#3498db; font-size:20px; font-weight:bold"> "{{ license.policy_title }}"</code></h2>
         <br>
 
 
@@ -15,13 +15,22 @@
             <div id="tip">
                 다음 양식과 데이터 타입에 맞게 작성 후 업로드 해 주십시오.
             </div>
+            <div id="tip">
+                중복된 이메일이 포함될 경우 사용자가 추가되지 않습니다. 확인 후 작성해 주십시오.
+            </div>
             <br>
 
             <h4 style="color:gray">일괄 추가 파일 업로드</h4>
-            <span id="upfile">
-                <img src="@/assets/icons/upload.png" style="width:33px; height:30px;"/>
-                파일 업로드
-            </span>
+            
+
+            <div class="file_input">
+                <label>
+                    <img src="@/assets/icons/upload.png" style="width:33px; height:30px;"/>
+                    파일 업로드
+                    <input type="file" id="file" ref="file" @change="handleFileUpload()" onchange="javascript:document.getElementById('file_route').value=this.value">
+                </label>
+                <input type="text" readonly="readonly" title="File Route" id="file_route">
+            </div>
             <br><br>
 
             <hr style="border-top:1px solid gray">
@@ -31,7 +40,7 @@
             <h4 style="color:gray" align="center">다음 정보로 사용자를 등록합니다.</h4>
             <br>
             <div align="center">
-                <button style="width:120px">사용자 추가</button>
+                <button style="width:120px" @click="submitFile()">사용자 추가</button>
             </div>
             <br>
         <!-- TODO -->
@@ -52,12 +61,16 @@ export default {
             email: '',
             password: '',
             name: '',
-            dept: ''
+            dept: '',
+            file: ''
         }
     },
     computed: {
         license: function() {
             return this.$store.state.licenseStore.selectedlicense;
+        },
+        userInfo: function() {
+            return this.$store.state.userinfo.userInfo
         },
     },
     methods: {
@@ -78,6 +91,45 @@ export default {
                 document.body.appendChild(link);
                 link.click();
             })
+        },
+        handleFileUpload() {
+            this.file = this.$refs.file.files[0];
+        },
+        async submitFile() {
+            var fileext = document.getElementById('file').value;
+            fileext = fileext.slice(fileext.indexOf('.') + 1).toLowerCase();
+            
+            if(fileext === '') {
+                alert('업로드된 파일이 없습니다. \n파일을 업로드해 주세요.');
+                return;
+            } else if(fileext !== 'xlsx') {
+                alert('업로드된 파일은 엑셀파일이 아닙니다. \n확장자를 다시 확인해주세요.');
+                return;
+            }
+
+            let formData = new FormData();
+            formData.append('file', this.file);
+
+            await axios.post('/api/addUsers', 
+                formData,
+                {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    },
+                    params: {
+                        'adminUserNo': this.userInfo.no,
+                        'licenseNo': this.license.no
+                    }
+                }).then(res => {
+                    if(res.data === true) {
+                        alert('사용자 일괄 추가를 완료했습니다.')
+                        window.history.go(-1);
+                    } else {
+                        alert('파일 내에 추가할 사용자가 없습니다. \n다시 확인하고 업로드해주세요.')
+                    }
+                }).catch(e => {
+                    console.log(e);
+                });
         }
     }
 }
@@ -124,6 +176,7 @@ export default {
         color: #0f9d58;
         text-align: center;
         display: inline-block;
+        font-weight: bold;
     }
     #upfile {
         margin-left: 20px;
@@ -134,10 +187,36 @@ export default {
         display: inline-block;
     }
     #tip {
-        margin-left: 20px;
+        margin: 0 0 10px 20px;
         padding: 10px;
         border: 2px solid gray;
         border-radius: 5px;
         color: red;
+    }
+
+    .file_input label {
+        margin: 0 10px 0 20px;
+        padding: 10px;
+        border: 1px solid lightgray;
+        border-radius: 5px;
+        text-align: center;
+        position:relative;
+        cursor:pointer;
+        display:inline-block;
+        vertical-align:middle;
+    }
+    .file_input label input {
+        position:absolute;
+        width:0;
+        height:0;
+        overflow:hidden;
+    }
+    .file_input input[type=text] {
+        width:30%;
+        line-height:28px;
+        font-size:12px;
+        padding:0 0 0 5px;
+        border:1px solid #777;
+        border-radius: 5px;
     }
 </style>

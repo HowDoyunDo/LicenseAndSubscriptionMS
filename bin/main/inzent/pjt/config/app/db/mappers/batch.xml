@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="batch">
+	<delete id="batchService" parameterType="string">
+		<![CDATA[
+			delete 
+			 from agent
+			 where last_login < to_timestamp(#{_parameter}, 'YYYY-MM-DD HH24:MI:SS') 
+			
+		]]>
+	</delete>
+</mapper>

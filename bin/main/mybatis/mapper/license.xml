@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="license">
+
+	<select id="getLicenseAllList" resultType="licensevo2">
+	<![CDATA[
+		select ua.name ,ua.co_name, sp.policy_title , l.*
+			 from license l, user_admin ua , subscription_policy sp 
+		 where l.user_admin_no = ua.no 
+			and l.policy_no = sp.no;	
+	]]>
+	</select>
+	<select id="getLicenseOneList" resultType="licensevo2"
+		parameterType="licensevo2">
+	<![CDATA[
+		select 	ua.name ,
+				sp.policy_title , sp.standard, 
+				ol.reg_date, ol.total_price, ol.month_payment, 
+				l.*
+			 from license l, user_admin ua , subscription_policy sp ,order_list ol 
+		 where l.user_admin_no = ua.no 
+			and l.policy_no = sp.no
+			and l.order_no = ol.no
+			and l.no = #{no}
+			 ;
+	]]>
+	</select>
+	<select id="pwCheck" parameterType="uservo" resultType="uservo">
+	<![CDATA[
+		select * 
+			from (select * from user_admin where email=#{email}) as a
+		 where password = #{password} ;
+	]]>
+	</select>
+	<insert id="setLicenseCancel" parameterType="licensevo2">
+	<![CDATA[
+		insert into subscription_cancel (license_no, order_no , user_admin_no )
+		values(#{no}, #{order_no}, #{user_admin_no});
+	]]>
+	</insert>
+	<update id="updateCancel" parameterType="licensevo2">
+	<![CDATA[
+		update license 
+			set activation = 'C',
+			end_date = TO_TIMESTAMP(#{end_date}, 'YYYY-MM-DD HH24:MI:SS')
+		 where no=#{no} ;
+	]]>
+	</update>
+	<select id="getLicenseUserList" resultType="licensevo2" parameterType="uservo">
+	<![CDATA[
+		select ua.name , sp.policy_title , sp.standard,  l.*
+			 from license l, user_admin ua , subscription_policy sp 
+		 where 	l.user_admin_no = ua.no 
+				and l.policy_no = sp.no
+				and user_admin_no = #{no}
+				and now() between l.start_date and l.end_date 
+		 order by l.no;	
+	]]>
+	</select>
+	<select id="getLicenseAdminUser" resultType="uservo">
+	<![CDATA[
+		  select  a.last_login ,ua.*
+				from license l , user_admin ua , agent a
+		    where l.user_admin_no = ua.no
+				  and a.user_admin_no =ua.no
+			 	  and l.no= #{no}
+		   order by last_login desc 
+			limit 1;
+	]]>
+	</select>
+</mapper>

@@ -1,6 +1,6 @@
 <template>
     <div id="adduser" class="contents">
-        <h2>사용자 개별 추가 <code style="color:#3498db; font-size:20px;"> "{{ license.policy_title }}"</code></h2>
+        <h2>사용자 개별 추가 <code style="color:#3498db; font-size:20px; font-weight:bold"> "{{ license.policy_title }}"</code></h2>
         <br>
 
         <div id="inner">
@@ -30,20 +30,16 @@
             <h4 style="color:gray" align="center">다음 정보로 사용자를 등록합니다.</h4>
             <br>
             <div align="center">
-                <button style="width:120px">사용자 추가</button>
+                <button style="width:120px" @click="addUser()">사용자 추가</button>
             </div>
             <br>
         </div>
-
-        <!-- TODO -->
-        <!-- 1. general_user 추가 -->
-        <!-- 2. email로 general_user 검색 후 no 추출 -->
-        <!-- 3. user_no / license_no / user_admin_no 를 사용해 agent 등록 -->
-        <!-- 4. license 테이블 current_count +1 하기 -->
     </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
     data() {
         return {
@@ -57,6 +53,48 @@ export default {
         license: function() {
             return this.$store.state.licenseStore.selectedlicense;
         },
+        userInfo: function() {
+            return this.$store.state.userinfo.userInfo
+        },
+    },
+    methods: {
+        addUser() {
+            if(this.email === '') {
+                alert('사용자의 이메일을 입력해주세요.')
+            } else if (this.password === '') {
+                alert('사용자의 비밀번호를 입력해주세요.')
+            } else if (this.name === '') {
+                alert('사용자의 이름을 입력해주세요.')
+            } else if (this.dept === '') {
+                alert('사용자의 부서를 입력해주세요.')
+            } else {
+                // <!-- TODO -->
+                // <!-- 1. general_user 추가 -->
+                // <!-- 2. email로 general_user 검색 후 no 추출 -->
+                // <!-- 3. user_no / license_no / user_admin_no 를 사용해 agent 등록 -->
+                // <!-- 4. license 테이블 current_count +1 하기 -->
+                console.log('this.userInfo.no: ' + this.userInfo.no + '/' + 'this.license.no: ' + this.license.no)
+                axios.post('/api/addUser', null, {
+                    params: {
+                        'email': this.email,
+                        'password': this.password,
+                        'name': this.name,
+                        'dept': this.dept,
+                        'adminUserNo': this.userInfo.no,
+                        'licenseNo': this.license.no
+                    }
+                })
+                .then(res => { 
+                    if(res.data === false) {
+                        alert('해당 라이선스 내 중복된 이메일입니다. 다시 입력해주세요.');
+                    } else {
+                        alert('사용자를 추가했습니다.');
+                        window.history.go(-1);
+                    }
+                });
+
+            }
+        }
     }
 }
 </script>
