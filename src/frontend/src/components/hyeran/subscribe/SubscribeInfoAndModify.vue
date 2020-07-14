@@ -58,8 +58,8 @@
         <tr>
           <th>URL</th>
           <td>
-            <input v-if="modifyAllToggle==true" type="text" v-model="url" />
-            <div v-else>{{url}}</div>
+            <!-- <input v-if="modifyAllToggle==true" type="text" v-model="url" /> -->
+            <div>{{url}}</div>
           </td>
         </tr>
         <tr>
@@ -132,7 +132,7 @@ export default {
     return {
       subscribe_no: "",
       productPrice: "",
-      url: "",
+      // url: "",
       reg_date: "",
       list: "",
       modifyToggle: false,
@@ -175,7 +175,7 @@ export default {
             max_count: this.max_count,
             price: this.uncomma(this.format),
             visible: this.visible,
-            url: this.url
+            // url: this.url
           };
           res = await subscribeModify(sunModifyData);
         }
@@ -223,7 +223,6 @@ export default {
           const { data } = await subscribeDelete({
             no: this.subscribe_no
           });
-          console.log('dadta!!!!!!!!!!!!', data);
           if (data == 1) {
             alert("삭제 완료");
             this.$router.push("/subscribe/alllist");
@@ -256,5 +255,8 @@ button {
   width: auto;
   padding: 0 15px;
   margin: 10px;
+}
+input {
+   outline:none;
 }
 </style>

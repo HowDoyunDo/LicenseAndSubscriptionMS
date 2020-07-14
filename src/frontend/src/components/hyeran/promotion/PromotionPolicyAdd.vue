@@ -9,27 +9,7 @@
           </td>
         </tr>
         <tr>
-          <th>기준 선택</th>
-          <td>
-            <input
-              type="radio"
-              name="promotionselect"
-              value="policy"
-              v-model="promotionselect"
-              @change="radioChange()"
-            /> 정책
-            <input
-              type="radio"
-              name="promotionselect"
-              value="product"
-              v-model="promotionselect"
-              @change="radioChange()"
-            /> 제품
-          </td>
-        </tr>
-
-        <tr v-if="promotionselect=='product'">
-          <th>제품 선택</th>
+          <th>정책 선택</th>
           <td>
             <select v-model="selected" class="select-box" @change="addProduct()">
               <option disabled value>제품을 선택해주세요</option>
@@ -41,45 +21,18 @@
             </select>
           </td>
         </tr>
-        <tr v-if="promotionselect=='policy'">
-          <th>정책 선택</th>
-          <td>
-            <select v-model="selectedPolicy" class="select-box" @change="addPolicy()">
-              <option disabled value>정책을 선택해주세요</option>
-              <option
-                v-for="(list) in policyList"
-                :value="list.no"
-                :key="list.no"
-              >{{list.policy_title}}</option>
-            </select>
-          </td>
-        </tr>
       </table>
 
       <br />
       <!-------productOneList Component 사용------>
-      <div v-if="promotionselect=='product' && selected != ''">
+      <div v-if="selected != ''">
         <table class="table_add">
           <tr>
             <th>선택된 제품</th>
           </tr>
         </table>
         <div class="select-product">
-          <ProductOneList :discountPrice="discountPrice" :pageType="true" />
-        </div>
-      </div>
-
-      <br />
-      <!------------->
-      <!-------SubscribeOneList Component 사용------>
-      <div v-if="promotionselect=='policy' && selectedPolicy != ''">
-        <table class="table_add">
-          <tr>
-            <th>선택된 정책</th>
-          </tr>
-        </table>
-        <div class="select-product">
-          <SubscribeOneList :discountPrice="discountPrice" :pageType="true" />
+          <ProductOneList :discountPrice="discountPrice" :pageType="true"/>
         </div>
       </div>
 
@@ -130,15 +83,14 @@
 <script>
 import { productAddMixin } from "../mixins/productAdd";
 import { promotionMixin } from "../mixins/promotionAdd";
-import { promotionAdd , promotionPolicyAdd} from "@/api/shr/promotion";
+import { promotionAdd } from "@/api/shr/promotion";
 
 export default {
   mixins: [productAddMixin, promotionMixin],
   data() {
     return {
       type: "true",
-      discountPrice: "",
-      promotionselect: ""
+      discountPrice: ""
     };
   },
   methods: {
@@ -147,10 +99,9 @@ export default {
       // 폼 유효성 검사
       if (!this.promotionFormValidation()) {
         // 등록할 데이터
-        const promotionAddData = {
+        const promotionAddData = { 
           title: this.title,
           selectedList: this.$store.getters["productStore_shr/getProductList"],
-          selectedPolicyList : this.$store.getters["subscribeStore/getPolicyList"],
           discount: this.discount,
           start_date: this.start_date,
           start_date_time: this.start_date_time,
@@ -159,49 +110,25 @@ export default {
           type: this.type
         };
 
-        if (this.promotionselect=='product' && promotionAddData.selectedList.length == 0) {
+        if (promotionAddData.selectedList.length == 0) {
           alert("제품을 선택해주세요");
-        } else if(this.promotionselect=='policy' &&  promotionAddData.selectedPolicyList.length == 0) {
-          alert(" 정책을 선택해주세요");
         } else {
-         
-          // 제품 프로모션 submit 등록
-          if(this.promotionselect =='product'){
-           const {data} = await promotionAdd(promotionAddData);
-
-            if (data == 1) {
-              alert("등록 완료");
-              this.$router.push("/promotion");
-            } else {
-              alert("등록 실패");
-            }
-          }  // 정책 프로모션 submit 등록  
-          else if(this.promotionselect=='policy'){ 
-            const res = await promotionPolicyAdd(promotionAddData);
-            if (res.data == 1) {
+          // 프로모션 submit 등록
+          const { data } = await promotionAdd(promotionAddData);
+          if (data == 1) {
             alert("등록 완료");
-            this.$router.push("/promotion/policy");
+            this.$router.push("/promotion");
           } else {
             alert("등록 실패");
           }
-          }
-
-          
-
         }
       }
     },
-    radioChange() {
-      this.selectedPolicy='';
-      this.selected='';
-      this.$store.commit("productStore_shr/productAllDelete");
-      this.$store.commit("subscribeStore/policyAllDelete");
-    }
+
   },
   destroyed() {
     // 선택제품된 제품목록 초기화
     this.$store.commit("productStore_shr/productAllDelete");
-    this.$store.commit("subscribeStore/policyAllDelete");
   }
 };
 </script>

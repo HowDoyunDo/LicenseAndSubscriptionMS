@@ -15,8 +15,8 @@ const requireAuthURL = () => (to, from, next) => {
         return next();
     }
     next('/login/' 
-            + to.params.policy_no + to.params.usemonth 
-            + to.params.promotion_type + to.params.visible
+            + to.params.policy_no + '/'+ to.params.usemonth + '/'
+            + to.params.promotion_type +'/'+ to.params.visible
         );
 
 };
@@ -60,15 +60,26 @@ export default [
         component: () => import('@/views/hyeran/system_admin/promotion/AllListPage.vue'),
     },
     {
+        path: '/promotion/policy',
+        name: 'promotionPolicy',
+        component: () => import('@/views/hyeran/system_admin/promotion/PolicyAllListPage.vue'),
+    },
+    {
         path: '/promotion/add',
         name: 'promotionAdd',
         component: () => import('@/views/hyeran/system_admin/promotion/AddPage.vue'),
     },
-    // 시스템 관리자 - 프로모션 상세보기
+    // 시스템 관리자 - 제품 프로모션 상세보기
     {
         path: '/promotion/info/:promotion_no',
         name: 'promotionInfo',
         component: () => import('@/views/hyeran/system_admin/promotion/InfoPage.vue'),
+    },
+    // 시스템 관리자 - 정책 프로모션 상세보기
+    {
+        path: '/promotion/policy/info/:promotion_no',
+        name: 'promotionPolicyInfo',
+        component: () => import('@/views/hyeran/system_admin/promotion/PolicyInfoPage.vue'),
     },
 
 

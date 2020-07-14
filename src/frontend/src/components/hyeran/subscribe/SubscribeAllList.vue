@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="search-wrapper">
+      <input id="myInput" type="text" v-model="keyword" placeholder="검색어 입력" />
+    </div>
     <table class="table_board">
       <tr>
         <th style="width:6%;">번호</th>
@@ -15,7 +18,7 @@
         onmouseover="this.style.background='#CEECF5';"
         onmouseout="this.style.background=''"
         style="cursor:pointer"
-        v-for="(list, index) in subAllList"
+        v-for="(list, index) in filteredList"
         :key="list.no"
         @click="listClick(index)"
       >
@@ -40,8 +43,18 @@ import { subscribeAllList } from "@/api/shr/subscribe";
 export default {
   data() {
     return {
-      subAllList: ""
+      subAllList: "",
+      keyword: ""
     };
+  },
+  computed: {
+    filteredList() {
+      return Object.values(this.subAllList).filter(post => {
+        return post.policy_title
+          .toLowerCase()
+          .includes(this.keyword.toLowerCase());
+      });
+    }
   },
   created() {
     this.listData();
@@ -50,6 +63,14 @@ export default {
     async listData() {
       const { data } = await subscribeAllList();
       this.subAllList = data;
+      // console.log(typeof this.subAllList);
+
+      // let newArray = [];
+      // newArray =  Object.keys(this.subAllList).map(function(_) {
+      //   return this.subAllList[_];
+      // });
+      // console.log(newArray);
+      // console.log('오브오브오브',Object.values(this.subAllList))
     },
     listClick(index) {
       // 클릭한 해당 구독정책번호
@@ -59,9 +80,44 @@ export default {
         params: { subscribe_no: subscribeNo }
       });
     }
-  },
+  }
+  //   filters: {
+  //   activePolicyList(value) {
+  //     if (value.standard == "A") {
+  //       console.log(value);
+  //       return "";
+  //     }
+  //     // return this.policyList.filter(function(standard) {
+  //     //   console.log(standard);
+  //     // return value ;
+
+  //     // });
+  //   }
+  // },
 };
 </script>
 
 <style>
+/* .field {
+ font-size: 100%;
+    border: 1px solid #dae1e7;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
+    padding: 0.5rem 0.75rem;
+    margin: 5px;
+    width: 490px;
+    max-width: 95%;
+     outline:none;
+} */
+
+#myInput { 
+  /* background-image: image('@/assets/images/searchIcon.png'); */
+  background-image: url('/src/assets/images/minus.png');
+  background-repeat: no-repeat;
+  background-position: left center;
+  width: 100%;
+  font-size: 16px;
+  padding: 12px 20px 12px 40px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
 </style>

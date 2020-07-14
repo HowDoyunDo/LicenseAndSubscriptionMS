@@ -179,4 +179,8 @@ button {
   width: 90%;
   max-width: 95%;
 }
+input{
+     outline:none;
+
+}
 </style>

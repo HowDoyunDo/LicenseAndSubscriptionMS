@@ -1,18 +1,18 @@
 <template>
   <div class="contents">
-    <h2>제품 프로모션 목록</h2>
+    <h2>정책 프로모션 목록</h2>
     <div class="btnn">
       <button class="submit_btn" @click="promotionAdd">등록</button>
     </div>
-    <PromotionAllList />
+    <PromotionPolicyAllList />
   </div>
 </template>
 
 <script>
-import PromotionAllList from "@/components/hyeran/promotion/PromotionAllList.vue";
+import PromotionPolicyAllList from "@/components/hyeran/promotion/PromotionPolicyAllList.vue";
 export default {
   components: {
-    PromotionAllList
+    PromotionPolicyAllList
   },
   methods: {
     promotionAdd() {

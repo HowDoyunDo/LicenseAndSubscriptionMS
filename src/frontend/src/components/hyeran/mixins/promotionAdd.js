@@ -1,4 +1,5 @@
 import { productOneList } from '@/api/shr/product';
+import { subscribeOneList } from '@/api/shr/subscribe';
 import ProductOneList from "@/components/hyeran/product/ProductOneList.vue";
 
 export const promotionMixin = {
@@ -13,6 +14,8 @@ export const promotionMixin = {
             end_date_time: "",
             type: "",
             promotionProduct: [],
+            policy_no:"",
+            promotionPolicy:[]
         }
     },
     components: {
@@ -24,7 +27,8 @@ export const promotionMixin = {
             if (
                 this.title == "" ||
                 this.productList == "" ||
-                this.selected == "" ||
+                this.promotionselect == "" ||
+                (this.selected =="" && this.selectedPolicy=="" )||
                 this.discount == "" ||
                 this.start_date == "" ||
                 this.start_date_time == "" ||
@@ -39,7 +43,7 @@ export const promotionMixin = {
             }
         },
 
-        // 초기값 세팅
+        // 초기값 세팅 - 제품 프로모션
         async defaultSetting() {
             // 해당 프로모션 list
             const list = await this.$store.getters[
@@ -57,7 +61,24 @@ export const promotionMixin = {
             const { data } = await productOneList({ no: this.product_no });
             this.promotionProduct = data;
         },
-
+        // 초기값 세팅 - 정책 프로모션
+        async defaultSetting_policy() {
+            // 해당 프로모션 list
+            const list = await this.$store.getters[
+                "promotionStore/getPromotionPolicyOneList"
+            ];
+            this.title = list.title;
+            this.policy_no = list.policy_no;
+            this.discount = list.discount;
+            this.start_date = list.start_date;
+            this.start_date_time = list.start_date_time;
+            this.end_date = list.end_date;
+            this.end_date_time = list.end_date_time;
+            this.type = list.type;
+            // 해당 프로모션의 정책
+            const { data } = await subscribeOneList({ subscribeNo : this.policy_no });
+            this.promotionPolicy = data;
+        },
 
         // 할인율 입력폼 체크
         discountPriceForm(e) {

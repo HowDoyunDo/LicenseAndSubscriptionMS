@@ -28,22 +28,8 @@
               <select v-model="selected" class="select-box" style="width:400px">
                 <option disabled value>정책을 선택해주세요</option>
                 <option v-for="list in policyList" :value="list.no" :key="list.no">
-                  <!-- <h4> {{list | activePolicyList}} </h4> -->
                   {{list.policy_title}}&nbsp;&nbsp; [ ￦{{list.price | formatPrice}} ]
                   사용수 : {{list.max_count}}
-                  <!-- <template v-if="standardBoth=='A'">
-                    <div v-if="list.standard=='A'">
-                      {{list.policy_title}}&nbsp;&nbsp; [ ￦{{list.price | formatPrice}} ]
-                      사용수 : {{list.max_count}}
-                    </div>
-                  </template>
-                  <template v-else-if="standardBoth=='U'">
-                    <div v-if="list.standard=='U'">
-                      {{list.policy_title}}&nbsp;&nbsp; [ ￦{{list.price | formatPrice}} ]
-                      사용수 : {{list.max_count}}
-                    </div>
-                  </template>
-                  <template v-else></template>-->
                 </option>
               </select>
             </td>
@@ -63,7 +49,7 @@
           <tr>
             <th>이용 개월 수</th>
             <td>
-              <input type="number" min="1" max="36" v-model="usemonth" /> 개월
+              <input type="number" min="1" max="36" v-model="usemonth" @change="usemonthCheck" /> 개월
               <div style="font-size:12px; color:red;">* 개월 수는 30일로 계산됩니다.</div>
             </td>
           </tr>
@@ -92,7 +78,7 @@ export default {
       enddate: "",
       usemonth: "",
       policyList: "",
-      policyAllList :'',
+      policyAllList: "",
       selected: "",
       standardBoth: ""
     };
@@ -111,19 +97,7 @@ export default {
       return enddatee;
     }
   },
-  filters: {
-    activePolicyList(value) {
-      if (value.standard == "A") {
-        console.log(value);
-        return "";
-      }
-      // return this.policyList.filter(function(standard) {
-      //   console.log(standard);
-      // return value ;
 
-      // });
-    }
-  },
   methods: {
     // 목록
     listClick() {
@@ -136,7 +110,8 @@ export default {
         this.usemonth == "" ||
         this.startdate == "" ||
         this.getEndDate == "" ||
-        this.selected == ""
+        this.selected == "" ||
+        this.standardBoth == ""
       ) {
         alert("필수 입력사항을 입력해주세요");
       } else {
@@ -170,6 +145,13 @@ export default {
         });
         this.policyList = x;
       }
+    },
+    // usemonth 체크
+    usemonthCheck() {
+      if (!(this.usemonth >= 1 && this.usemonth <= 36)) {
+        alert("1개월 이상 최대 36개월까지 가능합니다.");
+        this.usemonth = "";
+      }
     }
   }
 };
@@ -198,5 +180,6 @@ input[type="date"] {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   padding: 0.5rem 0.75rem;
   margin: 5px;
+   outline:none;
 }
 </style>

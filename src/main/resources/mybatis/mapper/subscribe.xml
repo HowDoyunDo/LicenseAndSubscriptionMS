@@ -18,8 +18,11 @@
 
 	<select id="setSubAdd" resultType="subscribevo">
 	<![CDATA[
-		insert into subscription_policy(policy_title , standard , max_count , price ,visible ,url)
-		values(#{policy_title}, #{standard}, #{max_count}, #{price} ,#{visible} ,'http://url-test');
+	    insert into subscription_policy(policy_title , standard , max_count , price ,visible ,url)
+			values(	
+					#{policy_title}, #{standard}, #{max_count}, #{price} ,#{visible} ,
+					concat('/subscribe/order-url/',currval('subscription_policy_no_seq'),'/1/t/',#{visible}) 
+				   );
 	]]>
 	</select>
 
@@ -50,7 +53,7 @@
 		update subscription_policy 
 		  set policy_title = #{policy_title} , visible = #{visible} ,
 		  standard = #{standard}, max_count = #{max_count}, 
-		  price = #{price}, url = #{url}
+		  price = #{price}
 		 where no = #{no};
 	]]>
 	</update>

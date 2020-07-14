@@ -30,10 +30,13 @@
       <ul>
         <template v-if="promotionMenu">
           <li>
-            <router-link to="/promotion">프로모션 목록</router-link>
+            <router-link to="/promotion" style="font-size:14px">제품 프로모션 목록</router-link>
+          </li>
+          <li>
+            <router-link to="/promotion/policy" style="font-size:14px">정책 프로모션 목록</router-link>
           </li>
             <li>
-            <router-link to="/promotion/add">프로모션 등록</router-link>
+            <router-link to="/promotion/add" style="font-size:14px">프로모션 등록</router-link>
           </li>
           <br />
         </template>

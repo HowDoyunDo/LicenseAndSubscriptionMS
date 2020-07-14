@@ -16,6 +16,12 @@ export default [
             },
         ]
     },
+    // {
+    //     path: '/login/:policy_no/:usemonth/:promotion_type/:visible',
+    //     name: 'login',
+    //     component: () => import('@/views/wheesung/Login.vue'),
+      
+    // },
     {
         path: '/adminlogin',
         name: 'adminlogin',

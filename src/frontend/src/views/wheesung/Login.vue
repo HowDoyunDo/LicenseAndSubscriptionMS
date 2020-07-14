@@ -65,11 +65,13 @@ export default {
           }
           sessionStorage.setItem("license-token", result.data);
           this.parseJwt(result.data);
+          console.log('라우터::::::::' , this.$route.params);
+          console.log('길이::::::::' , );
           //:policy_no:usemonth:start_date:promotion_type:visible
-          if(this.$route.params !== undefined || this.$route.params !== '' ){
+          if(Object.keys(this.$route.params).length !=0 ){
             this.$router.push("/subscribe/order-url/"
-             +this.$route.params.policy_no +this.$route.params.usemonth 
-             + this.$route.params.promotion_type 
+             +this.$route.params.policy_no + '/' +this.$route.params.usemonth + '/' 
+             + this.$route.params.promotion_type +'/' 
              + this.$route.params.visible
             )
           }else{

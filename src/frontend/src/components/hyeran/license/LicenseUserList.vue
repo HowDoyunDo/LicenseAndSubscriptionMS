@@ -44,8 +44,10 @@
           >관 리</button>
         </td>
         <td onclick="event.cancelBubble=true">
-          <a @click="licneseChange(list.no, list.policy_no, list.policy_title)">변경</a> /
-          <a @click="licneseCancel(list.no, list.order_no, list.user_admin_no,list.end_date)">취소</a>
+          <a @click="licneseChange(list.no, list.policy_no, list.policy_title, list.activation)">변경</a> /
+          <a
+            @click="licneseCancel(list.no, list.order_no, list.user_admin_no,list.end_date, list.activation)"
+          >취소</a>
           <modal2 v-if="showModal" @closeee2="showModal=false" :modalData="modalData" />
         </td>
       </tr>
@@ -67,14 +69,18 @@ export default {
     modal2: LicenseModal
   },
   methods: {
-    licneseChange(license_no, policy_no, policy_title) {
-      this.$router.push({
-        name: "licenseChange",
-        params: {
-          license_no: license_no,
-          policy_title: policy_title
-        }
-      });
+    licneseChange(license_no, policy_no, policy_title, activation) {
+      if (activation == "E" || activation == "C") {
+        alert("변경/취소 할 수 없습니다.");
+      } else {
+        this.$router.push({
+          name: "licenseChange",
+          params: {
+            license_no: license_no,
+            policy_title: policy_title
+          }
+        });
+      }
     },
     // 라이선스(구독 정책) 상세보기
     licenseInfoForm(index, licenseNo, policyNo) {
@@ -83,15 +89,19 @@ export default {
         params: { license_no: licenseNo, policy_no: policyNo }
       });
     },
-    
-    licneseCancel(licenseNo, orderNo, userAdminNo, endDate) {
-      this.showModal = true;
-      this.modalData = {
-        no: licenseNo,
-        order_no: orderNo,
-        user_admin_no: userAdminNo,
-        end_date: endDate
-      };
+
+    licneseCancel(licenseNo, orderNo, userAdminNo, endDate, activation) {
+      if (activation == "E" || activation == "C") {
+        alert("변경/취소 할 수 없습니다.");
+      } else {
+        this.showModal = true;
+        this.modalData = {
+          no: licenseNo,
+          order_no: orderNo,
+          user_admin_no: userAdminNo,
+          end_date: endDate
+        };
+      }
     },
     mouseclick(idx, standard) {
       this.$store.commit("licenseStore/SELECT_LIC", this.licenses[idx]);

@@ -40,6 +40,7 @@ public class SubscribeController {
 		return allList;
 	}
 
+	// 공개 정책인 것만 출력 
 	@PostMapping("/alllist_P")
 	public List<SubscribeVO> subscribeAllList_P() {
 		System.out.println("/alllist_P");
@@ -54,13 +55,13 @@ public class SubscribeController {
 		
 		// 구독 정책 추가
 		int resultSubAdd = service.setSubAdd(subscribevo);
-		
+
 		// subscribe_policy의 max(no) 추출
 		// 같은 정책 번호로 insert하기 위해
 		int policy_no = service.getMaxNo();
-
-		// 정책 추가 시 선택한 제품목록 추가
 		subscribevo.setPolicy_no(policy_no);
+		subscribevo.setNo(policy_no+1);
+		// 정책 추가 시 선택한 제품목록 추가
 		int resultSubProduct = p_service.setSubscribeProduct(subscribevo);
 
 		int result = -1;

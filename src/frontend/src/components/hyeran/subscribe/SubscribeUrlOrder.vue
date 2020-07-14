@@ -34,8 +34,29 @@
           <th>구독 종료일</th>
           <td>{{endDate}}</td>
         </tr>
+         <tr v-if="promotion_type=='t'">
+          <th>정책 적용 할인</th>
+          <td>
+            <template>
+              <ul>
+                <li
+                  v-for="promotion in promotionList"
+                  v-bind:key="promotion.no"
+                  style="margin-bottom:10px"
+                >
+                  프로모션 명 : {{ promotion.title }}
+                  <br />
+                  할인률 : {{ promotion.discount }}%
+                  <br />제품 정가(할인액) : <span> {{ promotion.product_price |formatPrice}}원</span>
+                  <span style="color: red"> (- {{(promotion.discount/100 * promotion.product_price) | formatPrice}}원)</span>
+                </li>
+              </ul>
+              <template v-if="promotionList==''">적용된 프로모션이 없습니다.</template>
+            </template>
+          </td>
+        </tr>
         <tr v-if="promotion_type=='t'">
-          <th>적용 할인</th>
+          <th>제품 적용 할인</th>
           <td>
             <template>
               <ul>
@@ -218,5 +239,8 @@ export default {
 }
 .nav-tabs li.active a {
   background-color: #d9edf7;
+}
+input {
+   outline:none;
 }
 </style>
