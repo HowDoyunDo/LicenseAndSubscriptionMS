@@ -40,11 +40,15 @@ function promotionDelete(promotionNo){
 function promotionPolicyDelete(promotionNo){
     return instance.post('promotionPolicyDelete',promotionNo)
 }
-// 정책번호로 프로모션 진행 체크
+// 제품 번호로 프로모션 진행 체크
 function promotionCheckPNo(productNoList){
     return instance.post('promotionCheckPNo', productNoList)
+}
+// 제품 번호로 프로모션 진행 체크
+function promotionPolicyCheckPNo(policytNo){
+    return instance.post('promotionPolicyCheckPNo', policytNo)
 }
 
 export {promotionAllList, promotionAdd, promotionOneList, promotionModify, promotionDelete,
         promotionCheckPNo, promotionPolicyAllList, promotionPolicyOneList, promotionPolicyAdd,
-        promotionPolicyModify, promotionPolicyDelete} ;
+        promotionPolicyModify, promotionPolicyDelete, promotionPolicyCheckPNo} ;

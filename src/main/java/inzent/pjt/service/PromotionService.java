@@ -61,5 +61,8 @@ public class PromotionService {
 	public List<PromotionVO2> getPromotionCheckPNo(HashMap<String,Object> map) {
 		return dao.getPromotionCheckPNo(map);
 	}
+	public List<PromotionVO2> getPromotionPolicyCheckPNo(PromotionVO2 vo) {
+		return dao.getPromotionPolicyCheckPNo(vo);
+	}
 }
 

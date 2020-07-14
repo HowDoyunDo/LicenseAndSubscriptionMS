@@ -47,5 +47,8 @@ public class PromotionDAO {
 	public List<PromotionVO2> getPromotionCheckPNo(HashMap<String,Object> map) {
 		return sqlSession.selectList("promotion.getPromotionCheckPNo",map);
 	}
+	public List<PromotionVO2> getPromotionPolicyCheckPNo(PromotionVO2 vo) {
+		return sqlSession.selectList("promotion.getPromotionPolicyCheckPNo",vo);
+	}
 
 }

@@ -114,4 +114,13 @@
  		</foreach>
 			order by p.no;
 	</select>
+	<select id="getPromotionPolicyCheckPNo"  resultType="promotionvo2">
+	<![CDATA[
+		select pp.no as promotion_no, pp.*, sp.price as policy_price
+			from policy_promotion pp , subscription_policy sp 
+		 where policy_no = #{policy_no}
+		 	and pp.policy_no = sp.no;
+	]]>
+
+	</select>
 </mapper>

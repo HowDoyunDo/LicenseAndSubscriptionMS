@@ -150,7 +150,7 @@ export default {
     usemonthCheck() {
       if (!(this.usemonth >= 1 && this.usemonth <= 36)) {
         alert("1개월 이상 최대 36개월까지 가능합니다.");
-        this.usemonth = "";
+        this.usemonth = 1;
       }
     }
   }

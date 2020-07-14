@@ -19,10 +19,18 @@ public class PromotionVO2 {
 	private ArrayList<ProductVO> selectedList; // 프로모션 등록 시 선택한 제품들
 	private ArrayList<SubscribeVO> selectedPolicyList; // 프로모션 등록 시 선택한 정책들
 	private int product_price; // 제품가격
+	private int policy_price ; //정책 가격
 	
 	
 	
-	
+	public int getPolicy_price() {
+		return policy_price;
+	}
+
+	public void setPolicy_price(int policy_price) {
+		this.policy_price = policy_price;
+	}
+
 	public String getPolicy_title() {
 		return policy_title;
 	}

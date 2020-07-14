@@ -98,5 +98,12 @@ public class PromotionController {
 		List<PromotionVO2> result = service.getPromotionCheckPNo(map);
 		return result;
 	}
+	@PostMapping("/promotionPolicyCheckPNo")
+	public List<PromotionVO2> promotionPolicyCheckPNo(@RequestBody PromotionVO2 PromotionVO2) {
+		System.out.println("/promotionPolicyCheckPNo");
+		
+		List<PromotionVO2> result = service.getPromotionPolicyCheckPNo(PromotionVO2);
+		return result;
+	}
 
 }

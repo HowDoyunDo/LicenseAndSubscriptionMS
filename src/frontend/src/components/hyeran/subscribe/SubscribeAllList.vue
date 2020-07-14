@@ -50,6 +50,7 @@ export default {
   computed: {
     filteredList() {
       return Object.values(this.subAllList).filter(post => {
+        console.log(Object.values(post));
         return post.policy_title
           .toLowerCase()
           .includes(this.keyword.toLowerCase());
@@ -63,14 +64,6 @@ export default {
     async listData() {
       const { data } = await subscribeAllList();
       this.subAllList = data;
-      // console.log(typeof this.subAllList);
-
-      // let newArray = [];
-      // newArray =  Object.keys(this.subAllList).map(function(_) {
-      //   return this.subAllList[_];
-      // });
-      // console.log(newArray);
-      // console.log('오브오브오브',Object.values(this.subAllList))
     },
     listClick(index) {
       // 클릭한 해당 구독정책번호
@@ -81,43 +74,23 @@ export default {
       });
     }
   }
-  //   filters: {
-  //   activePolicyList(value) {
-  //     if (value.standard == "A") {
-  //       console.log(value);
-  //       return "";
-  //     }
-  //     // return this.policyList.filter(function(standard) {
-  //     //   console.log(standard);
-  //     // return value ;
-
-  //     // });
-  //   }
-  // },
 };
 </script>
 
 <style>
-/* .field {
- font-size: 100%;
-    border: 1px solid #dae1e7;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
-    padding: 0.5rem 0.75rem;
-    margin: 5px;
-    width: 490px;
-    max-width: 95%;
-     outline:none;
-} */
-
-#myInput { 
-  /* background-image: image('@/assets/images/searchIcon.png'); */
-  background-image: url('/src/assets/images/minus.png');
+#myInput {
+  background-image: url("../../../assets/images/searchIcon2.png");
+  background-size: 23px;
+  background-position: 8px 8px;
   background-repeat: no-repeat;
-  background-position: left center;
-  width: 100%;
+  width: 260px;
+  height: 35px;
   font-size: 16px;
-  padding: 12px 20px 12px 40px;
+  padding: 12px 20px 12px 42px;
   border: 1px solid #ddd;
   margin-bottom: 12px;
+}
+input {
+  outline: none;
 }
 </style>
