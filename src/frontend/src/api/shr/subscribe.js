@@ -17,7 +17,6 @@ function subscribeOneList(subscribeNo) {
 
 // 시스템관리자 - 구독 정책 수정(일부 or 전체가능)
 function subscribeModify(subModifyData) {
-
     return instance.post('subscribeModify', subModifyData);
 }
 
