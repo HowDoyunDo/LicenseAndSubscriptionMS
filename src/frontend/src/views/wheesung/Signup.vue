@@ -91,6 +91,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   data() {
     return {
@@ -110,7 +111,6 @@ export default {
       
     };
   },
-  components: {},
   methods: {
     signin() {
       if (

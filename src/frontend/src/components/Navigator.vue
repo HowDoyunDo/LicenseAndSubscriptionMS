@@ -9,7 +9,10 @@
             <router-link to="/categorylist">카테고리 목록</router-link>
           </li>
           <li>
-            <router-link to="/">제품 목록</router-link>
+            <router-link to="/productlist">제품 목록</router-link>
+          </li>
+          <li>
+            <router-link to="/productadd">제품 등록</router-link>
           </li>
           <br />
         </template>
@@ -42,10 +45,10 @@
       <ul>
         <template v-if="orderMenu">
           <li>
-            <router-link to="/">주문 목록</router-link>
+            <router-link to="/orderlist">주문 목록</router-link>
           </li>
           <li>
-            <router-link to="/">구독 변경/취소 내역</router-link>
+            <router-link to="/subscriptioncancelchange">구독 변경/취소 내역</router-link>
           </li>
           <br />
         </template>
@@ -54,7 +57,7 @@
       <ul>
         <template v-if="customerMenu">
           <li>
-            <router-link to="/">고객사 관리</router-link>
+            <router-link to="/userlist">고객사 관리</router-link>
           </li>
           <li>
             <router-link to="/">견적 문의 내역</router-link>
@@ -67,7 +70,7 @@
       <ul>
         <template v-if="analysisMenu">
           <li>
-            <router-link to="/analysis/sales">매출 분석</router-link>
+            <router-link to="/analysis/sales/day">매출 분석</router-link>
           </li>
           <li>
             <router-link to="/analysis/product">상품 분석</router-link>
@@ -82,7 +85,7 @@
             <router-link to="/license/alllist">라이선스 현황</router-link>
           </li>
           <li>
-            <router-link to="/">라이선스 배치 서비스</router-link>
+            <router-link to="/batch">라이선스 배치 서비스</router-link>
           </li>
           <br />
         </template>

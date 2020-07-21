@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Products from '@/components/doyun/Products';
+import Products from '@/components/doyun/user_admin/subscribe/Products';
 
 export default {
   components: {
@@ -19,9 +19,7 @@ export default {
 
 <style>
   #home {
-      width: 85%;
       text-align: center;
-      border-left: 1px solid lightgray;
       padding: 40px;
   }
 </style>

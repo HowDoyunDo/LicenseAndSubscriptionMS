@@ -1,0 +1,118 @@
+<template>
+  <div class="contents" style="border-left : 1px solid lightgray;">
+    <div>
+      <br />
+      <div style="text-align: center;">
+        <h2 style="cursor:pointer;" :style="{color:changeColor}" @click="changeclick">변경 내역</h2>
+        <h2 style="cursor:default">&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;</h2>
+        <h2 style="cursor:pointer;" :style="{color:cancelColor}" @click="cancelclick">취소 내역</h2>
+      </div>
+      <br />
+      <table v-if="clicked" class="table_board">
+        <tr style="float:center;">
+          <th style="width:30px;">번호</th>
+          <th style="width:150px;">기업명 [관리자]</th>
+          <th style="text-align: left;">구독 정책명</th>
+          <th style="width:100px;">시작일</th>
+          <th style="width:100px;">종료일</th>
+          <th style="width:100px;">변경일</th>
+        </tr>
+        <tr
+          style="cursor:default"
+          v-for="(change, idx) in changelist"
+          :key="change.no"
+        >
+          <td>{{ idx + 1 }}</td>
+          <td>{{ change.co_name }} [{{ change.name }}]</td>
+          <td style="text-align: left;">{{ change.policy_title }}</td>
+          <td>{{change.start_date}}</td>
+          <td>{{change.end_date}}</td>
+          <td>{{change.change_date}}</td>
+        </tr>
+      </table>
+      <table v-if="!clicked" class="table_board">
+        <tr style="float:center;">
+          <th style="width:50px;">번호</th>
+          <th style="width:200px;">기업명 [관리자]</th>
+          <th style="text-align: left;">구독 정책명</th>
+          <th style="width:200px;">취소일</th>
+        </tr>
+        <tr
+          style="cursor:default"
+          v-for="(cancel, idx) in cancellist"
+          :key="cancel.no"
+        >
+          <td>{{ idx + 1 }}</td>
+          <td>{{ cancel.co_name }} [{{ cancel.name }}]</td>
+          <td style="text-align: left;">{{cancel.policy_title}}</td>
+          <td>{{cancel.cancel_date}}</td>
+        </tr>
+      </table>
+    </div>
+    <br />
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  data() {
+    return {
+      clicked: true,
+      cancellist: "",
+      changelist: "",
+      changeColor: 'blue',
+      cancelColor: 'black',
+    };
+  },
+  methods: {
+    changeclick() {
+      this.clicked = true;
+      if (this.clicked == true) {
+        this.changeColor = "blue";
+        this.cancelColor = 'black';
+      }
+    },
+    cancelclick() {
+      this.clicked = false;
+      if (this.clicked == false) {
+        this.cancelColor = "blue";
+        this.changeColor = "black";
+      }
+    }
+  },
+  created() {
+    axios.get("/api/cancellist").then(result => {
+      this.cancellist = result.data;
+    });
+    axios.get("/api/changelist").then(result => {
+      this.changelist = result.data;
+    });
+  }
+};
+</script>
+
+<style>
+.cssbtn {
+  background-color: #3498db;
+  color: #ffffff;
+  border: none;
+  width: 200px;
+  height: 40px;
+}
+
+.table_board th {
+  text-align: center;
+  font-size: 15px;
+  height: 40px;
+}
+
+.table_board td {
+  height: 40px;
+}
+
+h2 {
+  display: inline;
+}
+</style>

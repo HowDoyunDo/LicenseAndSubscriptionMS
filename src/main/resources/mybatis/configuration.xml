@@ -10,6 +10,12 @@
 		<typeAlias type="inzent.pjt.vo.LicenseVo" alias="licensevo"/>
 		<typeAlias type="inzent.pjt.vo.GeneralUserVo" alias="generaluservo"/>
 		<typeAlias type="inzent.pjt.vo.AgentVo" alias="agentvo"/>
+		<typeAlias type="inzent.pjt.vo.BatchVo" alias="batchvo"/>
+		
+		<typeAlias type="inzent.pjt.dto.AnalysisDayDTO" alias="add"/>
+		<typeAlias type="inzent.pjt.dto.AnalysisWeekDTO" alias="awd"/>
+		<typeAlias type="inzent.pjt.dto.AnalysisMonthDTO" alias="amd"/>
+		<typeAlias type="inzent.pjt.dto.AnalysisProductDTO" alias="apd"/>
 		
 		<!-- add -->
 		<typeAlias alias="subscribevo" type="inzent.pjt.vo.SubscribeVO"/>
@@ -19,15 +25,21 @@
 		<typeAlias alias="orderlistvo" type="inzent.pjt.vo.OrderListVO"/>
 		<typeAlias alias="licensevo2" type="inzent.pjt.vo.LicenseVO2"/>
 		<typeAlias alias="subchangevo" type="inzent.pjt.vo.SubscribeChangeVO"/>
+		
+		<typeAlias type="inzent.pjt.vo.CategoryVo" alias="categoryvo"/>
+		<typeAlias type="inzent.pjt.vo.ProductVo2" alias="productvo2"/>
+		<typeAlias type="inzent.pjt.vo.OrderVo" alias="ordervo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="inzent/pjt/config/app/db/mappers/policy.xml" />
 		<mapper resource="inzent/pjt/config/app/db/mappers/license.xml" />
 		<mapper resource="inzent/pjt/config/app/db/mappers/batch.xml" />
+		<mapper resource="inzent/pjt/config/app/db/mappers/analysis.xml" />
 		<mapper resource="mybatis/mapper/login.xml" />
-		<mapper resource="mybatis/mapper/login.xml"/>
 		<mapper resource="mybatis/mapper/subscribe.xml"/>
 		<mapper resource="mybatis/mapper/product.xml"/>
+		<mapper resource="mybatis/mapper/product2.xml"/>
+		<mapper resource="mybatis/mapper/User.xml"/>
 		<mapper resource="mybatis/mapper/promotion.xml"/>
 		<mapper resource="mybatis/mapper/license.xml"/>
 	</mappers>

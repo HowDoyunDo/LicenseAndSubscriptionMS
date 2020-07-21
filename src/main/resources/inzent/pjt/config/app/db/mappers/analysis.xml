@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="analysis">
+	<select id="getOrderListDay" resultType="add">
+	<![CDATA[
+		 select substring(to_char(start_date, 'YYYY-MM-DD HH:MI:SS'), 0, 11) as date, 
+		   count(*) as order_cnt,
+		   count(distinct policy_no) as pol_cnt,
+		   sum(org_price) as org_price, 
+		   sum(dc_price) as dc_price,
+		   sum(total_price) as total_price
+		  from order_list 
+		  group by date order by date desc
+	]]>
+	</select>
+	
+	<select id="getOrderListWeek" resultType="awd">
+	<![CDATA[
+		select
+		  (ROW_NUMBER() OVER()) AS no,
+		  date_trunc('week', start_date) as week_start,
+		  date_trunc('week', start_date) + '6 days' as week_end,
+		  count(*) as order_cnt,
+		  count(distinct policy_no) as pol_cnt,
+		  sum(org_price) as org_price, 
+		  sum(dc_price) as dc_price,
+		  sum(total_price) as total_price
+		 from order_list
+		 group by week_start
+		 order by week_start desc;
+	]]>
+	</select>
+	
+	<select id="getOrderListMonth" resultType="amd">
+	<![CDATA[
+		select
+		  (ROW_NUMBER() OVER()) AS no,
+		  to_char(start_date, 'YYYY-MM') as year_month,
+		  count(*) as order_cnt,
+		  count(distinct policy_no) as pol_cnt,
+		  sum(org_price) as org_price, 
+		  sum(dc_price) as dc_price,
+		  sum(total_price) as total_price
+		 from order_list
+		 group by year_month
+		 order by year_month desc; 
+	]]>
+	</select>
+	
+	<select id="getOrderListPrdt" parameterType="map" resultType="apd">
+	<![CDATA[
+		select
+		  ol.policy_no as policy_no,
+		  sp.policy_title as policy_title,
+		  sp.standard as standard,
+		  sp.visible as visible,
+		  sp.price as price,
+		  sum(ol.month_count) as order_cnt,
+		  sum(ol.org_price) as org_price, 
+		  sum(ol.dc_price) as dc_price,
+		  sum(ol.total_price) as total_price
+		 from order_list ol, subscription_policy sp
+		 where ol.reg_date >= to_timestamp(#{start}, 'YYYY-MM-DD HH24:MI:SS')
+		 and ol.reg_date > to_timestamp(#{end}, 'YYYY-MM-DD HH24:MI:SS')
+		 group by policy_no, policy_title, sp.no, price
+		 having ol.policy_no = sp.no
+		 order by total_price desc
+	]]>
+	</select>
+</mapper>
+	

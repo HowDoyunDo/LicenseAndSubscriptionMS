@@ -38,7 +38,8 @@
           </tr>
           <tr>
             <th>현재 사용량 / 최대 사용 수량</th>
-            <td>{{licenseList.current_count}} / {{licenseList.max_count}}</td>
+            <td v-if="licenseList.max_count === 0">{{licenseList.current_count}} / 제한 없음</td>
+            <td v-if="licenseList.max_count !== 0">{{licenseList.current_count}} / {{licenseList.max_count}}</td>
           </tr>
           <tr>
             <th>사용 기간</th>

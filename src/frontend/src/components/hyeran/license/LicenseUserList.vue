@@ -5,7 +5,7 @@
         <th style="width:5%">번호</th>
         <th style="width:17%">구독 정책명(라이센스 상세)</th>
         <th style="width:7%">이용 기준</th>
-        <th style="width:8%">
+        <th style="width:9%">
           현재/최대
           <br />사용 수량
         </th>
@@ -26,8 +26,9 @@
       >
         <td>{{list.no}}</td>
         <td style=" text-decoration: underline">{{list.policy_title}}[{{list.policy_no}}]</td>
-        <td>{{list.standard == 'A' ? '사용자' : ' 에이전트'}}</td>
-        <td>{{ list.current_count }} / {{ list.max_count }}</td>
+        <td>{{list.standard == 'U' ? '사용자' : ' 에이전트'}}</td>
+        <td v-if="list.max_count === 0">{{ list.current_count }} / 제한 없음</td>
+        <td v-if="list.max_count !== 0">{{ list.current_count }} / {{ list.max_count }}</td>
         <td>{{list.start_date | formatDate }} ~ {{list.end_date | formatDate}}</td>
         <td>
           <div v-if="list.activation=='A'">활성화</div>

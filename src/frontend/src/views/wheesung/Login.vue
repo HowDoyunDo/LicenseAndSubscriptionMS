@@ -23,6 +23,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
   data() {
     return {
@@ -80,9 +81,8 @@ export default {
             })
             .join("")
         );
-        console.log(JSON.parse(jsonPayload));
         this.$store.commit("userinfo/setUserInfo", JSON.parse(jsonPayload));
-        console.log(this.$store.state.userinfo.userInfo.name);
+        
         return JSON.parse(jsonPayload);
       } catch (e) {
         console.log(e);

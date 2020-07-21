@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="user">
+	<select id="userList" resultType="map">
+		select u.no, u.email, u.manager_type, u.name, u.co_name, u.co_name, to_char(reg_date, 'YYYY-MM-DD') reg_date from user_admin u
+	</select>
+	<select id="userInfo" resultType="uservo">
+		select u.no, u.email, u.manager_type, u.name, u.co_name, u.co_location, u.co_tel, to_char(reg_date, 'YYYY-MM-DD') reg_date
+		 from user_admin u
+		 where u.no = #{no}
+	</select>
+	<select id="cancelList" resultType="map">
+		select to_char(c.cancel_date, 'YYYY-MM-DD') cancel_date, p.policy_title, a.name, a.co_name
+		 from subscription_cancel c
+		 left join order_list o
+		 ON c.order_no = o.policy_no
+		 left join subscription_policy p
+		 on o.policy_no = p.no
+		 left join user_admin a
+		 on c.user_admin_no = a."no" 
+	</select>
+	<select id="changeList" resultType="map">
+		select to_char(c.change_date, 'YYYY-MM-DD') change_date, p.policy_title, a.name, a.co_name, to_char(c.start_date, 'YYYY-MM-DD') start_date, to_char(c.end_date, 'YYYY-MM-DD') end_date
+		 from subscription_change c
+		 left join subscription_policy p
+		 ON c.policy_no = p."no" 
+		 left join license l
+		 on c.license_no = l."no"
+		 left join user_admin a
+		 on l.user_admin_no = a."no" 
+	</select>
+	<select id="orderList" resultType="map">
+		select o.no, to_char(o.reg_date, 'YYYY-MM-DD') reg_date, p.policy_title, a.name, a.co_name, o.month_count, o.total_price, to_char(o.start_date, 'YYYY-MM-DD') start_date, to_char(o.end_date, 'YYYY-MM-DD') end_date
+		 from order_list o
+		 left join subscription_policy p
+		 on o.policy_no = p."no" 
+		 left join user_admin a
+		 on o.user_no = a."no" 
+	</select>
+	<select id="orderInfo" resultType="ordervo">
+		select o.no, to_char(o.reg_date, 'YYYY-MM-DD') reg_date, p.policy_title, a.name, a.co_name, o.month_count, o.total_price, to_char(o.start_date, 'YYYY-MM-DD') start_date, to_char(o.end_date, 'YYYY-MM-DD') end_date
+		 from order_list o
+		 left join subscription_policy p
+		 on o.policy_no = p."no" 
+		 left join user_admin a
+		 on o.user_no = a."no" 
+		 where o.no = #{no}
+	</select>
+</mapper>

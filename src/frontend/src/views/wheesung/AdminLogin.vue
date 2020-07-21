@@ -32,6 +32,7 @@
 
 <script>
 import axios from "axios";
+
 export default {
     data() {
         return {
@@ -65,7 +66,7 @@ export default {
                 }
                 sessionStorage.setItem("license-token", result.data);
                 this.parseJwt(result.data);
-                this.$router.push("/");
+                this.$router.push("/analysis/sales/day");
             });
         },
         parseJwt(token) {
@@ -81,6 +82,7 @@ export default {
                     .join("")
                 );
                 this.$store.commit("userinfo/setUserInfo", JSON.parse(jsonPayload));
+                
                 return JSON.parse(jsonPayload);
             } catch (e) {
                 console.log(e);

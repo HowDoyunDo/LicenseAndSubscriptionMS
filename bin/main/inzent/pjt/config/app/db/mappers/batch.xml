@@ -9,4 +9,23 @@
 			
 		]]>
 	</delete>
+	
+	<select id="getBatchInfo" resultType="batchvo">
+		<![CDATA[
+			select * from batch_service
+		]]>
+	</select>
+	
+	<update id="updateBatch" parameterType="map">
+		<![CDATA[
+			update batch_service
+			  set batch_period_days = ${period}, 
+			  login_limit_months = ${months},
+			  login_limit_days = ${days},
+			  login_limit_hours = ${hours},
+			  recent_batch = current_timestamp,
+			  next_batch = current_timestamp + '${months} months' + '${days} days' + '${hours} hours'
+			  where no = 1
+		]]>
+	</update>
 </mapper>

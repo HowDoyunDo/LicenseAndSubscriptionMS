@@ -1,6 +1,8 @@
 <template>
     <div id="header">
-        <router-link to="/"><img style="width:155px; height:25px; margin-left:16px" src="../../public/logo.png"/></router-link>
+        <router-link to="/" v-if="this.userInfo.name === undefined"><img style="width:155px; height:25px; margin-left:16px" src="../../public/logo.png"/></router-link>
+        <router-link to="/" v-if="this.userInfo.co_number !== undefined"><img style="width:155px; height:25px; margin-left:16px" src="../../public/logo.png"/></router-link>
+        <router-link to="/analysis/sales/day" v-if="(this.userInfo.name !== undefined) && (this.userInfo.co_number === undefined)"><img style="width:155px; height:25px; margin-left:16px" src="../../public/logo.png"/></router-link>
         <ul v-if="(this.userInfo.name !== undefined) && (this.userInfo.co_number === undefined)">
             <li @click="remove"><router-link id="white" to="/">로그아웃</router-link></li>
             <li>관리자님 환영합니다.</li> 
