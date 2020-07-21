@@ -45,4 +45,12 @@ public class UserDao {
   public OrderVo orderInfo(OrderVo vo) {
     return session.selectOne("orderInfo", vo);
   }
+  
+  public UserVo myInfo(UserVo vo) {
+    return session.selectOne("myInfo", vo);
+  }
+  
+  public void changeUserInfo(UserVo vo) {
+    session.update("changeUserInfo", vo);
+  }
 }

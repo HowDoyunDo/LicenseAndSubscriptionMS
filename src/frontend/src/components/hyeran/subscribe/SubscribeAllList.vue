@@ -1,5 +1,8 @@
 <template>
   <div>
+    <div class="search-wrapper">
+      <input id="myInput" type="text" v-model="keyword" placeholder="검색어 입력" />
+    </div>
     <table class="table_board">
       <tr>
         <th style="width:6%;">번호</th>
@@ -15,7 +18,7 @@
         onmouseover="this.style.background='#CEECF5';"
         onmouseout="this.style.background=''"
         style="cursor:pointer"
-        v-for="(list, index) in subAllList"
+        v-for="(list, index) in filteredList"
         :key="list.no"
         @click="listClick(index)"
       >
@@ -40,8 +43,19 @@ import { subscribeAllList } from "@/api/shr/subscribe";
 export default {
   data() {
     return {
-      subAllList: ""
+      subAllList: "",
+      keyword: ""
     };
+  },
+  computed: {
+    filteredList() {
+      return Object.values(this.subAllList).filter(post => {
+        console.log(Object.values(post));
+        return post.policy_title
+          .toLowerCase()
+          .includes(this.keyword.toLowerCase());
+      });
+    }
   },
   created() {
     this.listData();
@@ -59,9 +73,24 @@ export default {
         params: { subscribe_no: subscribeNo }
       });
     }
-  },
+  }
 };
 </script>
 
 <style>
+#myInput {
+  background-image: url("../../../assets/images/searchIcon2.png");
+  background-size: 23px;
+  background-position: 8px 8px;
+  background-repeat: no-repeat;
+  width: 260px;
+  height: 35px;
+  font-size: 16px;
+  padding: 12px 20px 12px 42px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
+input {
+  outline: none;
+}
 </style>

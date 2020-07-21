@@ -3,6 +3,8 @@
         <Detail>
             <!-- slot 위치 -->
             <br>
+            <div id="inner">
+            <br>
             <ul class="user" style="float:left">
                 <th>{{ solution }} _사용자 정책</th>
                 <li v-for="(upolicy, i) in uPolicies" v-bind:key="upolicy.no">
@@ -63,8 +65,8 @@
                     </div>
                 </li>
             </ul>
-
-            <br>
+            
+            <hr>
 
             <ul class="agent" style="float:left">
                 <th>{{ solution }} _에이전트 정책</th>
@@ -126,6 +128,7 @@
                     </div>
                 </li>
             </ul>
+            </div>
         </Detail>
 
         <button id="subBtn" @click="subBtn()">
@@ -277,7 +280,8 @@ export default {
       position:fixed;
       right:50px;
       bottom:50px;
-      z-index:1000
+      z-index:1000;
+      opacity: 0.8;
   }
 
   #upBtn {
@@ -290,5 +294,12 @@ export default {
       padding:10px;
       z-index:1000;
       background-color: #ccc;
+      opacity: 0.7;
+  }
+
+  #inner {
+      width: 100%;
+      display: inline-block;
+      border: 1px solid #ccc;
   }
 </style>

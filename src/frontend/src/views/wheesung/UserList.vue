@@ -1,16 +1,15 @@
 <template>
   <div class="contents" style="border-left : 1px solid lightgray;">
     <div>
-      <br />
-      <h2 style="text-align:center">관리자 목록</h2>
+      <h2>관리자 목록</h2>
       <br />
       <table class="table_board">
         <tr style="float:center;">
-          <th>번호</th>
-          <th style="width:150px; text-align: left;">기업명 [관리자]</th>
-          <th>타입</th>
-          <th style="width:250px;text-align: left; padding: 0 0 0 20px;">이메일</th>
-          <th style="width:150px;">등록일</th>
+          <th width="5%">번호</th>
+          <th style="width:20%;">기업명 [관리자]</th>
+          <th width="5%">타입</th>
+          <th style="width:20%; padding: 0 0 0 20px;">이메일</th>
+          <th style="width:15%;">등록일</th>
         </tr>
         <tr
           onmouseover="this.style.background='#CEECF5';"
@@ -21,9 +20,9 @@
           @click="listClick(user.no)"
         >
           <td>{{ idx + 1 }}</td>
-          <td style="text-align: left;">{{ user.co_name }} [{{ user.name }}]</td>
+          <td>{{ user.co_name }} [{{ user.name }}]</td>
           <td>{{ user.manager_type }}</td>
-          <td style="text-align: left; padding: 0 0 0 20px;">{{user.email}}</td>
+          <td style="padding: 0 0 0 20px;">{{user.email}}</td>
           <td>{{user.reg_date}}</td>
         </tr>
       </table>
@@ -61,21 +60,13 @@ export default {
 </script>
 
 <style>
+@import "/assets/css/allList.css";
+
 .cssbtn {
   background-color: #3498db;
   color: #ffffff;
   border: none;
   width: 200px;
-  height: 40px;
-}
-
-.table_board th {
-  text-align: center;
-  font-size: 15px;
-  height: 40px;
-}
-
-.table_board td {
   height: 40px;
 }
 </style>

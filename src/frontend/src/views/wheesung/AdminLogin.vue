@@ -1,9 +1,8 @@
 <template>
   <div class="contents">
     <div id="login" style="width: 460px; margin: 0 auto;">
-      <br />
       <form @submit.prevent="login">
-        <h1 style="text-align:center;">관리자 로그인</h1>
+        <h1>관리자 로그인</h1>
         <br />
         <span class="signtext">
           <input class="signtextinput" type="text" placeholder="이메일을 입력하세요." v-model="email" />
@@ -82,7 +81,7 @@ export default {
                     .join("")
                 );
                 this.$store.commit("userinfo/setUserInfo", JSON.parse(jsonPayload));
-                
+
                 return JSON.parse(jsonPayload);
             } catch (e) {
                 console.log(e);

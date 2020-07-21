@@ -111,6 +111,7 @@ export default {
       
     };
   },
+  components: {},
   methods: {
     signin() {
       if (

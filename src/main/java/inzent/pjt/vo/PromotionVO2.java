@@ -4,8 +4,10 @@ import java.util.ArrayList;
 
 public class PromotionVO2 {
 	private int promotion_no;
+	private int policy_no;
 	private int product_no;
 	private String product_name;
+	private String policy_title;
 	private String title;
 	private int discount;
 	private String start_date;
@@ -15,9 +17,44 @@ public class PromotionVO2 {
 	private boolean type;
 	private String reg_date;
 	private ArrayList<ProductVO> selectedList; // 프로모션 등록 시 선택한 제품들
+	private ArrayList<SubscribeVO> selectedPolicyList; // 프로모션 등록 시 선택한 정책들
 	private int product_price; // 제품가격
+	private int policy_price ; //정책 가격
 	
 	
+	
+	public int getPolicy_price() {
+		return policy_price;
+	}
+
+	public void setPolicy_price(int policy_price) {
+		this.policy_price = policy_price;
+	}
+
+	public String getPolicy_title() {
+		return policy_title;
+	}
+
+	public void setPolicy_title(String policy_title) {
+		this.policy_title = policy_title;
+	}
+
+	public int getPolicy_no() {
+		return policy_no;
+	}
+
+	public void setPolicy_no(int policy_no) {
+		this.policy_no = policy_no;
+	}
+
+	public ArrayList<SubscribeVO> getSelectedPolicyList() {
+		return selectedPolicyList;
+	}
+
+	public void setSelectedPolicyList(ArrayList<SubscribeVO> selectedPolicyList) {
+		this.selectedPolicyList = selectedPolicyList;
+	}
+
 	public int getProduct_price() {
 		return product_price;
 	}

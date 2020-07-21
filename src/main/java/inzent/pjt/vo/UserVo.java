@@ -12,18 +12,10 @@ public class UserVo {
   private String manager_type;      // 사용자가 마스터관리자(M)인지 서브관리자(S)인지 구별
   private String reg_date;          // 사용자 가입일
   private String admin_type;        // 시스템관리자 고객관리자 식별
-  private String last_login; // 마지막 로그인 날짜
   
-  
-	public String getLast_login() {
-		return last_login;
-	}
-	public void setLast_login(String last_login) {
-		this.last_login = last_login;
-	}
-	public int getNo() {
-		return no;
-	}
+  public int getNo() {
+    return no;
+  }
   public void setNo(int no) {
     this.no = no;
   }

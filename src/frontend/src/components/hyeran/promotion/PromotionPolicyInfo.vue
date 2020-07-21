@@ -17,11 +17,11 @@
       <br />
       <table class="table_add">
         <tr>
-          <th>선택된 제품</th>
+          <th>선택된 정책</th>
         </tr>
       </table>
       <div class="select-product">
-        <ProductOneList :promotionProduct="promotionProduct" :discountPrice="discount/100" />
+        <SubscribeOneList :promotionPolicy="promotionPolicy" :discountPrice="discount/100" />
       </div>
 
       <br />
@@ -69,7 +69,7 @@
 
       <div class="submit_btn">
         <div v-if="modifyToggle==true">
-          <button type="button" @click="promotionModifySubmit">수정 완료</button>
+          <button type="button" @click="promotionModifySubmit">완료</button>
           <button type="button" @click="cancel">취소</button>
         </div>
         <div v-else>
@@ -83,8 +83,11 @@
 </template>
 <script>
 import { promotionMixin } from "../mixins/promotionAdd";
-import { promotionModify, promotionDelete } from "@/api/shr/promotion";
-
+import {
+  promotionPolicyModify,
+  promotionPolicyDelete
+} from "@/api/shr/promotion";
+import SubscribeOneList from "@/components/hyeran/subscribe/SubscribeOneList.vue";
 export default {
   mixins: [promotionMixin],
   data() {
@@ -93,20 +96,22 @@ export default {
       modifyToggle: false
     };
   },
-
+  components: {
+    SubscribeOneList
+  },
   async created() {
     this.promotionNo = this.$route.params.promotion_no;
 
     // 프로모션 목록 스토어 저장
     await this.$store.dispatch(
-      "promotionStore/selectOnePromotion",
+      "promotionStore/selectOnePromotionPolicy",
       this.promotionNo
     );
 
-    // 초기값 세팅
-    this.defaultSetting();
+    // 정책 프로모션 초기값 세팅
+    this.defaultSetting_policy();
   },
- 
+
   methods: {
     // 수정 submit button
     async promotionModifySubmit() {
@@ -121,7 +126,7 @@ export default {
           end_date_time: this.end_date_time,
           type: this.type
         };
-        const { data } = await promotionModify(promotionData);
+        const { data } = await promotionPolicyModify(promotionData);
 
         if (data == 1) {
           alert("수정 완료");
@@ -134,12 +139,12 @@ export default {
     },
     // 목록
     listClick() {
-      this.$router.push({ name: "promotion" });
+      this.$router.push("/promotion/policy");
     },
     // 취소
     cancel() {
       this.modifyToggle = false;
-      this.defaultSetting();
+      this.defaultSetting_policy();
     },
     modifyClick() {
       if (confirm("수정하시겠습니까?")) {
@@ -149,19 +154,18 @@ export default {
     // 삭제
     async deleteClick() {
       if (confirm("삭제하시겠습니까?")) {
-        const { data } = await promotionDelete({
+        const { data } = await promotionPolicyDelete({
           promotion_no: this.promotionNo
         });
         if (data == 1) {
           alert("삭제 완료");
-          this.$router.push("/promotion");
+          this.$router.push("/promotion/policy");
         } else {
           alert("삭제 실패");
           this.cancel();
         }
       }
-    },
-
+    }
   }
 };
 </script>
@@ -183,6 +187,6 @@ input[type="radio"] {
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1);
   padding: 0.5rem 0.75rem;
   margin: 5px;
-   outline:none;
+  outline: none;
 }
 </style>

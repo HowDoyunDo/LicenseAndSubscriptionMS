@@ -5,7 +5,15 @@ public class CategoryVo {
   private String title;
   private String reg_date;
   private String ca_title;
+  private String category_image;
   
+  
+  public String getCategory_image() {
+    return category_image;
+  }
+  public void setCategory_image(String category_image) {
+    this.category_image = category_image;
+  }
   public String getCa_title() {
     return ca_title;
   }

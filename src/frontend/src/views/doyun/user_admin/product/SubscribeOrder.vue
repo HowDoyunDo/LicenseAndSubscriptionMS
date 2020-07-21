@@ -81,9 +81,9 @@
                 <br>
                 <br><br><br>
 
-                <hr style="border-top: 1px solid lightgray;">
+                <hr style="border-top: 1px solid #ccc;">
                 <div class="selPayM" align="center">
-                    <h5 style="font-weight: bold">결제 방식 선택</h5>
+                    <h5 style="font-weight: bold; font-size:15px">결제 방식 선택</h5>
                     <button id="cards" @click="selPayM('cards')"
                         :style="{background: cardsCol}">
                         신용카드
@@ -93,11 +93,11 @@
                         실시간계좌이체
                     </button>
                 </div>
-                <hr style="border-top: 1px solid lightgray;">
+                <hr style="border-top: 1px solid #ccc;">
                 <br>
                 <p align="center" style="font-size:17px"><input type="checkbox" v-model="chk"/> 다음 결제정보에 대해 이해하고 있으며, 결제를 진행합니다.</p>
                 <div align="center">
-                    <button @click="gopay()">
+                    <button style="width:110px" @click="gopay()">
                         결제하기
                     </button>
                 </div>
@@ -178,8 +178,9 @@
                 <br>
                 <br>
                 <br><br><br>
-                <hr style="border-top: 1px solid black;">
+                <hr style="border-top: 1px solid #ccc;">
                 <div class="selPayM" align="center">
+                    <h5 style="font-weight: bold; font-size:15px">결제 방식 선택</h5>
                     <button id="cards" @click="selPayM('cards')"
                         :style="{background: cardsCol}">
                         신용카드
@@ -189,11 +190,11 @@
                         실시간계좌이체
                     </button>
                 </div>
-                <hr style="border-top: 1px solid gray;">
+                <hr style="border-top: 1px solid #ccc;">
                 <br>
                 <p align="center" style="font-size:17px"><input type="checkbox" v-model="chk"/> 다음 결제정보에 대해 이해하고 있으며, 결제를 진행합니다.</p>
                 <div align="center">
-                    <button align="center" @click="gopay()">
+                    <button style="width:110px" @click="gopay()">
                         결제하기
                     </button>
                 </div>

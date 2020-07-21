@@ -40,6 +40,7 @@ public class SubscribeController {
 		return allList;
 	}
 
+	// 공개 정책인 것만 출력 
 	@PostMapping("/alllist_P")
 	public List<SubscribeVO> subscribeAllList_P() {
 		System.out.println("/alllist_P");

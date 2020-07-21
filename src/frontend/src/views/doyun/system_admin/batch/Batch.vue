@@ -58,7 +58,7 @@
             <h4 style="color:gray" align="center">다음 정보로 배치서비스를 변경합니다.</h4>
             <br>
             <div align="center">
-                <button style="width:150px" @click="chgbatch()">배치 서비스 변경</button>
+                <button style="width:180px" @click="chgbatch()">배치 서비스 변경</button>
             </div>
             <br>
         </div>

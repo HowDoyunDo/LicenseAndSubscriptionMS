@@ -27,6 +27,7 @@ public class ProductController2 {
   public String categoryAdd(@RequestBody CategoryVo vo) throws Exception{
     String chk = productservice.categoryChk(vo);
     if(chk == "S") {
+    	System.out.println("카테고리"+vo.getCategory_image());
       productservice.categoryAdd(vo);
       return "S";
     }

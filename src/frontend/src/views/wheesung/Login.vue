@@ -82,7 +82,7 @@ export default {
             .join("")
         );
         this.$store.commit("userinfo/setUserInfo", JSON.parse(jsonPayload));
-        
+
         return JSON.parse(jsonPayload);
       } catch (e) {
         console.log(e);

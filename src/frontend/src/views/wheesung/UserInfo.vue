@@ -1,8 +1,7 @@
 <template>
   <div class="contents" style="border-left : 1px solid lightgray;">
     <div>
-      <br />
-      <h2 style="text-align:center">관리자 정보</h2>
+      <h2>관리자 정보</h2>
       <br />
       <form class="form" @submit.prevent="productChange">
         <table class="table_add">

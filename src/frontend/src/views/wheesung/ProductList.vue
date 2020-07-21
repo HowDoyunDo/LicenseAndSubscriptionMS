@@ -1,9 +1,7 @@
 <template>
   <div class="contents">
     <div>
-      <br>
-      <h2 style="text-align:center">제품 목록</h2>
-      <br />
+      <h2>제품 목록</h2>
       <div style="text-align: right; margin: 10px;">
         <input class="cssbtn" type="button" value="등록" @click="movetoadd" />
       </div>

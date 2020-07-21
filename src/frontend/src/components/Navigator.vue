@@ -123,7 +123,7 @@
             <router-link to="/">관리자 목록</router-link>
           </li>
           <li>
-            <router-link to="/">관리자 정보수정</router-link>
+            <router-link to="/myinfo">관리자 정보수정</router-link>
           </li>
           <br />
         </template>

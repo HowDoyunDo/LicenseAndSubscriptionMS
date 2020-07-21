@@ -37,4 +37,12 @@ public class UserService {
   public OrderVo orderInfo(OrderVo vo) {
     return userdao.orderInfo(vo);
   }
+  
+  public UserVo myInfo(UserVo vo) {
+    return userdao.myInfo(vo);
+  }
+  
+  public void changeUserInfo(UserVo vo) {
+    userdao.changeUserInfo(vo);
+  }
 }

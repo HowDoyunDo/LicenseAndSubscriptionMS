@@ -12,12 +12,12 @@ import userinfo from '@/store/wheesung/userinfo.js'
 
 export default new Vuex.Store({
   modules: {
-    subscribeStore: subscribeStore,
     productStore : productStore,
-    productStore_shr: productStore_shr,
     licenseStore : licenseStore,
+    userinfo : userinfo,
+    subscribeStore: subscribeStore,
+    productStore_shr: productStore_shr,
     promotionStore : promotionStore,
-    userinfo : userinfo
   },
   plugins: [
     createPersistedState()

@@ -59,5 +59,15 @@ export default [
         path: '/orderinfo/:no',
         name: 'orderinfo',
         component: () => import("@/views/wheesung/OrderInfo.vue")
+    },
+    {
+        path: '/myinfo',
+        name: 'myinfo',
+        component: () => import("@/views/wheesung/MyInfo.vue")
+    },
+    {
+        path: '/changeuserinfo',
+        name: 'changeuserinfo',
+        component: () => import("@/views/wheesung/ChangeUserInfo.vue")
     }
 ]

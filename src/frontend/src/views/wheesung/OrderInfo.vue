@@ -2,7 +2,7 @@
     <div class="contents" style="border-left : 1px solid lightgray;">
     <div>
       <br />
-      <h2 style="text-align:center">주문 정보</h2>
+      <h2>주문 정보</h2>
       <br />
       <form class="form" @submit.prevent="productChange">
         <table class="table_add">

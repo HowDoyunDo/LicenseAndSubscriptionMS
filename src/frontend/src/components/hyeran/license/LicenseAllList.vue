@@ -1,10 +1,5 @@
 <template>
   <div>
-    A : 활성화
-    F : 수량 가득참
-    E : 기간종료
-    C : 취소
-    
     <table class="table_board">
       <tr>
         <th style="width:5%">번호</th>

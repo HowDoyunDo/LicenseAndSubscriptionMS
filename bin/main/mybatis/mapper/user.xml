@@ -46,4 +46,11 @@
 		 on o.user_no = a."no" 
 		 where o.no = #{no}
 	</select>
+	<select id="myInfo" resultType="uservo">
+		select * from user_admin where no = #{no}
+	</select>
+	<update id="changeUserInfo">
+		update user_admin set name = #{name}, password = #{password}, co_name = #{co_name}, co_location = #{co_location}, co_tel = #{co_tel}
+		 where no = #{no}
+	</update>
 </mapper>

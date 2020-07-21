@@ -2,7 +2,7 @@
   <div class="contents" style="border-left : 1px solid lightgray;">
     <div>
       <br />
-      <div style="text-align: center;">
+      <div>
         <h2 style="cursor:pointer;" :style="{color:changeColor}" @click="changeclick">변경 내역</h2>
         <h2 style="cursor:default">&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;</h2>
         <h2 style="cursor:pointer;" :style="{color:cancelColor}" @click="cancelclick">취소 내역</h2>
@@ -10,12 +10,12 @@
       <br />
       <table v-if="clicked" class="table_board">
         <tr style="float:center;">
-          <th style="width:30px;">번호</th>
-          <th style="width:150px;">기업명 [관리자]</th>
-          <th style="text-align: left;">구독 정책명</th>
-          <th style="width:100px;">시작일</th>
-          <th style="width:100px;">종료일</th>
-          <th style="width:100px;">변경일</th>
+          <th style="width:5%;">번호</th>
+          <th style="width:20%;">기업명 [관리자]</th>
+          <th style="width:30%">구독 정책명</th>
+          <th style="width:10%;">시작일</th>
+          <th style="width:10%;">종료일</th>
+          <th style="width:10%;">변경일</th>
         </tr>
         <tr
           style="cursor:default"
@@ -24,7 +24,7 @@
         >
           <td>{{ idx + 1 }}</td>
           <td>{{ change.co_name }} [{{ change.name }}]</td>
-          <td style="text-align: left;">{{ change.policy_title }}</td>
+          <td>{{ change.policy_title }}</td>
           <td>{{change.start_date}}</td>
           <td>{{change.end_date}}</td>
           <td>{{change.change_date}}</td>
@@ -32,10 +32,10 @@
       </table>
       <table v-if="!clicked" class="table_board">
         <tr style="float:center;">
-          <th style="width:50px;">번호</th>
-          <th style="width:200px;">기업명 [관리자]</th>
-          <th style="text-align: left;">구독 정책명</th>
-          <th style="width:200px;">취소일</th>
+          <th style="width:5%">번호</th>
+          <th style="width:20%;">기업명 [관리자]</th>
+          <th style="width:30%">구독 정책명</th>
+          <th style="width:10%">취소일</th>
         </tr>
         <tr
           style="cursor:default"
@@ -44,7 +44,7 @@
         >
           <td>{{ idx + 1 }}</td>
           <td>{{ cancel.co_name }} [{{ cancel.name }}]</td>
-          <td style="text-align: left;">{{cancel.policy_title}}</td>
+          <td>{{cancel.policy_title}}</td>
           <td>{{cancel.cancel_date}}</td>
         </tr>
       </table>

@@ -24,6 +24,13 @@ export default {
   components: {
     Header,
     Navigator
+  },
+  beforeUpdate() {
+    switch (document.location.pathname) {
+      case "subscribeOrderUrl":
+        this.isChecked = true;
+        break;
+    }
   }
 };
 </script>
@@ -33,7 +40,6 @@ export default {
 @import "./assets/css/allList.css";
 @import "./assets/css/products.css";
 @import "./assets/css/table.css";
-
 
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

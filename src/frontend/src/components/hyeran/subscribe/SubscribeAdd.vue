@@ -133,4 +133,7 @@ button {
   padding: 0 15px;
   margin: 10px;
 }
+input {
+   outline:none;
+}
 </style>

@@ -8,8 +8,21 @@ public class ProductVo2 {
   private int price;
   private String reg_date;
   private String title;
+  private String product_image;
+  private String info_image;
   
-  
+  public String getProduct_image() {
+    return product_image;
+  }
+  public void setProduct_image(String product_image) {
+    this.product_image = product_image;
+  }
+  public String getInfo_image() {
+    return info_image;
+  }
+  public void setInfo_image(String info_image) {
+    this.info_image = info_image;
+  }
   public String getTitle() {
     return title;
   }

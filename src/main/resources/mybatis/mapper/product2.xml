@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="product2">
-	<select id="categoryList" resultType="map">
-		select c.no, c.title, to_char(reg_date, 'YYYY-MM-DD') reg_date from category c
-	</select>
-	<insert id="categoryAdd">
-		insert into category (title) values ( #{title} )
-	</insert>
-	<select id="categoryChk" resultType="int">
-		select count(*) from category where title = #{title}
-	</select>
-	<delete id="categoryDel">
-		delete from category where title = #{ca_title}
-	</delete>
-	
-	<select id="productList" resultType="map">
-		select p.no, p.name, p.comments, p.price, to_char(reg_date, 'YYYY-MM-DD') reg_date from product p
-	</select>
-	<select id="productChk" resultType="int">
-		select count(*) from product where name = #{name}
-	</select>
-	<insert id="productAdd">
-		insert into product (category_no, name, comments, price) values (#{category_no}, #{name}, #{comments}, #{price})
-	</insert>
-	<delete id="productDel">
-		delete from product where name = #{name}
-	</delete>
-	<update id="productChange">
-		update product set category_no = #{category_no}, name = #{name}, comments = #{comments}, price = #{price}
-		 where no = #{no}
-	</update>
-	<select id="productinfo" resultType="productvo2">
-		select p.no, p.category_no, p.name, p.comments, p.price, p.reg_date, c.title
- 		 from product p, category c
-		 where p.category_no = c.no and p.no = #{no}
-	</select>
+   <select id="categoryList" resultType="map">
+      select c.no, c.title, to_char(reg_date, 'YYYY-MM-DD') reg_date, c.category_image from category c
+   </select>
+   <insert id="categoryAdd">
+      insert into category (title, category_image) values ( #{title}, #{category_image} )
+   </insert>
+   <select id="categoryChk" resultType="int">
+      select count(*) from category where title = #{title}
+   </select>
+   <delete id="categoryDel">
+      delete from category where title = #{ca_title}
+   </delete>
+   
+   <select id="productList" resultType="map">
+      select p.no, p.name, p.comments, p.price, to_char(reg_date, 'YYYY-MM-DD') reg_date from product p
+   </select>
+   <select id="productChk" resultType="int">
+      select count(*) from product where name = #{name}
+   </select>
+   <insert id="productAdd">
+      insert into product (category_no, name, comments, price, product_image, info_image) values (#{category_no}, #{name}, #{comments}, #{price}, #{product_image}, #{info_image})
+   </insert>
+   <delete id="productDel">
+      delete from product where name = #{name}
+   </delete>
+   <update id="productChange">
+      update product set category_no = #{category_no}, name = #{name}, comments = #{comments}, price = #{price}, product_image = #{product_image}, info_image = #{info_image}
+       where no = #{no}
+   </update>
+   <select id="productinfo" resultType="productvo2">
+      select p.no, p.category_no, p.name, p.comments, p.price, p.reg_date, c.title, p.product_image, p.info_image
+        from product p, category c
+       where p.category_no = c.no and p.no = #{no}
+   </select>
 </mapper>
