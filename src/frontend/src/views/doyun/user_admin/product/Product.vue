@@ -2,11 +2,9 @@
     <div id="product" class="contents">
         <Detail>
             <!-- slot 위치 -->
-            <br>
             <div id="inner">
-            <br>
             <ul class="user" style="float:left">
-                <th>{{ solution }} _사용자 정책</th>
+                <h4 style="color:gray">{{ solution }} _사용자 정책</h4>
                 <li v-for="(upolicy, i) in uPolicies" v-bind:key="upolicy.no">
                     <div class="panel panel-info">
                         <div class="panel-heading">{{ solution }}</div>
@@ -65,11 +63,13 @@
                     </div>
                 </li>
             </ul>
-            
-            <hr>
+            </div>
 
+            <br><br>
+
+            <div id="inner">
             <ul class="agent" style="float:left">
-                <th>{{ solution }} _에이전트 정책</th>
+                <h4 style="color:gray">{{ solution }} _에이전트 정책</h4>
                 <li v-for="(apolicy, i) in aPolicies" v-bind:key="apolicy.no">
                     <div class="panel panel-info">
                         <div class="panel-heading">{{ solution }}</div>
@@ -231,9 +231,8 @@ export default {
 <style scoped>
   #product ul {
     list-style: none;
-    margin-right: auto;
-    margin-left: auto;
-    width:100%;
+    width: 100%;
+    padding: 10px;
   }
   .user li, .agent li {
     padding: 10px;
@@ -301,5 +300,6 @@ export default {
       width: 100%;
       display: inline-block;
       border: 1px solid #ccc;
+      margin-left: 20px;
   }
 </style>

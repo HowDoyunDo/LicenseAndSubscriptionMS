@@ -122,9 +122,9 @@ export default {
                 .then(res => { 
                     if(res.data === false) {
                         if(this.addrtab)
-                            alert('해당 라이선스 내 중복된 MAC Address입니다. 다시 입력해주세요.');
+                            alert('해당 라이선스 내 중복된 MAC Address를 가진 에이전트가 존재합니다.\n확인 후 다시 입력해주세요.');
                         else
-                            alert('해당 라이선스 내 중복된 IP Address입니다. 다시 입력해주세요.');
+                            alert('해당 라이선스 내 중복된 IP Address를 가진 에이전트가 존재합니다.\n확인 후 다시 입력해주세요.');
                     } else {
                         alert('에이전트를 추가했습니다.');
                         window.history.go(-1);
@@ -151,8 +151,7 @@ export default {
 
 <style scoped>
     .info-table {
-        border-top: 2px solid #ccc;
-        border-bottom: 2px solid #ccc;
+        border: 2px solid #ccc;
         width: 100%;
         max-width: 100%;
         border-spacing: 0;
@@ -184,19 +183,21 @@ export default {
     }
 
     #tab-mac {
-        border-bottom: none;
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
         padding: 10px;
         display: inline-block;
         cursor: pointer;
+        border: 1px solid #ccc;
+        border-bottom: 1px solid #eaeaea;
     }
     #tab-ip {
-        border-bottom: none;
         padding: 10px;
         display: inline-block;
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
         cursor: pointer;
+        border: 1px solid #ccc;
+        border-bottom: 1px solid #eaeaea;
     }
 </style>

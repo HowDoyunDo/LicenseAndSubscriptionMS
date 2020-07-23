@@ -184,22 +184,22 @@ export default {
                 var thisWeek = new Date();  // 현재 날짜
                 switch( thisWeek.getDay() ) {   // 이번 주의 첫 날짜를 구함
                     case 2: 
-                    thisWeek.setDate(thisWeek.getDate-1);
+                    thisWeek.setDate(thisWeek.getDate()-1);
                     break;
                     case 3: 
-                    thisWeek.setDate(thisWeek.getDate-2);
+                    thisWeek.setDate(thisWeek.getDate()-2);
                     break;
                     case 4: 
-                    thisWeek.setDate(thisWeek.getDate-3);
+                    thisWeek.setDate(thisWeek.getDate()-3);
                     break;
                     case 5: 
-                    thisWeek.setDate(thisWeek.getDate-4);
+                    thisWeek.setDate(thisWeek.getDate()-4);
                     break;
                     case 6: 
-                    thisWeek.setDate(thisWeek.getDate-5);
+                    thisWeek.setDate(thisWeek.getDate()-5);
                     break;
                     case 7: 
-                    thisWeek.setDate(thisWeek.getDate-6);
+                    thisWeek.setDate(thisWeek.getDate()-6);
                     break;
                 }
 

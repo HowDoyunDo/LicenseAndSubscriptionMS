@@ -22,7 +22,6 @@ import com.github.ckpoint.toexcel.core.ToWorkBook;
 import com.github.ckpoint.toexcel.core.ToWorkSheet;
 
 import inzent.pjt.service.LicenseService;
-import inzent.pjt.service.scheduler.DynamicSchedule;
 import inzent.pjt.vo.AgentVo;
 import inzent.pjt.vo.GeneralUserVo;
 import inzent.pjt.vo.LicenseVo;
@@ -142,7 +141,7 @@ public class LicenseController {
 	}
 	
 	@PostMapping("/addUsers")
-	public boolean addUser(
+	public boolean addUsers(
 			@RequestPart MultipartFile file,
 			@RequestParam(value = "adminUserNo") int adminUserNo,
 			@RequestParam(value = "licenseNo") int licenseNo

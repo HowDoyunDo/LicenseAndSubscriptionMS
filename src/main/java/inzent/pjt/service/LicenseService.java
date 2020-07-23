@@ -90,7 +90,7 @@ public class LicenseService {
 	}
 
 	public boolean addUsers(List<GeneralUserVo> userList, int adminUserNo, int licenseNo) {
-		return licenseDao.addusers(userList, adminUserNo, licenseNo);
+		return licenseDao.addUsers(userList, adminUserNo, licenseNo);
 	}
 
 	public List<AgentVo> getAgentList(int licenseNo) {

@@ -65,17 +65,25 @@ public class LicenseDao {
 	}
 
 	public boolean addUser(Map<String, Object> map) {
-		if(sqlSession.selectOne("license.dupUserEmail", map) == null || sqlSession.selectOne("dupUserEmail", map) == "") {
-			sqlSession.insert("license.addUser", map);
-			sqlSession.insert("license.addAgent", map);
-			sqlSession.update("license.upCurrentCount", map.get("licenseNo"));
-			return true;
-		} else {			
+		if(sqlSession.selectOne("license.dupUserEmail", map) == null || sqlSession.selectOne("dupUserEmail", map) == "") {	
+			if(sqlSession.selectOne("license.dupUser", map) == null) {	// 해당하는 이메일을 가진 사용자가 라이센스 내부, 외부 모두 없는 경우
+				sqlSession.insert("license.addUser", map);	// 사용자 인덱스 추가
+				sqlSession.insert("license.addAgent", map);	// 에이전트 인덱스 추가
+				sqlSession.update("license.upCurrentCount", map.get("licenseNo"));	//사용량 증가
+				return true;
+			} else {	// 해당하는 이메일을 가진 사용자가 라이센스 내부에는 없지만 외부에는 존재하는 경우
+				sqlSession.update("license.updateUserInfo", map); // 사용자 업데이트
+				sqlSession.insert("license.addAgent", map);	// 에이전트 인덱스 추가
+				sqlSession.update("license.upCurrentCount", map.get("licenseNo"));	//사용량 증가
+				return true;
+			}
+		} else {	// 해당하는 이메일을 가진 사용자가 라이센스 내부에 존재하는 경우 
+			sqlSession.update("license.updateUserInfo", map);
 			return false;
 		}
 	}
 
-	public boolean addusers(List<GeneralUserVo> userList, int adminUserNo, int licenseNo) {
+	public boolean addUsers(List<GeneralUserVo> userList, int adminUserNo, int licenseNo) {
 		
 		if(userList.size() == 0) {
 			return false;
@@ -89,16 +97,18 @@ public class LicenseDao {
 				obj.put("licenseNo", licenseNo);
 				obj.put("adminUserNo", adminUserNo);
 				
-				if(sqlSession.selectOne("license.dupUserEmail", obj) == null) {
-					if(sqlSession.selectOne("license.dupUser", obj) == null) {
+				if(sqlSession.selectOne("license.dupUserEmail", obj) == null) {	// 해당 라이센스 내 중복된 이메일을 가진 사용자가 존재하지 않으면
+					if(sqlSession.selectOne("license.dupUser", obj) == null) {	// 해당 이메일을 가진 사용자가 존재하지 않으면
 						sqlSession.insert("license.addUser", obj);
 						sqlSession.insert("license.addAgent", obj);
 						sqlSession.update("license.upCurrentCount", licenseNo);
-					} else {
+					} else {													// 해당 이메일을 가진 사용자가 외부에 존재하면,
+						sqlSession.update("license.updateUserInfo", obj); // 사용자 업데이트
 						sqlSession.insert("license.addAgent", obj);
 						sqlSession.update("license.upCurrentCount", licenseNo);
 					}
-				} else {
+				} else {	// 해당 라이센스 내에 중복된 이메일을 가진 사용자가 존재하면
+					sqlSession.update("license.updateUserInfo", obj);
 					System.out.println("중복된 이메일: " + obj.get("email"));
 				}
 			}
@@ -133,16 +143,14 @@ public class LicenseDao {
 	}
 
 	public boolean addAgentMac(Map<String, Object> map) {
-		System.out.println(sqlSession.selectOne("license.dupAgentMac", map) == null);
 		if(sqlSession.selectOne("license.dupAgentMac", map) == null) {
 			if(sqlSession.selectOne("license.dupUser", map) == null) {
-				System.out.println("사용자 없음");
 				sqlSession.insert("license.addUser", map);
 				sqlSession.insert("license.addAgentMac", map);
 				sqlSession.update("license.upCurrentCount", map.get("licenseNo"));
 				return true;
 			} else {
-				System.out.println("사용자 존재");
+				sqlSession.update("license.updateUserInfo", map); // 사용자 업데이트
 				sqlSession.insert("addAgentMac", map);
 				sqlSession.update("license.upCurrentCount", map.get("licenseNo"));
 				return true;
@@ -153,21 +161,19 @@ public class LicenseDao {
 	}
 
 	public boolean addAgentIp(Map<String, Object> map) {
-		System.out.println(sqlSession.selectOne("license.dupAgentIp", map) == null);
-		if(sqlSession.selectOne("license.dupAgentIp", map) == null) {
-			if(sqlSession.selectOne("license.dupUser", map) == null) {
-				System.out.println("사용자 없음");
+		if(sqlSession.selectOne("license.dupAgentIp", map) == null) {	// 라이센스 내부에 해당 ip를 가진 에이전트가 존재X
+			if(sqlSession.selectOne("license.dupUser", map) == null) {	// 해당 사용자 정보X
 				sqlSession.insert("license.addUser", map);
 				sqlSession.insert("license.addAgentIp", map);
 				sqlSession.update("license.upCurrentCount", map.get("licenseNo"));
 				return true;
-			} else {
-				System.out.println("사용자 존재");
+			} else {	// 해당 사용자 정보O
+				sqlSession.update("license.updateUserInfo", map); // 사용자 업데이트
 				sqlSession.insert("addAgentIp", map);
 				sqlSession.update("license.upCurrentCount", map.get("licenseNo"));
 				return true;
 			}
-		} else {
+		} else {	// 라이센스 내부에 해당 ip를 가진 에이전트가 존재O
 			return false;
 		}
 	}

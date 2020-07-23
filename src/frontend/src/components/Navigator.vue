@@ -59,9 +59,9 @@
           <li>
             <router-link to="/userlist">고객사 관리</router-link>
           </li>
-          <li>
+          <!-- <li>
             <router-link to="/">견적 문의 내역</router-link>
-          </li>
+          </li> -->
           <br />
         </template>
       </ul>
@@ -119,16 +119,16 @@
       <h4 @click="toggleSetting">관리자 설정</h4>
       <ul>
         <template v-if="settingMenu">
-          <li>
+          <!-- <li>
             <router-link to="/">관리자 목록</router-link>
-          </li>
+          </li> -->
           <li>
             <router-link to="/myinfo">관리자 정보수정</router-link>
           </li>
           <br />
         </template>
       </ul>
-      <h4 @click="toggleQna">견적 문의</h4>
+      <!-- <h4 @click="toggleQna">견적 문의</h4>
       <ul>
         <template v-if="qnaMenu">
           <li>
@@ -136,7 +136,7 @@
           </li>
           <br />
         </template>
-      </ul>
+      </ul> -->
     </div>
     <!-- 비로그인 네비게이터 -->
     <div v-else-if="this.userInfo.name === undefined">

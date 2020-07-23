@@ -26,7 +26,7 @@
       >
         <td>{{list.no}}</td>
         <td style=" text-decoration: underline">{{list.policy_title}}[{{list.policy_no}}]</td>
-        <td>{{list.standard == 'A' ? '사용자' : ' 에이전트'}}</td>
+        <td>{{list.standard == 'A' ? '에이전트' : '사용자'}}</td>
         <td>{{ list.current_count }} / {{ list.max_count }}</td>
         <td>{{list.start_date | formatDate }} ~ {{list.end_date | formatDate}}</td>
         <td>

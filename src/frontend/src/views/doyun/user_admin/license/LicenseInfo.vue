@@ -54,6 +54,7 @@
                             <th style="width:30%">이메일</th>
                             <th style="width:15%">사용자 부서명</th>
                             <th style="width:30%">마지막 로그인</th>
+                            <!-- <th style="width:15%">활성화 여부</th> -->
                         </tr>
                         <tr v-for="(gu, idx) in filteredList" v-bind:key="gu.no">
                             <td>{{ idx+1 }}</td>
@@ -61,6 +62,10 @@
                             <td>{{ gu.email }}</td>
                             <td>{{ gu.dept_name }}</td>
                             <td>{{ date_to_str(gu.last_login) }}</td>
+                            <!-- <td v-if="gu.activation === true">
+                                <img style="border:1px solid #ccc; width:20px; height:20px;" src="@/assets/images/check.png"/>
+                            </td>
+                            <td v-if="gu.activation === false"><div style="border:1px solid #ccc; width:20px; height:20px; display:inline-block;"/></td> -->
                         </tr>
                     </table>
                 </template>
@@ -75,7 +80,7 @@
                             <th style="width:30%">마지막 로그인</th>
                         </tr>
                         <tr v-for="gu in filteredList" v-bind:key="gu.no">
-                            <td><input type="checkbox" @change="checkbox(gu.no)"></td>
+                            <td><input type="checkbox" style="width:15px; height:15px" @change="checkbox(gu.no)"></td>
                             <td>{{ gu.name }}</td>
                             <td>{{ gu.email }}</td>
                             <td>{{ gu.dept_name }}</td>
@@ -277,31 +282,6 @@ export default {
 
             return year + "-" + month + "-" + date + " " + hour + ":" + min + ":" + sec;
         },
-        search_user() {
-            if(this.startdate !== '' && this.enddate === '') {
-                alert('검색 날짜 범위를 올바르게 입력해주세요.');
-                return;
-            }
-
-            axios.get('/api/license/search', {
-                params: {
-                    licenseNo: this.license.no,
-
-                    email: this.useremail,
-                    name: this.username,
-                    dept: this.userdept,
-                    start: this.startdate,
-                    end: this.enddate,
-                }
-            }).then(res => { 
-                if(res.data.length === 0) {
-                    alert('검색 결과가 없습니다.');
-                    return;
-                }
-                console.log(res.data);
-                this.$store.commit('licenseStore/SELECT_USR', res.data);
-            });
-        },
         deleteUsr() {
             this.delete = !this.delete;
             this.delUsrNos = [];
@@ -413,8 +393,7 @@ export default {
 
 <style scoped>
     .info-table {
-        border-top: 2px solid #ccc;
-        border-bottom: 2px solid #ccc;
+        border: 2px solid #ccc;
         width: 100%;
         max-width: 100%;
         border-spacing: 0;
@@ -441,23 +420,29 @@ export default {
         width: 100px;
     }
     .inner {
-        margin-left:20px;
+        padding: 10px;
         text-align: left;
+        width: 100%;
+        display: inline-block;
+        border: 1px solid #ccc;
+        margin-left: 20px;
     }
     #tab-mac {
-        border-bottom: none;
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
         padding: 10px;
         display: inline-block;
         cursor: pointer;
+        border: 1px solid #ccc;
+        border-bottom: 1px solid #eaeaea;
     }
     #tab-ip {
-        border-bottom: none;
         padding: 10px;
         display: inline-block;
         border-top-left-radius: 4px;
         border-top-right-radius: 4px;
         cursor: pointer;
+        border: 1px solid #ccc;
+        border-bottom: 1px solid #eaeaea;
     }
 </style>

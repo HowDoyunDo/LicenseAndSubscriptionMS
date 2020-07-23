@@ -46,6 +46,12 @@
             <input class="signtextinput" type="password" v-model="password" />
           </span>
           <h4>
+            <label id="stylelabel">비밀번호 확인</label>
+          </h4>
+          <span id="signtext">
+            <input class="signtextinput" type="password" v-model="password2" />
+          </span>
+          <h4>
             <label id="stylelabel">이름</label>
           </h4>
           <span id="signtext">
@@ -97,6 +103,7 @@ export default {
     return {
       email: "",
       password: "",
+      password2: "",
       name: "",
       co_name: "",
       co_location: "",
@@ -140,8 +147,9 @@ export default {
         alert("인증번호를 입력 해주세요.");
       } else if (this.auth_number_chk=="" || this.auth_number != this.auth_number_chk){
         alert("인증되지 않은 번호입니다.")
-      }
-        else {
+      } else if (this.password !== this.password2) {
+        alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.")
+      } else {
         axios
           .post("/api/signup", {
             email: this.email,

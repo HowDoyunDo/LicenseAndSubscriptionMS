@@ -156,7 +156,6 @@ export default {
     }
     .info-table td {
         padding: 15px;
-        font-weight: bold;
         text-align: center;
     }
     .inner {

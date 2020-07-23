@@ -14,7 +14,7 @@
 	
 	<select id="getUserList" parameterType="int" resultType="generaluservo">
 		<![CDATA[
-			select gu.*, ag.last_login
+			select gu.*, ag.last_login, ag.activation
 			 from agent ag, general_user gu
 			 where ag.license_no = #{licenseNo}
 			 and ag.user_no = gu.no
@@ -116,6 +116,15 @@
 			  values(#{email}, #{password}, #{name}, #{dept})
 		]]>
 	</insert>
+	<update id="updateUserInfo" parameterType="map">
+		<![CDATA[
+			update general_user
+			  set password = #{password},
+			  name = #{name},
+			  dept_name = #{dept}
+			 where email = #{email} 
+		]]>
+	</update>
 	
 	<insert id="addAgent" parameterType="map">
 		<![CDATA[
