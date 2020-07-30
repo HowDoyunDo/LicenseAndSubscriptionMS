@@ -2,7 +2,7 @@
   <div class="contents">
     <div>
       <h1>주문 내역</h1>
-      <br>
+      <br />
       <div style="margin: 0 0 10px 0;">
         <select v-model="selected" style="margin: 0 5px 0 0; height: 30px;">
           <option value="co_name">기업명</option>
@@ -12,7 +12,7 @@
           style="margin: 8px 0 0 0;"
           id="myInput"
           type="text"
-          v-if="selected==='co_name'"
+          v-if="selected === 'co_name'"
           v-on:input="keyword = $event.target.value"
           placeholder="검색어 입력"
         />
@@ -20,7 +20,7 @@
           style="margin: 8px 0 0 0;"
           id="myInput"
           type="text"
-          v-if="selected==='name'"
+          v-if="selected === 'name'"
           v-on:input="keyword = $event.target.value"
           placeholder="검색어 입력"
         />
@@ -45,9 +45,9 @@
           <td>{{ idx + 1 }}</td>
           <td>{{ order.co_name }} [{{ order.name }}]</td>
           <td>{{ order.policy_title }}</td>
-          <td>{{order.start_date}}</td>
-          <td>{{order.end_date}}</td>
-          <td>{{order.reg_date}}</td>
+          <td>{{ order.start_date }}</td>
+          <td>{{ order.end_date }}</td>
+          <td>{{ order.reg_date }}</td>
         </tr>
       </table>
     </div>
@@ -96,10 +96,10 @@ export default {
 </script>
 
 <style scoped>
-  h1 {
-      font-size: 4.5rem;
-      color:#000000D9;
-  }
+h1 {
+  font-size: 4.5rem;
+  color: #000000d9;
+}
 .cssbtn {
   background-color: #3498db;
   color: #ffffff;
