@@ -12,20 +12,20 @@
 import PromotionPolicyAllList from "@/components/hyeran/promotion/PromotionPolicyAllList.vue";
 export default {
   components: {
-    PromotionPolicyAllList
+    PromotionPolicyAllList,
   },
   methods: {
     promotionAdd() {
       this.$router.push("/promotion/add");
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
 h1 {
   font-size: 4.5rem;
-  color:#000000D9;
+  color: #000000d9;
 }
 .btnn {
   text-align: right;

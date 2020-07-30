@@ -2,22 +2,42 @@
   <div class="contents">
     <div>
       <div style="margin: 20px 0 10px;">
-        <h1 style="cursor:pointer;" :style="{color:changeColor}" @click="changeclick">변경 내역</h1>
+        <h1
+          style="cursor:pointer;"
+          :style="{ color: changeColor }"
+          @click="changeclick"
+        >
+          변경 내역
+        </h1>
         <h1 style="cursor:default">&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;</h1>
-        <h1 style="cursor:pointer;" :style="{color:cancelColor}" @click="cancelclick">취소 내역</h1>
+        <h1
+          style="cursor:pointer;"
+          :style="{ color: cancelColor }"
+          @click="cancelclick"
+        >
+          취소 내역
+        </h1>
       </div>
-      <br>
+      <br />
       <div style="margin: 0 0 10px 0;">
-        <select v-if="clicked===true" v-model="selected" style="margin: 0 5px 0 0; height: 30px;">
+        <select
+          v-if="clicked === true"
+          v-model="selected"
+          style="margin: 0 5px 0 0; height: 30px;"
+        >
           <option value="co_name">기업명</option>
           <option value="name">관리자명</option>
         </select>
-        <select v-if="clicked===false" v-model="selected" style="margin: 0 5px 0 0; height: 30px;">
+        <select
+          v-if="clicked === false"
+          v-model="selected"
+          style="margin: 0 5px 0 0; height: 30px;"
+        >
           <option value="co_name">기업명</option>
           <option value="name">관리자명</option>
         </select>
         <input
-          v-if="selected==='co_name'"
+          v-if="selected === 'co_name'"
           style="margin: 8px 0 0 0;"
           id="myInput"
           type="text"
@@ -25,7 +45,7 @@
           placeholder="검색어 입력"
         />
         <input
-          v-if="selected==='name'"
+          v-if="selected === 'name'"
           style="margin: 8px 0 0 0;"
           id="myInput"
           type="text"
@@ -42,15 +62,20 @@
           <th style="width:10%;">종료일</th>
           <th style="width:10%;">변경일</th>
         </tr>
-        <tr style="cursor:default" v-for="(change, idx) in changefilteredList" :key="change.no">
+        <tr
+          style="cursor:default"
+          v-for="(change, idx) in changefilteredList"
+          :key="change.no"
+        >
           <td>{{ idx + 1 }}</td>
           <td>{{ change.co_name }} [{{ change.name }}]</td>
           <td>{{ change.policy_title }}</td>
-          <td>{{change.start_date}}</td>
-          <td>{{change.end_date}}</td>
-          <td>{{change.change_date}}</td>
+          <td>{{ change.start_date }}</td>
+          <td>{{ change.end_date }}</td>
+          <td>{{ change.change_date }}</td>
         </tr>
       </table>
+
       <table v-if="!clicked" class="table_board">
         <tr style="float:center;">
           <th style="width:5%">번호</th>
@@ -58,11 +83,15 @@
           <th style="width:30%">구독 정책명</th>
           <th style="width:10%">취소일</th>
         </tr>
-        <tr style="cursor:default" v-for="(cancel, idx) in cancelfilteredList" :key="cancel.no">
+        <tr
+          style="cursor:default"
+          v-for="(cancel, idx) in cancelfilteredList"
+          :key="cancel.no"
+        >
           <td>{{ idx + 1 }}</td>
           <td>{{ cancel.co_name }} [{{ cancel.name }}]</td>
-          <td>{{cancel.policy_title}}</td>
-          <td>{{cancel.cancel_date}}</td>
+          <td>{{ cancel.policy_title }}</td>
+          <td>{{ cancel.cancel_date }}</td>
         </tr>
       </table>
     </div>
@@ -154,10 +183,10 @@ export default {
 .table_board td {
   height: 40px;
 }
-  h1 {
-      font-size: 4.5rem;
-      color:#000000D9;
-  }
+h1 {
+  font-size: 4.5rem;
+  color: #000000d9;
+}
 #myInput {
   background-image: url("../../assets/images/searchIcon2.png");
   background-size: 23px;

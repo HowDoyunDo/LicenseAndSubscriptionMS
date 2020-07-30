@@ -47,12 +47,22 @@
           </tr>
           <tr>
             <th>가입일</th>
-            <td>{{ this.$store.state.userinfo.userInfo.reg_date.substring(0,19) }}</td>
+            <td>
+              {{
+                this.$store.state.userinfo.userInfo.reg_date.substring(0, 19)
+              }}
+            </td>
           </tr>
         </table>
+
         <br />
         <div style="text-align: center;">
-          <input class="cssbtn" type="button" value="완료" @click="changeUserInfo" />
+          <input
+            class="cssbtn"
+            type="button"
+            value="완료"
+            @click="changeUserInfo"
+          />
         </div>
       </form>
     </div>
@@ -143,7 +153,7 @@ export default {
         var jsonPayload = decodeURIComponent(
           atob(base64)
             .split("")
-            .map(function (c) {
+            .map(function(c) {
               return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
             })
             .join("")
@@ -169,10 +179,10 @@ export default {
 </script>
 
 <style scoped>
-  h1 {
-      font-size: 4.5rem;
-      color:#000000D9;
-  }
+h1 {
+  font-size: 4.5rem;
+  color: #000000d9;
+}
 .cssbtn {
   background-color: #3498db;
   color: #ffffff;

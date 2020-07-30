@@ -1,7 +1,7 @@
 <template>
   <div class="contents">
     <h1>제품 프로모션 목록</h1>
-    <br>
+    <br />
     <PromotionAllList />
   </div>
 </template>
@@ -16,8 +16,8 @@ export default {
 </script>
 
 <style scoped>
-  h1 {
-      font-size: 4.5rem;
-      color:#000000D9;
-  }
+h1 {
+  font-size: 4.5rem;
+  color: #000000d9;
+}
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="contents">
     <h1>구독 정책 목록</h1>
-    <br>
+    <br />
     <SubscribeAllList />
   </div>
 </template>
@@ -13,11 +13,11 @@ export default {
     SubscribeAllList,
   },
 };
-</script> 
- 
+</script>
+
 <style scoped>
-  h1 {
-      font-size: 4.5rem;
-      color:#000000D9;
-  }
+h1 {
+  font-size: 4.5rem;
+  color: #000000d9;
+}
 </style>

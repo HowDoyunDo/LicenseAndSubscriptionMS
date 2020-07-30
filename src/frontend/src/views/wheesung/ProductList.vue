@@ -10,7 +10,13 @@
           v-on:input="keyword = $event.target.value"
           placeholder="제품명 입력"
         />
-        <input style="float: right;" class="cssbtn" type="button" value="등록" @click="movetoadd" />
+        <input
+          style="float: right;"
+          class="cssbtn"
+          type="button"
+          value="등록"
+          @click="movetoadd"
+        />
       </div>
       <table class="table_board">
         <tr style="float:center;">
@@ -28,11 +34,17 @@
           <td>{{ product.price | formatPrice }}</td>
           <td>{{ product.reg_date }}</td>
           <td>
-            <a @click="productChangeForm(product.no)" style="cursor:pointer;">수정</a> /
-            <a @click="productDel(product.name)" style="cursor:pointer;">삭제</a>
+            <a @click="productChangeForm(product.no)" style="cursor:pointer;"
+              >수정</a
+            >
+            /
+            <a @click="productDel(product.name)" style="cursor:pointer;"
+              >삭제</a
+            >
           </td>
         </tr>
       </table>
+
       <!-- <Page
         :total-pages="3"
         :total="113"
@@ -112,10 +124,10 @@ export default {
 </script>
 
 <style scoped>
-  h1 {
-      font-size: 4.5rem;
-      color:#000000D9;
-  }
+h1 {
+  font-size: 4.5rem;
+  color: #000000d9;
+}
 .cssbtn {
   background-color: #3498db;
   color: #ffffff;
