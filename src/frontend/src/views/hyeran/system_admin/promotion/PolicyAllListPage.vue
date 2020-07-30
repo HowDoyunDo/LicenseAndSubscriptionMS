@@ -1,6 +1,6 @@
 <template>
   <div class="contents">
-    <h2>정책 프로모션 목록</h2>
+    <h1>정책 프로모션 목록</h1>
     <div class="btnn">
       <button class="submit_btn" @click="promotionAdd">등록</button>
     </div>
@@ -22,7 +22,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+h1 {
+  font-size: 4.5rem;
+  color:#000000D9;
+}
 .btnn {
   text-align: right;
 }

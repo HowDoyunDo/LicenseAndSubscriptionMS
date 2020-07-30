@@ -10,7 +10,12 @@
           </h4>
           <div id="email">
             <span id="inputemail">
-              <input style="width:280px; border: none; outline:none;" type="email" v-model="email" @keyup="reset" />
+              <input
+                style="width:280px; border: none; outline:none;"
+                type="email"
+                v-model="email"
+                @keyup="reset"
+              />
               <img
                 src="@/assets/images/check.png"
                 v-show="show"
@@ -27,13 +32,22 @@
           <div id="email">
             <span id="inputemail">
               인증번호
-              <input style="margin: 0 10px; width: 120px;" type="text" v-model.number="auth_number" />
+              <input
+                style="margin: 0 10px; width: 120px;"
+                type="text"
+                v-model.number="auth_number"
+              />
               <img
                 src="@/assets/images/check.png"
                 v-show="emailshow"
                 style="margin: 0 15px 0 0; visibility: emailshow ? 'visible' : 'hidden';"
               />
-              <input type="button" style="background-color: #3498db; border: none; color: #ffffff;" value="전송" @click="emailAuth" />
+              <input
+                type="button"
+                style="background-color: #3498db; border: none; color: #ffffff;"
+                value="전송"
+                @click="emailAuth"
+              />
             </span>
             <span>
               <input class="inputbtn" type="button" value="확인" @click="authNumberChkForm" />
@@ -97,7 +111,6 @@
 
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {
@@ -114,8 +127,7 @@ export default {
       emailshow: "",
       chk: "",
       auth_number: "",
-      auth_number_chk : ""
-      
+      auth_number_chk: "",
     };
   },
   components: {},
@@ -139,16 +151,19 @@ export default {
       ) {
         alert("필수 정보를 입력해 주세요");
         console.log(this.chk);
-      } else if (this.show === false || this.show === '') {
+      } else if (this.show === false || this.show === "") {
         alert("이메일 중복체크를 하세요.");
       } else if (this.chk == false) {
         alert("개인정보 동의를 체크해주세요.");
-      } else if (this.auth_number==""){
+      } else if (this.auth_number == "") {
         alert("인증번호를 입력 해주세요.");
-      } else if (this.auth_number_chk=="" || this.auth_number != this.auth_number_chk){
-        alert("인증되지 않은 번호입니다.")
+      } else if (
+        this.auth_number_chk == "" ||
+        this.auth_number != this.auth_number_chk
+      ) {
+        alert("인증되지 않은 번호입니다.");
       } else if (this.password !== this.password2) {
-        alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.")
+        alert("비밀번호와 비밀번호 확인이 일치하지 않습니다.");
       } else {
         axios
           .post("/api/signup", {
@@ -159,9 +174,9 @@ export default {
             co_location: this.co_location,
             co_tel: this.co_tel,
             co_number: this.co_number,
-            manager_type: this.manager_type
+            manager_type: this.manager_type,
           })
-          .then(result => {
+          .then((result) => {
             console.log(result.data);
             alert("회원가입 되었습니다.");
             this.$router.replace("/login");
@@ -169,67 +184,69 @@ export default {
       }
     },
     emailchk() {
-      if(!this.validEmail(this.email)){
+      console.log("이메일체크");
+      if (!this.validEmail(this.email)) {
         this.show = "";
-        alert("이메일 형식을 확인하세요.")
-      }
-      else{
+        alert("이메일 형식을 확인하세요.");
+      } else {
         axios
-        .post("/api/emailchk", {
-          email: this.email
-        })
-        .then(result => {
-          console.log(result);
-          if (result.data == "s") {
-            this.show = true;
-          } else if (result.data == "f") {
-            this.show = false;
-          }
-        });
+          .post("/api/emailchk", {
+            email: this.email,
+          })
+          .then((result) => {
+            console.log(result);
+            if (result.data == "s") {
+              this.show = true;
+            } else if (result.data == "f") {
+              this.show = false;
+            }
+          });
       }
     },
     emailAuth(e) {
-      if(this.show == true){
-        e.target.value = '재전송';
+      if (this.show == true) {
+        e.target.value = "재전송";
         axios
           .post("/api/emailauth", {
-            email: this.email
+            email: this.email,
           })
-          .then(result => {
-            console.log("번호 : " + result.data.text.substr(17,5));
-            this.auth_number_chk = Number(result.data.text.substr(17,5));
+          .then((result) => {
+            console.log("번호 : " + result.data.text.substr(17, 5));
+            this.auth_number_chk = Number(result.data.text.substr(17, 5));
           });
-      }
-      else{
+      } else {
         alert("이메일 중복 확인 하세요.");
       }
     },
-    authNumberChkForm(){
-      if(this.auth_number == ""){
-        alert("인증번호를 입력 해주세요.")
-      }
-      else if(this.auth_number== this.auth_number_chk){
-        alert('인증완료')
+    authNumberChkForm() {
+      if (this.auth_number == "") {
+        alert("인증번호를 입력 해주세요.");
+      } else if (this.auth_number == this.auth_number_chk) {
+        alert("인증완료");
         this.emailshow = true;
-      }else{
-        alert('인증번호 맞지 않음')
+      } else {
+        alert("인증번호 맞지 않음");
       }
     },
-    validEmail: function(email){
+    validEmail: function (email) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(String(email).toLowerCase());
     },
-    reset(){
+    reset() {
       this.show = "";
       this.auth_number = "";
       this.auth_number_chk = "";
       this.emailshow = "";
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style>
+<style scoped>
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
 #signtext {
   width: 100%;
   height: 51px;

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import inzent.pjt.dto.ProductDTO;
 import inzent.pjt.vo.ProductVO;
 import inzent.pjt.vo.SubscribeVO;
 
@@ -29,4 +30,5 @@ public class ProductDAO {
 	public List<ProductVO> getProductList(int subscribeNo) {
 		return sqlSession.selectList("product.getProductList", subscribeNo);
 	}
+
 }

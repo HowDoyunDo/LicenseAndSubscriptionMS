@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="product2">
    <select id="categoryList" resultType="map">
-      select c.no, c.title, to_char(reg_date, 'YYYY-MM-DD') reg_date, c.category_image from category c
+      select c.no, c.title, to_char(reg_date, 'YYYY-MM-DD') reg_date, c.category_image from category c order by no
    </select>
    <insert id="categoryAdd">
       insert into category (title, category_image) values ( #{title}, #{category_image} )
@@ -15,7 +15,7 @@
    </delete>
    
    <select id="productList" resultType="map">
-      select p.no, p.name, p.comments, p.price, to_char(reg_date, 'YYYY-MM-DD') reg_date from product p
+      select p.no, p.name, p.comments, p.price, to_char(reg_date, 'YYYY-MM-DD') reg_date from product p order by no
    </select>
    <select id="productChk" resultType="int">
       select count(*) from product where name = #{name}
@@ -35,4 +35,38 @@
         from product p, category c
        where p.category_no = c.no and p.no = #{no}
    </select>
+   
+   
+   
+   
+	<select id="getProducts" resultType="pd">
+		<![CDATA[
+			select pd.*, ct.no as category_no, ct.title as title, ct.category_image as category_image
+			 from product pd, category ct
+			 where pd.category_no = ct.no
+			 order by no;
+		]]>
+	</select>
+	
+	<select id="getFirstProduct" resultType="pd" parameterType="string">
+		<![CDATA[
+			select pd.*, ct.no as category_no, ct.title as title, ct.category_image as category_image
+			 from product pd, category ct
+			 where pd.category_no = ct.no
+			 and ct.title = #{_parameter}
+			 order by no
+			 limit 1
+		]]>
+	</select>
+	
+	<select id="productsInCategory" resultType="pd" parameterType="string">
+		<![CDATA[
+			select pd.*, ct.no as category_no, ct.title as title, ct.category_image as category_image
+			 from product pd, category ct
+			 where pd.category_no = ct.no
+			 and ct.title = #{_parameter}
+			 order by no;
+		]]>
+	</select>
+	
 </mapper>

@@ -4,166 +4,34 @@
 
             <li role="presentation" class="dropdown">
                 <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                    {{ solution }} 
+                    {{ this.$store.state.productStore.product.title }} 
                     <span class="caret"></span>
                 </a>
                 <ul class="dropdown-menu" role="menu" style="width:300px;">
-                    <li>
-                        <a @click="detail('iworks', 'UI/UX 솔루션')">
+                    <li v-for="category in categories" :key="category.no">
+                        <a @click="detail(category.title)">
                             <router-link to='/product'>
-                                UI/UX 솔루션
-                            </router-link>
-                        </a>
-                    </li>
-                    <li>
-                        <a @click="detail('igate', '채널통합 솔루션')">
-                            <router-link to='/product'>
-                                채널통합 솔루션
-                            </router-link>
-                        </a>
-                    </li>
-                    <li>
-                        <a @click="detail('xtorm', '컨텐츠 통합관리')">
-                            <router-link to='/product'>
-                                컨텐츠 통합관리
-                            </router-link>
-                        </a>
-                    </li>
-                    <li>
-                        <a @click="detail('experdb', '오픈소스 데이터 플랫폼')">
-                            <router-link to='/product'>
-                                오픈소스 데이터 플랫폼
-                            </router-link>
-                        </a>
-                    </li>
-                    <li>
-                        <a @click="detail('libeka', '통합도서관시스템')">
-                            <router-link to='/product'>
-                                통합도서관시스템
-                            </router-link>
-                        </a>
-                    </li>
-                    <li>
-                        <a @click="detail('myguard', '정보 보안')">
-                            <router-link to='/product'>
-                                정보 보안
-                            </router-link>
-                        </a>
-                    </li>
-                    <li>
-                        <a @click="detail('centdoc', '문서중앙화')">
-                            <router-link to='/product'>
-                                문서중앙화
+                                {{ category.title }}
                             </router-link>
                         </a>
                     </li>
                 </ul>
             </li>
 
-            <template v-if="solution === 'UI/UX 솔루션'">
-                <li role="presentation" :class="iworks">
-                    <a @click="detail('iworks', 'UI/UX 솔루션')">
-                        <router-link to='/product'>
-                            iWorks
-                        </router-link>
-                    </a>
-                </li>
-                <li role="presentation" :class="ixeb">
-                    <a @click="detail('ixeb', 'UI/UX 솔루션')">
-                        <router-link to='/product'>
-                            iXeb
-                        </router-link>
-                    </a>
-                </li>
-            </template>
-
-            <template v-if="solution === '채널통합 솔루션'">
-                <li role="presentation" :class="igate">
-                    <a @click="detail('igate', '채널통합 솔루션')">
-                        <router-link to='/product'>
-                            iGate
-                        </router-link>
-                    </a>
-                </li>
-                <li role="presentation" :class="apim">
-                    <a @click="detail('apim', '채널통합 솔루션')">
-                        <router-link to='/product'>
-                            APIM
-                        </router-link>
-                    </a>
-                </li>
-                <li role="presentation" :class="ecross">
-                    <a @click="detail('ecross', '채널통합 솔루션')">
-                        <router-link to='/product'>
-                            eCross
-                        </router-link>
-                    </a>
-                </li>
-            </template>
-
-            <template v-if="solution === '컨텐츠 통합관리'">
-                <li role="presentation" :class="xtorm">
-                    <a @click="detail('xtorm', '컨텐츠 통합관리')">
-                        <router-link to='/product'>
-                            Xtorm
-                        </router-link>
-                    </a>
-                </li>
-            </template>
-
-            <template v-if="solution === '오픈소스 데이터 플랫폼'">
-                <li role="presentation" :class="experdb">
-                    <a @click="detail('experdb', '오픈소스 데이터 플랫폼')">
-                        <router-link to='/product'>
-                            eXperDB
-                        </router-link>
-                    </a>
-                </li>
-            </template>
-
-            <template v-if="solution === '통합도서관시스템'">
-                <li role="presentation" :class="libeka">
-                    <a @click="detail('libeka', '통합도서관시스템')">
-                        <router-link to='/product'>
-                            Libeka
-                        </router-link>
-                    </a>
-                </li>
-                <li role="presentation" :class="libekas4">
-                    <a @click="detail('libekas4', '통합도서관시스템')">
-                        <router-link to='/product'>
-                            Libeka S4
-                        </router-link>
-                    </a>
-                </li>
-            </template>
-
-            <template v-if="solution === '정보 보안'">
-                <li role="presentation" :class="myguard">
-                    <a @click="detail('myguard', '정보 보안')">
-                        <router-link to='/product'>
-                            MyGuard
-                        </router-link>
-                    </a>
-                </li>
-            </template>
-
-            <template v-if="solution === '문서중앙화'">
-                <li role="presentation" :class="centdoc">
-                    <a @click="detail('centdoc', '문서중앙화')">
-                        <router-link to='/product'>
-                            문서중앙화
-                        </router-link>
-                    </a>
-                </li>
-            </template>
+            <li v-for="tab in tabs" :key="tab.no" role="presentation" :class="isActive(tab.name)">
+                <a @click="seltab(tab.name)">
+                    <router-link to='/product'>
+                        {{ tab.name }}
+                    </router-link>
+                </a>
+            </li>
         </ul>
 
-        <img :src="imgsrc" />
+        <img :src="product.info_image" />
         <br><br>
 
         <!-- 구독 정책 내용 삽입 -->
-        <h2>구독 신청하기</h2>
+        <h1>구독 신청하기</h1>
         <slot></slot>
     </div>
 </template>
@@ -172,85 +40,87 @@
 import axios from 'axios';
 
 export default {
+    data() {
+        return {
+            categories: '',
+        }
+    },
     methods: {
-        async detail(pdt, sol) {
-            this.$store.commit('productStore/CHANGE_PDT', pdt);
-            this.$store.commit('productStore/CHANGE_SEL', sol);
-            this.$store.commit('productStore/ACTIVE_TAB', pdt);
+        async detail(sol) {
+            await axios.get('/api/productsInCategory', {
+                params: {
+                    sol: sol
+                }
+            }).then(res => { 
+                this.$store.commit('productStore/CHANGE_PDT', res.data[0]);
+                this.$store.commit('productStore/CHANGE_TABS', res.data);
+            });
 
             // solution store와 일치하는 User구독정책 table에서 검색
             await axios.get('/api/userpolicylist', {
                 params: {
-                    sol : this.solution
+                    sol : this.product.title
                 }
             }).then(res => { 
+                console.log(res.data);
                 this.$store.commit('productStore/CHANGE_UPLCY', res.data);
             });
 
             // solution store와 일치하는 Agent구독정책 table에서 검색
             await axios.get('/api/agentpolicylist', {
                 params: {
-                    sol : this.solution
+                    sol : this.product.title
                 }
             }).then(res => { 
+                console.log(res.data);
                 this.$store.commit('productStore/CHANGE_APLCY', res.data);
-
             });
+
+        },
+        seltab(tabName) {
+            this.tabs.forEach(element => {
+                if(element.name === tabName) {
+                    this.$store.commit('productStore/CHANGE_PDT', element);
+                }
+            });
+        },
+        isActive(tabName) {
+            if(tabName === this.product.name)
+                return "active";
         }
     },
     computed: {
-        solution: function() {
-            return this.$store.state.productStore.solution;
-        },
         product: function() {
             return this.$store.state.productStore.product;
         },
-        imgsrc: function() {
-            return require('@/assets/details/'+ this.$store.state.productStore.product +'.png');
-        },
-        polno: function() {
-            return this.$store.state.productStore.polno;
-        },
-
-
-        iworks: function() {
-            return this.$store.state.productStore.iworks;
-        },
-        ixeb: function() {
-            return this.$store.state.productStore.ixeb;
-        },
-        igate: function() {
-            return this.$store.state.productStore.igate;
-        },
-        apim: function() {
-            return this.$store.state.productStore.apim;
-        },
-        ecross: function() {
-            return this.$store.state.productStore.ecross;
-        },
-        xtorm: function() {
-            return this.$store.state.productStore.xtorm;
-        },
-        experdb: function() {
-            return this.$store.state.productStore.experdb;
-        },
-        libeka: function() {
-            return this.$store.state.productStore.libeka;
-        },
-        libekas4: function() {
-            return this.$store.state.productStore.libekas4;
-        },
-        myguard: function() {
-            return this.$store.state.productStore.myguard;
-        },
-        centdoc: function() {
-            return this.$store.state.productStore.centdoc;
-        },
+        tabs: function() {
+            return this.$store.state.productStore.tabs;
+        }
     },
+    async created() {
+        await axios.get('/api/categorylist', {}
+        ).then(res => { 
+            this.categories = res.data;
+            console.log(res.data);
+        });
+
+        await axios.get('/api/productsInCategory', {
+            params: {
+                sol: this.product.title
+            }
+        }).then(res => { 
+            this.$store.commit('productStore/CHANGE_PDT', res.data[0]);
+            this.$store.commit('productStore/CHANGE_TABS', res.data);
+        });
+    }
 }
 </script>
 
-<style>
+<style scoped>
+h1 {
+    font-size: 4.5rem;
+    color:#000000D9;
+}
 .btn-group {
     margin: 10px;
 }

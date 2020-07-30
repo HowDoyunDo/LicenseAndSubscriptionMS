@@ -1,6 +1,6 @@
 <template>
     <div id="batch" class="contents">
-        <h2>배치 서비스</h2>
+        <h1>배치 서비스</h1>
         <br>
         <div class="inner">
             <h4 style="color:gray">현재 배치 서비스</h4>
@@ -132,7 +132,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+    h1 {
+        font-size: 4.5rem;
+        color:#000000D9;
+    }
     .info-table {
         border-top: 2px solid #ccc;
         border-bottom: 2px solid #ccc;
@@ -148,7 +152,7 @@ export default {
     }
     .info-table th {
         background: #eaeaea;
-        font-weight: bold;
+        font-weight: normal;
         border: none;
         width: 20%;
         text-align: center;
@@ -157,9 +161,9 @@ export default {
     .info-table td {
         padding: 15px;
         text-align: center;
+        font-weight: normal;
     }
     .inner {
-        margin-left:20px;
         text-align: left;
     }
     .tip {

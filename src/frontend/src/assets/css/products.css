@@ -17,137 +17,23 @@
       }
       #products .panel-heading {
         font-size: 25px;
-        font-weight: bolder;
+        font-weight: normal;
         height: 55px;
         text-align: left;
         background-color: #d9edf7;
       }
-      #products img {
-        margin-right: 0;
-        margin-left: auto;
-      }
       #products .solutions {
         width: 80px;
         height: 70px;
+        float: right;
       }
       #products p {
         color: aliceblue;
         font-size: 20px;
-        font-weight: bolder;
+        font-weight: normal;
       }
   
-      #products .panel-body1 {
-        background-image: url('../../assets/products/iworks.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px;
-        height: 240px;
-        padding: 10px;
-        color: aliceblue;
-        text-align: left;
-      }
-      #products .panel-body2 {
-        background-image: url('../../assets/products/ixeb.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px;
-        height: 240px;
-        padding: 10px;
-        color: aliceblue;
-        text-align: left;
-      }
-      #products .panel-body3 {
-        background-image: url('../../assets/products/igate.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px;
-        height: 240px;
-        padding: 10px;
-        color: aliceblue;
-        text-align: left;
-      }
-      #products .panel-body4 {
-        background-image: url('../../assets/products/apim.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px;
-        height: 240px;
-        padding: 10px;
-        color: aliceblue;
-        text-align: left;
-      }
-      #products .panel-body5 {
-        background-image: url('../../assets/products/ecross.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px;
-        height: 240px;
-        padding: 10px;
-        color: aliceblue;
-        text-align: left;
-      }
-      #products .panel-body6 {
-        background-image: url('../../assets/products/xtorm.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px;
-        height: 240px;
-        padding: 10px;
-        color: aliceblue;
-        text-align: left;
-      }
-      #products .panel-body7 {
-        background-image: url('../../assets/products/experdb.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px;
-        height: 240px;
-        padding: 10px;
-        color: aliceblue;
-        text-align: left;
-      }
-      #products .panel-body8 {
-        background-image: url('../../assets/products/libeka.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px;
-        height: 240px;
-        padding: 10px;
-        color: aliceblue;
-        text-align: left;
-      }
-      #products .panel-body9 {
-        background-image: url('../../assets/products/libekas4.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px;
-        height: 240px;
-        padding: 10px;
-        color: aliceblue;
-        text-align: left;
-      }
-      #products .panel-body10 {
-        background-image: url('../../assets/products/myguard.png');
-        background-repeat: no-repeat;
-        background-size: contain;
-        border-bottom-left-radius: 3px;
-        border-bottom-right-radius: 3px;
-        height: 240px;
-        padding: 10px;
-        color: aliceblue;
-        text-align: left;
-      }
-      #products .panel-body11 {
-        background-image: url('../../assets/products/centdoc.png');
+      #products .panel-body {
         background-repeat: no-repeat;
         background-size: contain;
         border-bottom-left-radius: 3px;

@@ -1,6 +1,6 @@
 <template>
   <div id="order" class="contents">
-    <h2>구독 신청서 작성</h2>
+    <h1>구독 신청서 작성</h1>
         <p class="tip">
             서로 다른 정책의 제품들의 일괄 구매를 원하시는 고객님께서는 견적 문의 부탁드립니다.
         </p>
@@ -59,11 +59,11 @@
                 </table>
 
                 <hr style="border-top: 1px solid black;">
-                    <div id="price-title" style="width: 80%; text-align:right; font-size:17px; font-weight: bold; float:left">
+                    <div id="price-title" style="width: 80%; text-align:right; font-size:17px; font-weight: normal; float:left">
                         <p style="color: gray">정가 : </p>
                         <p style="color: red">할인 금액 : </p>
                     </div>
-                    <div id="final-price" style="width: 20%; text-align:right; font-size:17px; font-weight: bold; float:left">
+                    <div id="final-price" style="width: 20%; text-align:right; font-size:17px; font-weight: normal; float:left">
                         <p style="color: gray">{{ numberWithCommas(uPolicies[idx].price * usemonth) }}원</p>
                         <p style="color: red">- {{ numberWithCommas(alldiscount) }}원</p>
                     </div>
@@ -71,10 +71,10 @@
                 <br>
                 <br>
                 <hr style="border-top: 1px solid gray;">
-                    <div id="price-title" style="width: 80%; text-align:right; font-size:17px; font-weight: bold; float:left">
+                    <div id="price-title" style="width: 80%; text-align:right; font-size:17px; font-weight: normal; float:left">
                         <p style="color: black">결제 금액 : </p>
                     </div>
-                    <div id="final-price" style="width: 20%; text-align:right; font-size:17px; font-weight: bold; float:left">
+                    <div id="final-price" style="width: 20%; text-align:right; font-size:17px; font-weight: normal; float:left">
                         {{ numberWithCommas( (uPolicies[idx].price * usemonth) - alldiscount ) }}원
                     </div>
                 <br>
@@ -83,7 +83,7 @@
 
                 <hr style="border-top: 1px solid #ccc;">
                 <div class="selPayM" align="center">
-                    <h5 style="font-weight: bold; font-size:15px">결제 방식 선택</h5>
+                    <h4 style="font-weight: normal;">결제 방식 선택</h4>
                     <button id="cards" @click="selPayM('cards')"
                         :style="{background: cardsCol}">
                         신용카드
@@ -158,21 +158,21 @@
 
                 <hr style="border-top: 1px solid black;">
                     <div>
-                        <div id="price-title" style="width: 80%; text-align:right; font-size:17px; font-weight: bold; float:left">
+                        <div id="price-title" style="width: 80%; text-align:right; font-size:17px; font-weight: normal; float:left">
                             <p style="color: gray">정가 : </p>
                             <p style="color: red">할인금액 : </p>
                         </div>
-                        <div id="final-price" style="width: 20%; text-align:right; font-size:17px; font-weight: bold; float:left">
+                        <div id="final-price" style="width: 20%; text-align:right; font-size:17px; font-weight: normal; float:left">
                             <p style="color: gray">{{ numberWithCommas(aPolicies[idx].price * usemonth) }} 원</p>
                             <p style="color: red">- {{ numberWithCommas(alldiscount) }} 원</p>
                         </div>
                     </div>
                 <br><br><br>
                 <hr style="border-top: 1px solid gray;">
-                    <div id="price-title" style="width: 80%; text-align:right; font-size:17px; font-weight: bold; float:left">
+                    <div id="price-title" style="width: 80%; text-align:right; font-size:17px; font-weight: normal; float:left">
                         <p style="color: black">결제 금액 : </p>
                     </div>
-                    <div id="final-price" style="width: 20%; text-align:right; font-size:17px; font-weight: bold; float:left">
+                    <div id="final-price" style="width: 20%; text-align:right; font-size:17px; font-weight: normal; float:left">
                         {{ numberWithCommas( (aPolicies[idx].price * usemonth) - alldiscount ) }} 원
                     </div>
                 <br>
@@ -180,7 +180,7 @@
                 <br><br><br>
                 <hr style="border-top: 1px solid #ccc;">
                 <div class="selPayM" align="center">
-                    <h5 style="font-weight: bold; font-size:15px">결제 방식 선택</h5>
+                    <h4 style="font-weight: normal">결제 방식 선택</h4>
                     <button id="cards" @click="selPayM('cards')"
                         :style="{background: cardsCol}">
                         신용카드
@@ -260,7 +260,7 @@ export default {
             } else if(this.chk === true && this.paymethod !== '') {
                 // IMP.request_pay(param, callback) 호출
                 IMP.request_pay({ // param
-                    pg : 'html5_inicis',
+                    pg : 'inicis',
                     pay_method : this.paymethod,
                     merchant_uid : 'INZENT_Solutions' + new Date().getTime(),
                     name : this.type == 'U' ? (this.uPolicies[this.idx].policy_title + '/mxc' + this.uPolicies[this.idx].max_count) : (this.aPolicies[this.idx].policy_title + '/mxc' + this.aPolicies[this.idx].max_count),
@@ -391,7 +391,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+    h1 {
+        font-size: 4.5rem;
+        color:#000000D9;
+    }
     .tip {
         border: 2px solid gray;
         color: red;
@@ -419,7 +423,7 @@ export default {
     }
     .info-table th {
         background: #eaeaea;
-        font-weight: bold;
+        font-weight: normal;
         border: none;
         width: 20%;
         text-align: center;
@@ -427,7 +431,7 @@ export default {
     }
     .info-table td {
         padding: 15px;
-        font-weight: bold;
+        font-weight: normal;
     }
     .info-table input {
         width: 100px;

@@ -1,5 +1,36 @@
 <template>
   <div>
+    <div style="margin: 0 0 10px 0;">
+      <select v-model="selected" style="margin: 0 5px 0 0; height: 30px;">
+        <option value="policy_title">구독 정책명</option>
+        <option value="co_name">기업명</option>
+        <option value="name">관리자명</option>
+      </select>
+      <input
+        v-if="selected==='policy_title'"
+        style="margin: 8px 0 0 0;"
+        id="myInput"
+        type="text"
+        v-on:input="keyword = $event.target.value"
+        placeholder="검색어 입력"
+      />
+      <input
+        v-if="selected==='co_name'"
+        style="margin: 8px 0 0 0;"
+        id="myInput"
+        type="text"
+        v-on:input="keyword = $event.target.value"
+        placeholder="검색어 입력"
+      />
+      <input
+        v-if="selected==='name'"
+        style="margin: 8px 0 0 0;"
+        id="myInput"
+        type="text"
+        v-on:input="keyword = $event.target.value"
+        placeholder="검색어 입력"
+      />
+    </div>
     <table class="table_board">
       <tr>
         <th style="width:5%">번호</th>
@@ -18,11 +49,11 @@
         onmouseenter="this.style.background='#CEECF5';"
         onmouseleave="this.style.background=''"
         style="cursor:pointer;"
-        v-for="(list, index) in licenses"
+        v-for="(list, index) in filteredList"
         :key="list.no"
         @click="licneseChange(index, list.no, list.policy_no)"
       >
-        <td>{{list.no}}</td>
+        <td>{{index + 1}}</td>
         <td style=" text-decoration: underline">{{list.policy_title}}[{{list.policy_no}}]</td>
         <td>{{list.license_key}}</td>
         <td>{{list.standard == 'A' ? '사용자' : ' 에이전트'}}</td>
@@ -46,26 +77,61 @@ import { licenseAllList } from "@/api/shr/license";
 export default {
   data() {
     return {
-      licenses: ""
+      licenses: "",
+      selected: "policy_title",
+      keyword: "",
     };
   },
   async created() {
     const { data } = await licenseAllList();
     this.licenses = data;
   },
+  computed: {
+    filteredList() {
+      return Object.values(this.licenses).filter((post) => {
+        if (this.selected === "policy_title") {
+          return post.policy_title
+            .toLowerCase()
+            .includes(this.keyword.toLowerCase());
+        } else if (this.selected === "co_name") {
+          return post.co_name
+            .toLowerCase()
+            .includes(this.keyword.toLowerCase());
+        } else if (this.selected === "name") {
+          return post.name.toLowerCase().includes(this.keyword.toLowerCase());
+        }
+      });
+    },
+  },
   methods: {
     // userShow() {
     //   this.$router.push("/license/useradmin");
     // },
-     licneseChange(index, licenseNo, policyNo) {
-       this.$router.push({
+    licneseChange(index, licenseNo, policyNo) {
+      this.$router.push({
         name: "licnesePolicyInfo",
-        params: { license_no: licenseNo, policy_no: policyNo, pageTypeAdmin : true }
+        params: {
+          license_no: licenseNo,
+          policy_no: policyNo,
+          pageTypeAdmin: true,
+        },
       });
     },
-  }
+  },
 };
 </script>
 
-<style>
+<style scoped>
+#myInput {
+  background-image: url("../../../assets/images/searchIcon2.png");
+  background-size: 23px;
+  background-position: 8px 8px;
+  background-repeat: no-repeat;
+  width: 260px;
+  height: 35px;
+  font-size: 16px;
+  padding: 12px 20px 12px 42px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
+}
 </style>

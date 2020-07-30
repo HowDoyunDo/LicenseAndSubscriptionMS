@@ -1,7 +1,7 @@
 <template>
-  <div class="contents" style="border-left : 1px solid lightgray;">
+  <div class="contents">
     <div>
-      <h2>카테고리 목록</h2>
+      <h1>카테고리 목록</h1>
       <br />
       <table class="table_board">
         <tr style="float:center;">
@@ -37,7 +37,7 @@
     <hr />
     <div>
       <form @submit.prevent="categoryAdd">
-        <h2>카테고리 등록</h2>
+        <h1>카테고리 등록</h1>
         <br />
         <table class="table_add form">
           <tr>
@@ -99,6 +99,7 @@ export default {
       } else if (this.category_image == "" || this.category_image == null) {
         alert("카테고리 이미지를 넣어주세요");
       } else {
+        console.log(this.category_image);
         axios
           .post("/api/categoryadd", {
             title: this.title,
@@ -188,7 +189,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
 .cssbtn {
   background-color: #3498db;
   color: #ffffff;
@@ -205,5 +210,9 @@ export default {
 
 .table_board td {
   height: 40px;
+}
+
+.table_board td img {
+  background: gray;
 }
 </style>

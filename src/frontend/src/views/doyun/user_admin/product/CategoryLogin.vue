@@ -1,6 +1,6 @@
 <template>
   <div id="categoryLogin" class="contents">
-    <h2>제품 조회 및 구독 신청(로그인 후)</h2>
+    <h1>제품 조회 및 구독 신청(로그인 후)</h1>
     <br>
 
     <Products />
@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import Products from '@/components/doyun/user_admin/subscribe/Products';
+import Products from '@/components/doyun/user_adminsubscribe/Products';
 export default {
     components: {
       Products,
@@ -16,11 +16,14 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
   #categoryLogin {
       width: 85%;
       text-align: center;
-      border-left: 1px solid lightgray;
       padding: 40px;
   }
 </style>

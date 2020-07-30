@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h2>상세보기</h2>
+      <h1>상세보기</h1>
       <br />
       <div v-if="pageT==true">
         <h4>관리자 정보</h4>
@@ -150,7 +150,11 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
+h1 {
+    font-size: 4.5rem;
+    color:#000000D9;
+}
 button {
   width: auto;
   padding: 0 15px;

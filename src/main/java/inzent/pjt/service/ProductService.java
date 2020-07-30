@@ -26,8 +26,9 @@ public class ProductService {
 	public int setSubscribeProduct(SubscribeVO vo) {
 		return dao.setSubscribeProduct(vo); 
 	}
-	
+
 	public List<ProductVO> getProductList(int subscribeNo) {
 		return dao.getProductList(subscribeNo);
 	}
+
 }

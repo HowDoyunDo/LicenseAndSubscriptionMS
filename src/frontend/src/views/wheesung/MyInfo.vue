@@ -1,5 +1,5 @@
 <template>
-  <div class="contents" style="border-left : 1px solid lightgray;">
+  <div class="contents">
     <div>
       <h2>내정보</h2>
       <br />
@@ -32,8 +32,18 @@
         </table>
         <br />
         <div style="text-align: center;">
-          <input class="cssbtn" type="button" value="수정" @click="goChange" />
+          <input class="cssbtn" type="button" value="수정" @click="clickChange" />
         </div>
+        <br />
+        <table v-if="click" class="table_add">
+          <tr>
+            <th>비밀번호 입력</th>
+            <td>
+              <input style="height: 30px; width: 400px;" type="password" v-model="pw" />
+              <input style="float:right" type="button" class="inputpw" value="확인" @click="chkpw" />
+            </td>
+          </tr>
+        </table>
       </form>
     </div>
   </div>
@@ -41,39 +51,64 @@
 
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {
       list: "",
       no: "",
+      click: false,
+      pw: "",
     };
   },
   methods: {
-    goChange() {
-      this.$router.push("/changeuserinfo");
+    clickChange() {
+      this.click = true;
     },
-
+    chkpw() {
+      axios
+        .post("/api/chkpw", {
+          email: this.list.email,
+          password: this.pw,
+        })
+        .then((result) => {
+          if (result.data === "S") {
+            this.$router.push("/changeuserinfo");
+          } else {
+            alert("비밀번호가 일치하지 않습니다.");
+          }
+        });
+    },
   },
-  created(){
-    this.no = this.$store.state.userinfo.userInfo.no
-    console.log(this.no);
-    axios.post("/api/myinfo",{
-      no: this.no
-    }).then(result =>{
-      console.log(result.data)
-      this.list = result.data
-    });
-  }
+  created() {
+    this.no = this.$store.state.userinfo.userInfo.no;
+    axios
+      .post("/api/myinfo", {
+        no: this.no,
+      })
+      .then((result) => {
+        this.list = result.data;
+      });
+  },
 };
 </script>
 
-<style>
+<style scoped>
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
 .cssbtn {
   background-color: #3498db;
   color: #ffffff;
   border: none;
   width: 120px;
   height: 40px;
+}
+.inputpw {
+  background-color: #3498db;
+  color: #ffffff;
+  border: none;
+  width: 100px;
+  height: 30px;
 }
 </style>

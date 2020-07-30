@@ -1,9 +1,7 @@
 <template>
   <div class="contents">
-    <h2>제품 프로모션 목록</h2>
-    <div class="btnn">
-      <button class="submit_btn" @click="promotionAdd">등록</button>
-    </div>
+    <h1>제품 프로모션 목록</h1>
+    <br>
     <PromotionAllList />
   </div>
 </template>
@@ -12,21 +10,14 @@
 import PromotionAllList from "@/components/hyeran/promotion/PromotionAllList.vue";
 export default {
   components: {
-    PromotionAllList
+    PromotionAllList,
   },
-  methods: {
-    promotionAdd() {
-      this.$router.push("/promotion/add");
-    }
-  }
 };
 </script>
 
-<style>
-.btnn {
-  text-align: right;
-}
-button {
-  width: 80px;
-}
+<style scoped>
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
 </style>

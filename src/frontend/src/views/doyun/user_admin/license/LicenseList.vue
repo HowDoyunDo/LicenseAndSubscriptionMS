@@ -1,6 +1,6 @@
 <template>
     <div id="licenselist" class="contents">
-        <h2>라이센스 관리</h2>
+        <h1>라이센스 관리</h1>
         <table class="info-table">
             <tr>
                 <th style="width:5%">번호</th>
@@ -89,9 +89,12 @@ export default {
 </script>
 
 <style scoped>
+    h1 {
+        font-size: 4.5rem;
+        color:#000000D9;
+    }
     #licenselist {
         width: 85%;
-        border-left: 1px solid lightgray;
     }
     .info-table {
         border-top: 2px solid #ccc;
@@ -108,7 +111,7 @@ export default {
     }
     .info-table th {
         background: #eaeaea;
-        font-weight: bold;
+        font-weight: normal;
         border: none;
         width: 20%;
         text-align: center;
@@ -116,7 +119,7 @@ export default {
     }
     .info-table td {
         padding: 15px;
-        font-weight: bold;
+        font-weight: normal;
         text-align: center;
     }
     .info-table input {

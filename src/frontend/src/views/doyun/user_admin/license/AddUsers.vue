@@ -1,6 +1,6 @@
 <template>
     <div id="addusers" class="contents">
-        <h2>사용자 일괄 추가 <code style="color:#3498db; font-size:20px; font-weight:bold"> "{{ license.policy_title }}"</code></h2>
+        <h1>사용자 일괄 추가 <code style="color:#3498db; font-size:20px; font-weight:normal"> "{{ license.policy_title }}"</code></h1>
         <br>
 
 
@@ -136,6 +136,13 @@ export default {
 </script>
 
 <style scoped>
+    code {
+        font-family: 'Jeju Gothic', sans-serif;
+    }
+    h1 {
+        font-size: 4.5rem;
+        color:#000000D9;
+    }
     .info-table {
         border-top: 2px solid #ccc;
         border-bottom: 2px solid #ccc;
@@ -151,7 +158,7 @@ export default {
     }
     .info-table th {
         background: #eaeaea;
-        font-weight: bold;
+        font-weight: normal;
         border: none;
         width: 20%;
         text-align: center;
@@ -159,11 +166,10 @@ export default {
     }
     .info-table td {
         padding: 15px;
-        font-weight: bold;
+        font-weight: normal;
         text-align: left;
     }
     #inner {
-        margin-left: 20px;
         padding: 10px;
         border: 1px solid lightgray;
         border-radius: 5px;
@@ -176,7 +182,7 @@ export default {
         color: #0f9d58;
         text-align: center;
         display: inline-block;
-        font-weight: bold;
+        font-weight: normal;
     }
     #upfile {
         margin-left: 20px;

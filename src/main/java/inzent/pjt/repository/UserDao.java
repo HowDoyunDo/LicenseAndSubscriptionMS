@@ -53,4 +53,8 @@ public class UserDao {
   public void changeUserInfo(UserVo vo) {
     session.update("changeUserInfo", vo);
   }
+  
+  public int chkPw(UserVo vo) {
+    return session.selectOne("chkPw", vo);
+  }
 }

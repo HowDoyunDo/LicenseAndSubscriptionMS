@@ -6,10 +6,10 @@
         <div class="modal-container">
           <div class="modal-header">
             <slot name="header">
-              <h2>
+              <h1>
                 상세보기 이미지
                 <a href class="modal-default-button" @click.prevent="close">&times;</a>
-              </h2>
+              </h1>
             </slot>
           </div>
           <!-- modal-header -->
@@ -33,7 +33,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+h1 {
+    font-size: 4.5rem;
+    color:#000000D9;
+}
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -58,7 +62,6 @@ export default {
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
-  font-family: Helvetica, Arial, sans-serif;
 }
 .modal-header h3 {
   margin-top: 0;

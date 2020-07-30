@@ -45,4 +45,8 @@ public class UserService {
   public void changeUserInfo(UserVo vo) {
     userdao.changeUserInfo(vo);
   }
+  
+  public int chkPw(UserVo vo) {
+    return userdao.chkPw(vo);
+  }
 }

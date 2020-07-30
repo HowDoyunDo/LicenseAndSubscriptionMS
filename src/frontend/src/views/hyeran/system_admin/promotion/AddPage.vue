@@ -1,6 +1,7 @@
 <template>
   <div class="contents">
-    <h2>프로모션 등록</h2>
+    <h1>프로모션 등록</h1>
+    <br>
     <PromotionAdd />
   </div>
 </template>
@@ -15,5 +16,9 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
 </style>

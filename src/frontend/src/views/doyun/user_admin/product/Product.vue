@@ -4,10 +4,10 @@
             <!-- slot 위치 -->
             <div id="inner">
             <ul class="user" style="float:left">
-                <h4 style="color:gray">{{ solution }} _사용자 정책</h4>
+                <h4 style="color:gray">{{ product.title }} _사용자 정책</h4>
                 <li v-for="(upolicy, i) in uPolicies" v-bind:key="upolicy.no">
                     <div class="panel panel-info">
-                        <div class="panel-heading">{{ solution }}</div>
+                        <div class="panel-heading">{{ product.title }}</div>
                         <div class="panel-body">
                             <table align="center">
                                 <tr>
@@ -23,44 +23,17 @@
                             <br>
 
                             <label>포함제품</label>
-                            <template v-if="solution === 'UI/UX 솔루션'">
-                                <p>iWorks<br>
-                                iXeb<br><br></p>
-                            </template>
-
-                            <template v-if="solution === '채널통합 솔루션'">
-                                <p>iGate<br>
-                                APIM<br>
-                                eCross<br><br></p>
-                            </template>
-
-                            <template v-if="solution === '컨텐츠 통합관리'">
-                                <p>Xtorm<br><br></p>
-                            </template>
-
-                            <template v-if="solution === '오픈소스 데이터 플랫폼'">
-                                <p>eXperDB<br><br></p>
-                            </template>
-
-                            <template v-if="solution === '통합도서관시스템'">
-                                <p>Libeka<br>
-                                Libeka S4<br><br></p>
-                            </template>
-
-                            <template v-if="solution === '정보 보안'">
-                                <p>MyGuard<br><br></p>
-                            </template>
-
-                            <template v-if="solution === '문서중앙화'">
-                                <p>Xtorm<br>
-                                MyGuard<br><br></p>
-                            </template>
+                                <div id="includes" v-for="tab in tabs" :key="tab.no">{{ tab.name }}</div>
+                                <br>
 
                             <button style="width:110px; margin-bottom:10px" @click="getPromotionAndOrder(i, upolicy.standard)">
                                 구독 신청
                             </button>
                         </div>
                     </div>
+                </li>
+                <li v-if="uPolicies.length === 0" style="text-align: center">
+                    정책 없음
                 </li>
             </ul>
             </div>
@@ -69,10 +42,10 @@
 
             <div id="inner">
             <ul class="agent" style="float:left">
-                <h4 style="color:gray">{{ solution }} _에이전트 정책</h4>
+                <h4 style="color:gray">{{ product.title }} _에이전트 정책</h4>
                 <li v-for="(apolicy, i) in aPolicies" v-bind:key="apolicy.no">
                     <div class="panel panel-info">
-                        <div class="panel-heading">{{ solution }}</div>
+                        <div class="panel-heading">{{ product.title }}</div>
                         <div class="panel-body">
                             <table align="center">
                                 <tr>
@@ -88,44 +61,17 @@
                             <br>
 
                             <label>포함제품</label>
-                            <template v-if="solution === 'UI/UX 솔루션'">
-                                <p>iWorks<br>
-                                iXeb<br><br></p>
-                            </template>
-
-                            <template v-if="solution === '채널통합 솔루션'">
-                                <p>iGate<br>
-                                APIM<br>
-                                eCross<br><br></p>
-                            </template>
-
-                            <template v-if="solution === '컨텐츠 통합관리'">
-                                <p>Xtorm<br><br></p>
-                            </template>
-
-                            <template v-if="solution === '오픈소스 데이터 플랫폼'">
-                                <p>eXperDB<br><br></p>
-                            </template>
-
-                            <template v-if="solution === '통합도서관시스템'">
-                                <p>Libeka<br>
-                                Libeka S4<br><br></p>
-                            </template>
-
-                            <template v-if="solution === '정보 보안'">
-                                <p>MyGuard<br><br></p>
-                            </template>
-
-                            <template v-if="solution === '문서중앙화'">
-                                <p>Xtorm<br>
-                                MyGuard<br><br></p>
-                            </template>
+                            <div id="includes" v-for="tab in tabs" :key="tab.no">{{ tab.name }}</div>
+                            <br>
                             
                             <button style="width:110px" @click="getPromotionAndOrder(i, apolicy.standard)">
                                 구독 신청
                             </button>
                         </div>
                     </div>
+                </li>
+                <li v-if="aPolicies.length === 0" style="text-align: center">
+                    정책 없음
                 </li>
             </ul>
             </div>
@@ -209,11 +155,14 @@ export default {
         Detail,
     },
     computed: {
-        solution: function() {
-            return this.$store.state.productStore.solution;
-        },
+        // solution: function() {
+        //     return this.$store.state.productStore.solution;
+        // },
         product: function() {
             return this.$store.state.productStore.product;
+        },
+        tabs: function() {
+            return this.$store.state.productStore.tabs;
         },
         uPolicies: function() {
             return this.$store.state.productStore.uPolicies;
@@ -258,7 +207,7 @@ export default {
   }
   .user table th, .agent table th {
     background: #eaeaea;
-    font-weight: bold;
+    font-weight: normal;
     border: none;
     text-align: center;
     padding: 0 5px 0 5px;
@@ -269,7 +218,7 @@ export default {
   .user table, .agent table {
     width: 180px;
   }
-  p {
+  #includes {
       color: blueviolet;
   }
   #subBtn {

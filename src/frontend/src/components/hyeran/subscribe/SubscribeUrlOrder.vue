@@ -1,6 +1,6 @@
 <template>
   <div class="contents">
-    <h2>구독 신청서 작성</h2>
+    <h1>구독 신청서 작성</h1>
     <p class="tip">서로 다른 정책의 제품들의 일괄 구매를 원하시는 고객님께서는 견적 문의 부탁드립니다.</p>
     <div class="info-border">
       <table class="info-table">
@@ -80,7 +80,7 @@
       <hr style="border-top: 1px solid black;" />
       <div
         id="price-title"
-        style="width: 80%; text-align:right; font-size:17px; font-weight: bold; float:left"
+        style="width: 80%; text-align:right; font-size:17px; font-weight: normal; float:left"
       >
         <p style="color: gray">정책 정가 :</p>
         <p style="color: red">총 할인 금액 :</p>
@@ -89,7 +89,7 @@
       </div>
       <div
         id="final-price"
-        style="width: 20%; text-align:right; font-size:17px; font-weight: bold; float:left"
+        style="width: 20%; text-align:right; font-size:17px; font-weight: normal; float:left"
       >
         <p style="color: gray">{{policyTotal | formatPrice}} 원</p>
         <p v-if="discountTotal!=0" style="color: red"> {{discountTotal | formatPrice }} 원
@@ -103,13 +103,13 @@
       <hr style="border-top: 1px solid gray;" />
       <div
         id="price-title"
-        style="width: 80%; text-align:right; font-size:18px; font-weight: bold; float:left"
+        style="width: 80%; text-align:right; font-size:18px; font-weight: normal; float:left"
       >
         <p style="color: black">결제 금액 :</p>
       </div>
       <div
         id="final-price"
-        style="width: 20%; text-align:right; font-size:18px; font-weight: bold; float:left"
+        style="width: 20%; text-align:right; font-size:18px; font-weight: normal; float:left"
       >{{ policyTotal - discountTotal_policy| formatPrice }} 원</div>
       <br />
       <br />
@@ -118,7 +118,7 @@
 
      <hr style="border-top: 1px solid black;">
                 <div class="selPayM" align="center">
-                    <h5 style="font-weight: bold">결제 방식 선택</h5>
+                    <h4 style="font-weight: normal">결제 방식 선택</h4>
                     <button id="cards" @click="selPayM('cards')"
                         :style="{background: cardsCol}">
                         신용카드
@@ -362,7 +362,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+h1 {
+    font-size: 4.5rem;
+    color:#000000D9;
+}
 .tip {
   border: 2px solid gray;
   color: red;
@@ -393,7 +397,7 @@ export default {
 }
 .info-table th {
   background: #eaeaea;
-  font-weight: bold;
+  font-weight: normal;
   border: none;
   width: 20%;
   text-align: center;
@@ -401,7 +405,7 @@ export default {
 }
 .info-table td {
   padding: 15px;
-  font-weight: bold;
+  font-weight: normal;
 }
 .info-table input {
   width: 100px;

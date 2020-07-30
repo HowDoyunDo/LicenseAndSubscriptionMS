@@ -7,11 +7,11 @@
 ">
           <div class="modal-header">
             <slot name="header">
-              <h2 class="cancel-h2" v-if="pwCheck==false">
+              <h1 class="cancel-h2" v-if="pwCheck==false">
                 구독을 취소하시겠습니까?
                 <a href class="modal-default-button" @click.prevent="close">&times;</a>
-              </h2>
-              <h2 v-if="pwCheck==true">관리자 비밀번호 입력</h2>
+              </h1>
+              <h1 v-if="pwCheck==true">관리자 비밀번호 입력</h1>
             </slot>
           </div>
           <!-- modal-header -->
@@ -100,7 +100,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+h1 {
+    font-size: 4.5rem;
+    color:#000000D9;
+}
 .modal-mask {
   position: fixed;
   z-index: 9998;
@@ -125,7 +129,6 @@ export default {
   border-radius: 2px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
   transition: all 0.3s ease;
-  font-family: Helvetica, Arial, sans-serif;
 }
 .modal-header h3 {
   margin-top: 0;
@@ -168,7 +171,7 @@ button {
 }
 .cancel-h2 {
   font-size: 26px;
-  font: bold;
+  font: normal;
 }
 .pwcheck {
   font-size: 100%;

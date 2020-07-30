@@ -1,7 +1,7 @@
 <template>
-  <div class="contents" style="border-left : 1px solid lightgray;">
+  <div class="contents">
     <div>
-      <h2>관리자 목록</h2>
+      <h1>관리자 목록</h1>
       <br />
       <table class="table_board">
         <tr style="float:center;">
@@ -59,9 +59,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 @import "/assets/css/allList.css";
 
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
 .cssbtn {
   background-color: #3498db;
   color: #ffffff;

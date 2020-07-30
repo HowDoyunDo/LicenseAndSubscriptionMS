@@ -114,7 +114,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .btn {
   width: 55px;
   margin-top: 1px;

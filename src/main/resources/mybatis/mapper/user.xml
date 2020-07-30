@@ -53,4 +53,7 @@
 		update user_admin set name = #{name}, password = #{password}, co_name = #{co_name}, co_location = #{co_location}, co_tel = #{co_tel}
 		 where no = #{no}
 	</update>
+	<select id="chkPw" resultType="int">
+		select count(*) from user_admin where email = #{email}
+	</select>
 </mapper>

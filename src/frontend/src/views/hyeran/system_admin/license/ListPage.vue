@@ -1,6 +1,6 @@
 <template>
   <div class="contents">
-    <h2> 전체 라이선스 현황 </h2>
+    <h1> 전체 라이선스 현황 </h1>
     <br />
     <LicenseAllList />
   </div>
@@ -15,8 +15,12 @@ export default {
 };
 </script>
 
-<style>
-button {
-  width: 80px;
-}
+<style scoped>
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
+  button {
+    width: 80px;
+  }
 </style>

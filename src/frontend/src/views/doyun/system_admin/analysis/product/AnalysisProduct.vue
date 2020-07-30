@@ -1,6 +1,6 @@
 <template>
     <div id="analysisSales" class="contents">
-        <h2>상품 분석</h2>
+        <h1>상품 분석</h1>
         <br>
 
         <div class="inner">
@@ -298,7 +298,10 @@ export default {
 
 <style scoped>
     @import "/assets/allList.css";
-
+    h1 {
+        font-size: 4.5rem;
+        color:#000000D9;
+    }
     .tip {
         border: 2px solid gray;
         color: red;
@@ -307,7 +310,6 @@ export default {
         border-radius: 5px;
     }
     .inner {
-        margin-left:20px;
         text-align: left;
     }
     .none {

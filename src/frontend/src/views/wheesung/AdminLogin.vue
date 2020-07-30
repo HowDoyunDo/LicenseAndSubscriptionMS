@@ -96,7 +96,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
 .signtext {
   width: 100%;
   height: 51px;

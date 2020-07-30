@@ -1,6 +1,6 @@
 <template>
   <div id="home" class="contents">
-    <h2>제품 조회</h2>
+    <h1>제품 조회</h1>
     <br>
     
     <Products />
@@ -17,7 +17,11 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+  h1 {
+    font-size: 4.5rem;
+    color:#000000D9;
+  }
   #home {
       text-align: center;
       padding: 40px;

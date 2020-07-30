@@ -19,7 +19,7 @@
     width: 22%;
     height: 40px;
     background: #eaeaea;
-    font-weight: bold;
+    font-weight: normal;
   }
   .table_add td {
     width: 78%;
@@ -55,6 +55,6 @@
   .product-sum {
     text-align: right;
     /* color:red;  */
-    font-style: bold;
+    font-style: normal;
     font-size: 20px;
   }

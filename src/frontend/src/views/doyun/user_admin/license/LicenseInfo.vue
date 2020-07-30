@@ -1,7 +1,7 @@
 <template>
     <div id="licenseinfo" class="contents">
         <template v-if="type === 'U'">
-            <h2>사용자 관리 <code style="color:#3498db; font-size:20px; font-weight:bold"> "{{ license.policy_title }}"</code></h2>
+            <h1>사용자 관리 <code style="color:#3498db; font-size:20px; font-weight:normal"> "{{ license.policy_title }}"</code></h1>
             <br>
             <div class="inner">
                 <h4 style="color:gray">보유 사용자 조회</h4>
@@ -54,7 +54,7 @@
                             <th style="width:30%">이메일</th>
                             <th style="width:15%">사용자 부서명</th>
                             <th style="width:30%">마지막 로그인</th>
-                            <!-- <th style="width:15%">활성화 여부</th> -->
+                            <th style="width:15%">활성화 여부</th>
                         </tr>
                         <tr v-for="(gu, idx) in filteredList" v-bind:key="gu.no">
                             <td>{{ idx+1 }}</td>
@@ -62,10 +62,10 @@
                             <td>{{ gu.email }}</td>
                             <td>{{ gu.dept_name }}</td>
                             <td>{{ date_to_str(gu.last_login) }}</td>
-                            <!-- <td v-if="gu.activation === true">
+                            <td v-if="gu.activation === true">
                                 <img style="border:1px solid #ccc; width:20px; height:20px;" src="@/assets/images/check.png"/>
                             </td>
-                            <td v-if="gu.activation === false"><div style="border:1px solid #ccc; width:20px; height:20px; display:inline-block;"/></td> -->
+                            <td v-if="gu.activation === false"><div style="border:1px solid #ccc; width:20px; height:20px; display:inline-block;"/></td>
                         </tr>
                     </table>
                 </template>
@@ -94,7 +94,7 @@
 
 
         <template v-if="type === 'A'">
-            <h2>에이전트 관리 <code style="color:#3498db; font-size:20px; font-weight:bold"> "{{ license.policy_title }}"</code></h2>
+            <h1>에이전트 관리 <code style="color:#3498db; font-size:20px; font-weight:normal"> "{{ license.policy_title }}"</code></h1>
             <br>
             <div class="inner">
                 <h4 style="color:gray">보유 에이전트 조회</h4>
@@ -392,6 +392,13 @@ export default {
 </script>
 
 <style scoped>
+    code {
+        font-family: 'Jeju Gothic', sans-serif;
+    }
+    h1 {
+        font-size: 4.5rem;
+        color:#000000D9;
+    }
     .info-table {
         border: 2px solid #ccc;
         width: 100%;
@@ -406,7 +413,7 @@ export default {
     }
     .info-table th {
         background: #eaeaea;
-        font-weight: bold;
+        font-weight: normal;
         border: none;
         width: 20%;
         text-align: center;
@@ -414,7 +421,7 @@ export default {
     }
     .info-table td {
         padding: 15px;
-        font-weight: bold;
+        font-weight: normal;
     }
     .info-table input {
         width: 100px;
@@ -425,7 +432,6 @@ export default {
         width: 100%;
         display: inline-block;
         border: 1px solid #ccc;
-        margin-left: 20px;
     }
     #tab-mac {
         border-top-left-radius: 4px;

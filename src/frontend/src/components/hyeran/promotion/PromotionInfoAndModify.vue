@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2 v-if="modifyToggle==true">프로모션 수정</h2>
-    <h2 v-else>프로모션 상세보기</h2>
+    <h1 v-if="modifyToggle==true">프로모션 수정</h1>
+    <h1 v-else>프로모션 상세보기</h1>
     <br />
     <form class="form" @submit.prevent="promotionAddSubmit">
       <table class="table_add">
@@ -166,7 +166,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+h1 {
+    font-size: 4.5rem;
+    color:#000000D9;
+}
 button {
   width: auto;
   padding: 0 15px;

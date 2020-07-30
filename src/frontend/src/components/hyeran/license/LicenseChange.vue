@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <h2>구독 변경 신청</h2>
+      <h1>구독 변경 신청</h1>
       <br />
       <p class="tip">서로 다른 정책의 제품들의 일괄 구매를 원하시는 고객님께서는 견적 문의 부탁드립니다.</p>
       <br />
@@ -43,7 +43,7 @@
           <tr v-if="startdate!='' && usemonth!=''">
             <th>구독 이용 종료일</th>
             <td
-              style="font-weight: bold; letter-spacing: 1px;"
+              style="font-weight: normal; letter-spacing: 1px;"
             >{{ getEndDate=='Invalid date' ? '' : getEndDate }}</td>
           </tr>
           <tr>
@@ -158,7 +158,11 @@ export default {
 </script>
 
 
-<style>
+<style scoped>
+h1 {
+    font-size: 4.5rem;
+    color:#000000D9;
+}
 .tip {
   border: 2px solid gray;
   color: red;

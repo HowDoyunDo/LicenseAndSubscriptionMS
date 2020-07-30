@@ -2,6 +2,7 @@ package inzent.pjt.controller;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,8 @@ public class UserController {
   @Autowired
   LoginService loginservice;
   JwtUtil jwtutil = new JwtUtil();
+  @Autowired
+  private PasswordEncoder passwordEncoder;
   
   @GetMapping("/userlist")
   public List<UserVo> userList(UserVo vo) throws Exception{
@@ -58,6 +61,14 @@ public class UserController {
     return userservice.myInfo(vo);
   }
   
+  @PostMapping("/changeuserinfopw")
+  public void changeuserinfopw(@RequestBody UserVo vo) throws Exception{
+    String pw = passwordEncoder.encode(vo.getPassword());
+    System.out.println(pw);
+    vo.setPassword(pw);
+    userservice.changeUserInfo(vo);
+  }
+  
   @PostMapping("/changeuserinfo")
   public void changeUserInfo(@RequestBody UserVo vo) throws Exception{
     userservice.changeUserInfo(vo);
@@ -69,8 +80,24 @@ public class UserController {
     List<UserVo> list = loginservice.loginChk(vo);
     
     if (list.size() != 0) {
+      if(passwordEncoder.matches(vo.getPassword(), list.get(0).getPassword())) {
       return jwtutil.createKey(list.get(0));
+      }
     }
     return null;
+  }
+  
+  @PostMapping("/chkpw")
+  public String chkPw(@RequestBody UserVo vo) throws Exception{
+    int chk = 0;
+    String pw = loginservice.loginChk(vo).get(0).getPassword();
+    if(passwordEncoder.matches(vo.getPassword(), pw)) {
+      chk = userservice.chkPw(vo);
+    }
+    if(chk == 1) {
+      return "S";
+    }else {
+      return "F";
+    }
   }
 }

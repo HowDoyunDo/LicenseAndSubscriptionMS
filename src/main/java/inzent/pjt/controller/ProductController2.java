@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import inzent.pjt.dto.ProductDTO;
 import inzent.pjt.service.ProductService2;
 import inzent.pjt.vo.CategoryVo;
 import inzent.pjt.vo.ProductVo2;
@@ -72,4 +74,23 @@ public class ProductController2 {
   public void productChange(@RequestBody ProductVo2 vo) throws Exception{
     productservice.productChange(vo);
   }
+  
+	@GetMapping("/getProductList")
+	public List<ProductDTO> getProducts() {
+		return productservice.getProducts();
+	}
+	
+	@GetMapping("/getFirstProduct")
+	public ProductDTO getFirstProduct(
+			@RequestParam(value = "sol") String sol
+			) {
+		return productservice.getFirstProduct(sol);
+	}
+	
+	@GetMapping("/productsInCategory")
+	public List<ProductDTO> productsInCategory(
+			@RequestParam(value = "sol") String sol
+			) {
+		return productservice.productsInCategory(sol);
+	}
 }

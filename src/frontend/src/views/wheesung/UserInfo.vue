@@ -1,9 +1,9 @@
 <template>
-  <div class="contents" style="border-left : 1px solid lightgray;">
+  <div class="contents">
     <div>
       <h2>관리자 정보</h2>
       <br />
-      <form class="form" @submit.prevent="productChange">
+      <form class="form">
         <table class="table_add">
           <tr>
             <th>기업명</th>
@@ -41,32 +41,35 @@
 
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {
       no: "",
-      list: ""
+      list: "",
     };
   },
   methods: {
     goList() {
       this.$router.push("/userlist");
-    }
+    },
   },
   created() {
     axios
       .post("/api/userinfo", {
-        no: this.$route.params.no
+        no: this.$route.params.no,
       })
-      .then(result => {
+      .then((result) => {
         this.list = result.data;
       });
-  }
+  },
 };
 </script>
 
-<style>
+<style scoped>
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
 .cssbtn {
   background-color: #3498db;
   color: #ffffff;

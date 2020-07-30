@@ -1,6 +1,6 @@
 <template>
     <div id="addagent" class="contents">
-        <h2>에이전트 개별 추가 <code style="color:#3498db; font-size:20px; font-weight:bold"> "{{ license.policy_title }}"</code></h2>
+        <h1>에이전트 개별 추가 <code style="color:#3498db; font-size:20px; font-weight:normal"> "{{ license.policy_title }}"</code></h1>
         <br>
 
         <div id="inner">
@@ -150,6 +150,13 @@ export default {
 </script>
 
 <style scoped>
+    code {
+        font-family: 'Jeju Gothic', sans-serif;
+    }
+    h1 {
+        font-size: 4.5rem;
+        color:#000000D9;
+    }
     .info-table {
         border: 2px solid #ccc;
         width: 100%;
@@ -164,7 +171,7 @@ export default {
     }
     .info-table th {
         background: #eaeaea;
-        font-weight: bold;
+        font-weight: normal;
         border: none;
         width: 20%;
         text-align: center;
@@ -172,7 +179,7 @@ export default {
     }
     .info-table td {
         padding: 15px;
-        font-weight: bold;
+        font-weight: normal;
         text-align: left;
     }
     #inner {

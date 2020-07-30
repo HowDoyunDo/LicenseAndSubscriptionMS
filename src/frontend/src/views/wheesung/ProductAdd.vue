@@ -1,8 +1,7 @@
 <template>
   <div class="contents">
     <div>
-      <br />
-      <h2>제품 등록</h2>
+      <h1>제품 등록</h1>
       <br />
       <form
         class="form"
@@ -33,7 +32,7 @@
           <tr>
             <th>제품 설명</th>
             <td>
-              <input type="text" v-model="comments" />
+              <input type="text" v-model="comments"/>
             </td>
           </tr>
           <tr>
@@ -230,7 +229,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
 .cssbtn {
   background-color: #3498db;
   color: #ffffff;

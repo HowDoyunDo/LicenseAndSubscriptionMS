@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import inzent.pjt.dto.ProductDTO;
 import inzent.pjt.repository.ProductDao2;
 import inzent.pjt.vo.CategoryVo;
 import inzent.pjt.vo.ProductVo2;
@@ -53,4 +54,16 @@ public class ProductService2 {
   public void productChange(ProductVo2 vo) {
     productdao.productChange(vo);
   }
+  
+	public List<ProductDTO> getProducts() {
+		return productdao.getProducts();
+	}
+
+	public ProductDTO getFirstProduct(String sol) {
+		return productdao.getFirstProduct(sol);
+	}
+
+	public List<ProductDTO> productsInCategory(String sol) {
+		return productdao.productsInCategory(sol);
+	}
 }

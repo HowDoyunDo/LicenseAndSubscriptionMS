@@ -16,6 +16,7 @@
 		<typeAlias type="inzent.pjt.dto.AnalysisWeekDTO" alias="awd"/>
 		<typeAlias type="inzent.pjt.dto.AnalysisMonthDTO" alias="amd"/>
 		<typeAlias type="inzent.pjt.dto.AnalysisProductDTO" alias="apd"/>
+		<typeAlias type="inzent.pjt.dto.ProductDTO" alias="pd"/>
 		
 		<!-- add -->
 		<typeAlias type="inzent.pjt.vo.SubscribeVO" alias="subscribevo"/>

@@ -1,13 +1,38 @@
 <template>
-  <div class="contents" style="border-left : 1px solid lightgray;">
+  <div class="contents">
     <div>
-      <br />
-      <div>
-        <h2 style="cursor:pointer;" :style="{color:changeColor}" @click="changeclick">변경 내역</h2>
-        <h2 style="cursor:default">&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;</h2>
-        <h2 style="cursor:pointer;" :style="{color:cancelColor}" @click="cancelclick">취소 내역</h2>
+      <div style="margin: 20px 0 10px;">
+        <h1 style="cursor:pointer;" :style="{color:changeColor}" @click="changeclick">변경 내역</h1>
+        <h1 style="cursor:default">&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;</h1>
+        <h1 style="cursor:pointer;" :style="{color:cancelColor}" @click="cancelclick">취소 내역</h1>
       </div>
-      <br />
+      <br>
+      <div style="margin: 0 0 10px 0;">
+        <select v-if="clicked===true" v-model="selected" style="margin: 0 5px 0 0; height: 30px;">
+          <option value="co_name">기업명</option>
+          <option value="name">관리자명</option>
+        </select>
+        <select v-if="clicked===false" v-model="selected" style="margin: 0 5px 0 0; height: 30px;">
+          <option value="co_name">기업명</option>
+          <option value="name">관리자명</option>
+        </select>
+        <input
+          v-if="selected==='co_name'"
+          style="margin: 8px 0 0 0;"
+          id="myInput"
+          type="text"
+          v-on:input="keyword = $event.target.value"
+          placeholder="검색어 입력"
+        />
+        <input
+          v-if="selected==='name'"
+          style="margin: 8px 0 0 0;"
+          id="myInput"
+          type="text"
+          v-on:input="keyword = $event.target.value"
+          placeholder="검색어 입력"
+        />
+      </div>
       <table v-if="clicked" class="table_board">
         <tr style="float:center;">
           <th style="width:5%;">번호</th>
@@ -17,11 +42,7 @@
           <th style="width:10%;">종료일</th>
           <th style="width:10%;">변경일</th>
         </tr>
-        <tr
-          style="cursor:default"
-          v-for="(change, idx) in changelist"
-          :key="change.no"
-        >
+        <tr style="cursor:default" v-for="(change, idx) in changefilteredList" :key="change.no">
           <td>{{ idx + 1 }}</td>
           <td>{{ change.co_name }} [{{ change.name }}]</td>
           <td>{{ change.policy_title }}</td>
@@ -37,11 +58,7 @@
           <th style="width:30%">구독 정책명</th>
           <th style="width:10%">취소일</th>
         </tr>
-        <tr
-          style="cursor:default"
-          v-for="(cancel, idx) in cancellist"
-          :key="cancel.no"
-        >
+        <tr style="cursor:default" v-for="(cancel, idx) in cancelfilteredList" :key="cancel.no">
           <td>{{ idx + 1 }}</td>
           <td>{{ cancel.co_name }} [{{ cancel.name }}]</td>
           <td>{{cancel.policy_title}}</td>
@@ -62,38 +79,64 @@ export default {
       clicked: true,
       cancellist: "",
       changelist: "",
-      changeColor: 'blue',
-      cancelColor: 'black',
+      changeColor: "#3498db",
+      cancelColor: "black",
+      selected: "co_name",
+      keyword: "",
     };
+  },
+  computed: {
+    changefilteredList() {
+      return Object.values(this.changelist).filter((post) => {
+        if (this.selected === "name") {
+          return post.name.toLowerCase().includes(this.keyword.toLowerCase());
+        } else if (this.selected === "co_name") {
+          return post.co_name
+            .toLowerCase()
+            .includes(this.keyword.toLowerCase());
+        }
+      });
+    },
+    cancelfilteredList() {
+      return Object.values(this.cancellist).filter((post) => {
+        if (this.selected === "name") {
+          return post.name.toLowerCase().includes(this.keyword.toLowerCase());
+        } else if (this.selected === "co_name") {
+          return post.co_name
+            .toLowerCase()
+            .includes(this.keyword.toLowerCase());
+        }
+      });
+    },
   },
   methods: {
     changeclick() {
       this.clicked = true;
       if (this.clicked == true) {
-        this.changeColor = "blue";
-        this.cancelColor = 'black';
+        this.changeColor = "#3498db";
+        this.cancelColor = "black";
       }
     },
     cancelclick() {
       this.clicked = false;
       if (this.clicked == false) {
-        this.cancelColor = "blue";
+        this.cancelColor = "#3498db";
         this.changeColor = "black";
       }
-    }
+    },
   },
   created() {
-    axios.get("/api/cancellist").then(result => {
+    axios.get("/api/cancellist").then((result) => {
       this.cancellist = result.data;
     });
-    axios.get("/api/changelist").then(result => {
+    axios.get("/api/changelist").then((result) => {
       this.changelist = result.data;
     });
-  }
+  },
 };
 </script>
 
-<style>
+<style scoped>
 .cssbtn {
   background-color: #3498db;
   color: #ffffff;
@@ -111,8 +154,20 @@ export default {
 .table_board td {
   height: 40px;
 }
-
-h2 {
-  display: inline;
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
+#myInput {
+  background-image: url("../../assets/images/searchIcon2.png");
+  background-size: 23px;
+  background-position: 8px 8px;
+  background-repeat: no-repeat;
+  width: 260px;
+  height: 35px;
+  font-size: 16px;
+  padding: 12px 20px 12px 42px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
 }
 </style>

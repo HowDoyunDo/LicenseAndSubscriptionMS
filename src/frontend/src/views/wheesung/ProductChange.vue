@@ -1,7 +1,7 @@
 <template>
   <div class="contents">
     <div>
-      <h2>제품 수정</h2>
+      <h1>제품 수정</h1>
       <br />
       <form class="form" @submit.prevent="productChange">
         <table class="table_add">
@@ -258,7 +258,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
 .cssbtn {
   background-color: #3498db;
   color: #ffffff;

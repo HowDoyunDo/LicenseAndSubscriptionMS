@@ -19,9 +19,9 @@
 		select count(*) from system_admin where email = #{email}
 	</select>
 	<select id="loginChk" parameterType="map" resultType="uservo">
-		select * from user_admin where email = #{email} and password = #{password}
+		select * from user_admin where email = #{email}
 	</select>
 	<select id="adminloginChk" parameterType="map" resultType="adminvo">
-		select * from system_admin where email = #{email} and password = #{password}
+		select * from system_admin where email = #{email}
 	</select>
 </mapper>

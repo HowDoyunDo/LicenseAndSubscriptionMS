@@ -1,7 +1,6 @@
 <template>
   <div class="contents">
     <div id="login" style="width: 460px; margin: 0 auto;">
-      <br />
       <form @submit.prevent="login">
         <h1 style="text-align:center;">로그인</h1>
         <br />
@@ -96,7 +95,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
 .signtext {
   width: 100%;
   height: 51px;

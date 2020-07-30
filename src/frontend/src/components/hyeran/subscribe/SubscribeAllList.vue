@@ -1,7 +1,14 @@
 <template>
   <div>
-    <div class="search-wrapper">
-      <input id="myInput" type="text" v-model="keyword" placeholder="검색어 입력" />
+    <div class="search-wrapper btnn">
+      <input
+        style="float:left;"
+        id="myInput"
+        type="text"
+        v-on:input="keyword = $event.target.value"
+        placeholder="검색어 입력"
+      />
+      <button class="submit_btn" @click="subscribeAdd">등록</button>
     </div>
     <table class="table_board">
       <tr>
@@ -44,18 +51,17 @@ export default {
   data() {
     return {
       subAllList: "",
-      keyword: ""
+      keyword: "",
     };
   },
   computed: {
     filteredList() {
-      return Object.values(this.subAllList).filter(post => {
-        console.log(Object.values(post));
+      return Object.values(this.subAllList).filter((post) => {
         return post.policy_title
           .toLowerCase()
           .includes(this.keyword.toLowerCase());
       });
-    }
+    },
   },
   created() {
     this.listData();
@@ -65,19 +71,22 @@ export default {
       const { data } = await subscribeAllList();
       this.subAllList = data;
     },
+    subscribeAdd() {
+      this.$router.push("/subscribe/add");
+    },
     listClick(index) {
       // 클릭한 해당 구독정책번호
       const subscribeNo = this.subAllList[index].no;
       this.$router.push({
         name: "subscribeInfo",
-        params: { subscribe_no: subscribeNo }
+        params: { subscribe_no: subscribeNo },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style>
+<style scoped>
 #myInput {
   background-image: url("../../../assets/images/searchIcon2.png");
   background-size: 23px;
@@ -92,5 +101,11 @@ export default {
 }
 input {
   outline: none;
+}
+.btnn {
+  text-align: right;
+}
+button {
+  width: 80px;
 }
 </style>

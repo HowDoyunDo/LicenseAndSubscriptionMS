@@ -96,7 +96,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .product-sum {
   text-align: right;
   color: red;

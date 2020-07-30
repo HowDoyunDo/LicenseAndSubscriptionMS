@@ -79,6 +79,7 @@ public class LicenseController {
 	        int fileSize = Long.valueOf(file.length()).intValue();
 	        
 	        response.setContentType(mimeType);
+	        System.out.println(response.getContentType());
 	        response.setHeader("Content-Disposition", contentDisposition);
 	        response.setContentLength(fileSize);
 	    }catch (FileNotFoundException e) {

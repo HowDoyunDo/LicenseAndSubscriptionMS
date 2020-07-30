@@ -1,6 +1,6 @@
 <template>
   <div class="contents">
-    <h2>{{userInfo.name}} 님의 라이선스 현황</h2>
+    <h1>{{userInfo.name}} 님의 라이선스 현황</h1>
     <br />
     <LicenseUserListCom :licenses="licenses" />
   </div>
@@ -28,7 +28,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
 button {
   width: 80px;
 }

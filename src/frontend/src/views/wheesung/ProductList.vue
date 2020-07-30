@@ -1,23 +1,30 @@
 <template>
   <div class="contents">
     <div>
-      <h2>제품 목록</h2>
-      <div style="text-align: right; margin: 10px;">
-        <input class="cssbtn" type="button" value="등록" @click="movetoadd" />
+      <h1>제품 목록</h1>
+      <div style="margin: 0 0 10px 0;">
+        <input
+          style="margin: 8px 0 0 0;"
+          id="myInput"
+          type="text"
+          v-on:input="keyword = $event.target.value"
+          placeholder="제품명 입력"
+        />
+        <input style="float: right;" class="cssbtn" type="button" value="등록" @click="movetoadd" />
       </div>
       <table class="table_board">
         <tr style="float:center;">
-          <th style="width:100px;">번호</th>
-          <th style="width:250px;text-align: left; padding: 0 0 0 20px;">제품명</th>
-          <th style="text-align: left; width:200px;">제품 설명</th>
-          <th style="width:100px;">가격</th>
-          <th style="width:100px;">등록일</th>
-          <th style="width:100px;"></th>
+          <th style="width:5%;">번호</th>
+          <th style="width:30%;">제품명</th>
+          <th style="width:30%;">제품 설명</th>
+          <th style="width:10%">가격</th>
+          <th style="width:15%">등록일</th>
+          <th style="width:15%;"></th>
         </tr>
-        <tr v-for="(product, idx) in list" :key="product.no">
+        <tr v-for="(product, idx) in filteredList" :key="product.no">
           <td>{{ idx + 1 }}</td>
-          <td style="text-align: left; padding: 0 0 0 20px;">{{ product.name }}</td>
-          <td style="text-align: left;">{{ product.comments }}</td>
+          <td>{{ product.name }}</td>
+          <td>{{ product.comments }}</td>
           <td>{{ product.price | formatPrice }}</td>
           <td>{{ product.reg_date }}</td>
           <td>
@@ -32,7 +39,7 @@
         :per-page="10"
         :current-page="currentPage"
         @pagechanged="onPageChange"
-      ></Page> -->
+      ></Page>-->
     </div>
   </div>
 </template>
@@ -51,8 +58,16 @@ export default {
       name: "",
       comments: "",
       price: 0,
-      currentPage: 1
+      currentPage: 1,
+      keyword: "",
     };
+  },
+  computed: {
+    filteredList() {
+      return Object.values(this.list).filter((post) => {
+        return post.name.toLowerCase().includes(this.keyword.toLowerCase());
+      });
+    },
   },
   methods: {
     onPageChange(page) {
@@ -62,11 +77,11 @@ export default {
     productDel(pname) {
       axios
         .post("/api/productdel", {
-          name: pname
+          name: pname,
         })
-        .then(result => {
+        .then((result) => {
           if (result.status == 200) {
-            axios.get("/api/productlist").then(result => {
+            axios.get("/api/productlist").then((result) => {
               this.list = result.data;
             });
           }
@@ -75,15 +90,15 @@ export default {
     productChangeForm(no) {
       this.$router.push({
         name: "productchangeform",
-        params: { no: no }
+        params: { no: no },
       });
     },
     movetoadd() {
       this.$router.push("/productadd");
-    }
+    },
   },
   created() {
-    axios.get("/api/productlist").then(result => {
+    axios.get("/api/productlist").then((result) => {
       this.list = result.data;
     });
   },
@@ -91,12 +106,16 @@ export default {
     formatPrice(value) {
       if (!value) return "";
       return value.toFixed(0).replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g, "$1,");
-    }
-  }
+    },
+  },
 };
 </script>
 
-<style>
+<style scoped>
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
 .cssbtn {
   background-color: #3498db;
   color: #ffffff;
@@ -113,5 +132,18 @@ export default {
 
 .table_board td {
   height: 40px;
+}
+
+#myInput {
+  background-image: url("../../assets/images/searchIcon2.png");
+  background-size: 23px;
+  background-position: 8px 8px;
+  background-repeat: no-repeat;
+  width: 260px;
+  height: 35px;
+  font-size: 16px;
+  padding: 12px 20px 12px 42px;
+  border: 1px solid #ddd;
+  margin-bottom: 12px;
 }
 </style>

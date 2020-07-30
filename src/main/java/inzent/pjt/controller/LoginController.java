@@ -3,6 +3,7 @@ package inzent.pjt.controller;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,10 +17,14 @@ public class LoginController {
   @Autowired
   LoginService loginservice;
   JwtUtil jwtutil = new JwtUtil();
+  @Autowired
+  private PasswordEncoder passwordEncoder;
   
   // 회원가입
   @PostMapping("/signup")
   public String signUp(@RequestBody UserVo vo) throws Exception {
+    String pw = passwordEncoder.encode(vo.getPassword());
+    vo.setPassword(pw);
     loginservice.signUp(vo);
 
     return "/successSignUp";
@@ -32,7 +37,9 @@ public class LoginController {
     List<UserVo> list = loginservice.loginChk(vo);
     
     if (list.size() != 0) {
-      return jwtutil.createKey(list.get(0));
+      if(passwordEncoder.matches(vo.getPassword(), list.get(0).getPassword())) {
+        return jwtutil.createKey(list.get(0));
+      }
     }
     return null;
   }
@@ -43,8 +50,10 @@ public class LoginController {
     
     List<AdminVo> list = loginservice.adminloginChk(vo);
     
-    if(list.size() != 0) {
-      return jwtutil.createKey(list.get(0));
+    if (list.size() != 0) {
+      if(passwordEncoder.matches(vo.getPassword(), list.get(0).getPassword())) {
+        return jwtutil.createKey(list.get(0));
+      }
     }
     return null;
   }

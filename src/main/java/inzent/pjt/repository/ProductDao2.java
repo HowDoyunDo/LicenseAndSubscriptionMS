@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import inzent.pjt.dto.ProductDTO;
 import inzent.pjt.vo.CategoryVo;
 import inzent.pjt.vo.ProductVo2;
 
@@ -67,4 +68,16 @@ public class ProductDao2 {
     public void productChange(ProductVo2 vo) {
       session.update("product2.productChange", vo);
     }
+    
+	public List<ProductDTO> getProducts() {
+		return session.selectList("product2.getProducts");
+	}
+
+	public ProductDTO getFirstProduct(String sol) {
+		return session.selectOne("product2.getFirstProduct", sol);
+	}
+
+	public List<ProductDTO> productsInCategory(String sol) {
+		return session.selectList("product2.productsInCategory", sol);
+	}
 }

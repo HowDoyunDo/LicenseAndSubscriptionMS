@@ -1,5 +1,5 @@
 <template>
-  <div class="contents" style="border-left : 1px solid lightgray;">
+  <div class="contents">
     <div>
       <h2>정보 수정</h2>
       <br />
@@ -16,9 +16,15 @@
             </td>
           </tr>
           <tr>
-            <th>비밀번호</th>
+            <th>변경할 비밀번호</th>
             <td>
-              <input type="password" v-model="list.password" />
+              <input type="password" v-model="changePw" />
+            </td>
+          </tr>
+          <tr>
+            <th>비밀번호 재입력</th>
+            <td>
+              <input type="password" v-model="changePw2" />
             </td>
           </tr>
           <tr>
@@ -46,7 +52,7 @@
         </table>
         <br />
         <div style="text-align: center;">
-          <input class="cssbtn" type="button" value="완료"  @click="changeUserInfo"/>
+          <input class="cssbtn" type="button" value="완료" @click="changeUserInfo" />
         </div>
       </form>
     </div>
@@ -55,41 +61,80 @@
 
 <script>
 import axios from "axios";
-
 export default {
   data() {
     return {
       list: "",
-      no: ""
+      no: "",
+      changePw: "",
+      changePw2: "",
     };
   },
   methods: {
     changeUserInfo() {
-      axios
-        .post("/api/changeuserinfo", {
-          no: this.list.no,
-          name: this.list.name,
-          password: this.list.password,
-          co_name: this.list.co_name,
-          co_location: this.list.co_location,
-          co_tel: this.list.co_tel,
-        })
-        .then(result => {
-          console.log(result);
-          if(result.status == 200){
-              axios.post("/api/updatetoken",{
-                    password: this.list.password,
-                    email: this.$store.state.userinfo.userInfo.email
-              }).then(result =>{
-                  console.log(result.data)
-                    sessionStorage.setItem("license-token", result.data);
-                    localStorage.removeItem("vuex");
-                this.parseJwt(result.data);
-              });
+      console.log(this.list.password + " : password");
+      console.log(this.changePw);
+      console.log(this.changePw2);
+      if (this.changePw !== this.changePw2) {
+        alert("비밀번호와 비밀번호확인이 같지 않습니다.");
+      } else if (this.changePw === "" && this.changePw2 === "") {
+        console.log("비밀번호 빈칸!");
+        axios
+          .post("/api/changeuserinfo", {
+            no: this.list.no,
+            name: this.list.name,
+            password: this.list.password,
+            co_name: this.list.co_name,
+            co_location: this.list.co_location,
+            co_tel: this.list.co_tel,
+          })
+          .then((result) => {
+            console.log(result);
+            if (result.status == 200) {
+              axios
+                .post("/api/updatetoken", {
+                  password: this.list.password,
+                  email: this.$store.state.userinfo.userInfo.email,
+                })
+                .then((result) => {
+                  console.log(result.data);
+                  sessionStorage.setItem("license-token", result.data);
+                  localStorage.removeItem("vuex");
+                  this.parseJwt(result.data);
+                });
               alert("정보가 수정되었습니다.");
-              this.$router.push("/myinfo")
-          }
-        });
+              this.$router.push("/myinfo");
+            }
+          });
+      } else {
+        axios
+          .post("/api/changeuserinfopw", {
+            no: this.list.no,
+            name: this.list.name,
+            password: this.changePw,
+            co_name: this.list.co_name,
+            co_location: this.list.co_location,
+            co_tel: this.list.co_tel,
+          })
+          .then((result) => {
+            console.log(result);
+            if (result.status == 200) {
+              axios
+                .post("/api/updatetoken", {
+                  password: this.changePw,
+                  email: this.$store.state.userinfo.userInfo.email,
+                })
+                .then((result) => {
+                  console.log(result.data);
+                  sessionStorage.setItem("license-token", result.data);
+                  localStorage.removeItem("vuex");
+                  this.parseJwt(result.data);
+                });
+              alert("정보가 수정되었습니다.");
+              this.$router.push("/myinfo");
+            }
+          });
+      }
     },
     parseJwt(token) {
       try {
@@ -98,33 +143,36 @@ export default {
         var jsonPayload = decodeURIComponent(
           atob(base64)
             .split("")
-            .map(function(c) {
+            .map(function (c) {
               return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
             })
             .join("")
         );
         this.$store.commit("userinfo/setUserInfo", JSON.parse(jsonPayload));
-
         return JSON.parse(jsonPayload);
       } catch (e) {
         console.log(e);
       }
-    }
+    },
   },
   created() {
     this.no = this.$store.state.userinfo.userInfo.no;
     axios
       .post("/api/myinfo", {
-        no: this.no
+        no: this.no,
       })
-      .then(result => {
+      .then((result) => {
         this.list = result.data;
       });
-  }
+  },
 };
 </script>
 
-<style>
+<style scoped>
+  h1 {
+      font-size: 4.5rem;
+      color:#000000D9;
+  }
 .cssbtn {
   background-color: #3498db;
   color: #ffffff;

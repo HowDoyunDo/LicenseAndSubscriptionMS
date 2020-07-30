@@ -133,7 +133,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 button {
   width: auto;
   padding: 0 15px;

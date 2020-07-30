@@ -41,11 +41,13 @@ export default {
 @import "./assets/css/products.css";
 @import "./assets/css/table.css";
 
+@import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
+
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  color: #000000D9;
+  font-family: 'Jeju Gothic', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
   width: 100%;
   height: 100%;
   overflow: auto;
@@ -53,5 +55,21 @@ export default {
 
 #bottom-part {
   display: flex;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: normal;
+}
+
+button {
+  font-weight: normal;
+}
+
+input[type=password] {
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+::placeholder {
+  font-family: 'Jeju Gothic', sans-serif;
 }
 </style>
