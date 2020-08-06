@@ -2,65 +2,67 @@
     <div id="batch" class="contents">
         <h1>배치 서비스</h1>
         <br>
-        <div class="inner">
-            <h4 style="color:gray">현재 배치 서비스</h4>
-            <p class="tip">[ {{ batch.batch_period_days }}일 ] 주기로 
-                마지막 로그인으로부터 [
-                <span v-if="batch.login_limit_months !== 0">{{ batch.login_limit_months }}개월 </span> 
-                <span v-if="batch.login_limit_days !== 0">{{ batch.login_limit_days }}일 </span>
-                <span v-if="batch.login_limit_hours !== 0">{{ batch.login_limit_hours }}시간 </span>] 이상 지난 사용자를 삭제합니다.
-            </P>
-            <table class="info-table">
-                <tr>
-                    <th style="width:15%">배치 서비스 주기</th>
-                    <th style="width:15%">비로그인 제한 (개월)</th>
-                    <th style="width:15%">비로그인 제한 (일)</th>
-                    <th style="width:15%">비로그인 제한 (시간)</th>
-                    <th style="width:20%">최근 배치 실행 시간</th>
-                    <th style="width:20%">다음 배치 실행 시간</th>
-                </tr>
-                <tr>
-                    <td>{{ batch.batch_period_days }}일</td>
-                    <td>{{ batch.login_limit_months }}개월</td>
-                    <td>{{ batch.login_limit_days }}일</td>
-                    <td>{{ batch.login_limit_hours }}시간</td>
-                    <td>{{ date_to_str(batch.recent_batch) }}</td>
-                    <td>{{ date_to_str(batch.next_batch) }}</td>
-                </tr>                                          
-            </table>
-            <br><br>
+        <div id="inner">
+            <div class="inner">
+                <h4 style="color:gray">현재 배치 서비스</h4>
+                <p class="tip">[ {{ batch.batch_period_days }}일 ] 주기로 
+                    마지막 로그인으로부터 [
+                    <span v-if="batch.login_limit_months !== 0">{{ batch.login_limit_months }}개월 </span> 
+                    <span v-if="batch.login_limit_days !== 0">{{ batch.login_limit_days }}일 </span>
+                    <span v-if="batch.login_limit_hours !== 0">{{ batch.login_limit_hours }}시간 </span>] 이상 지난 사용자를 삭제합니다.
+                </P>
+                <table class="info-table">
+                    <tr>
+                        <th style="width:15%">배치 서비스 주기</th>
+                        <th style="width:15%">비로그인 제한 (개월)</th>
+                        <th style="width:15%">비로그인 제한 (일)</th>
+                        <th style="width:15%">비로그인 제한 (시간)</th>
+                        <th style="width:20%">최근 배치 실행 시간</th>
+                        <th style="width:20%">다음 배치 실행 시간</th>
+                    </tr>
+                    <tr>
+                        <td>{{ batch.batch_period_days }}일</td>
+                        <td>{{ batch.login_limit_months }}개월</td>
+                        <td>{{ batch.login_limit_days }}일</td>
+                        <td>{{ batch.login_limit_hours }}시간</td>
+                        <td>{{ date_to_str(batch.recent_batch) }}</td>
+                        <td>{{ date_to_str(batch.next_batch) }}</td>
+                    </tr>                                          
+                </table>
+                <br><br>
 
-            <h4 style="color:gray">배치 서비스 변경</h4>
-            <p class="tip">[ {{ batch_period_day }}일 ] 주기로 
-                마지막 로그인으로부터 [
-                <span v-if="batch.login_limit_months !== ''">{{ login_limit_months }}개월 </span> 
-                <span v-if="batch.login_limit_days !== ''">{{ login_limit_days }}일 </span>
-                <span v-if="batch.login_limit_hours !== ''">{{ login_limit_hours }}시간 </span>] 이상 지난 사용자를 삭제합니다.
-            </P>
-            <table class="info-table">
-                <tr>
-                    <th>배치 서비스 주기</th>
-                    <th>비로그인 제한 (개월)</th>
-                    <th>비로그인 제한 (일)</th>
-                    <th>비로그인 제한 (시간)</th>
-                </tr>
-                <tr>
-                    <td><input type="number" v-model="batch_period_day"/>일</td>
-                    <td><input type="number" v-model="login_limit_months"/>개월</td>
-                    <td><input type="number" v-model="login_limit_days"/>일</td>
-                    <td><input type="number" v-model="login_limit_hours"/>시간</td>
-                </tr>                                          
-            </table>
-            <br>
-            <br>
-            <hr style="border-top:1px solid gray">
-            <br>
-            <h4 style="color:gray" align="center">다음 정보로 배치서비스를 변경합니다.</h4>
-            <br>
-            <div align="center">
-                <button style="width:180px" @click="chgbatch()">배치 서비스 변경</button>
+                <h4 style="color:gray">배치 서비스 변경</h4>
+                <p class="tip">[ {{ batch_period_day }}일 ] 주기로 
+                    마지막 로그인으로부터 [
+                    <span v-if="batch.login_limit_months !== ''">{{ login_limit_months }}개월 </span> 
+                    <span v-if="batch.login_limit_days !== ''">{{ login_limit_days }}일 </span>
+                    <span v-if="batch.login_limit_hours !== ''">{{ login_limit_hours }}시간 </span>] 이상 지난 사용자를 삭제합니다.
+                </P>
+                <table class="info-table">
+                    <tr>
+                        <th>배치 서비스 주기</th>
+                        <th>비로그인 제한 (개월)</th>
+                        <th>비로그인 제한 (일)</th>
+                        <th>비로그인 제한 (시간)</th>
+                    </tr>
+                    <tr>
+                        <td><input type="number" v-model="batch_period_day"/>일</td>
+                        <td><input type="number" v-model="login_limit_months"/>개월</td>
+                        <td><input type="number" v-model="login_limit_days"/>일</td>
+                        <td><input type="number" v-model="login_limit_hours"/>시간</td>
+                    </tr>                                          
+                </table>
+                <br>
+                <br>
+                <hr style="border-top:1px solid gray">
+                <br>
+                <h4 style="color:gray" align="center">다음 정보로 배치서비스를 변경합니다.</h4>
+                <br>
+                <div align="center">
+                    <button style="width:180px" @click="chgbatch()">배치 서비스 변경</button>
+                </div>
+                <br>
             </div>
-            <br>
         </div>
     </div>
 </template>
@@ -73,10 +75,10 @@ export default {
             batch: '',
 
             // 배치 변경 데이터
-            batch_period_day: '',
-            login_limit_months: '',
-            login_limit_days: '',
-            login_limit_hours: '',
+            batch_period_day: 0,
+            login_limit_months: 0,
+            login_limit_days: 0,
+            login_limit_hours: 0,
         }
     },
     async created() {
@@ -172,5 +174,11 @@ export default {
         font-size: 15px;
         padding: 20px;
         border-radius: 5px;
+    }
+    #inner {
+        width: 100%;
+        display: inline-block;
+        border: 1px solid #ccc;
+        padding:10px;
     }
 </style>

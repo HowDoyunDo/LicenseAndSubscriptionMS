@@ -2,7 +2,7 @@
   <div>
     <div class="search-wrapper btnn">
       <input
-        style="float:left;"
+        style="float:left; height:40px"
         id="myInput"
         type="text"
         v-on:input="keyword = $event.target.value"
@@ -97,7 +97,7 @@ export default {
   font-size: 16px;
   padding: 12px 20px 12px 42px;
   border: 1px solid #ddd;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 input {
   outline: none;
@@ -107,5 +107,6 @@ input {
 }
 button {
   width: 80px;
+  height: 40px;
 }
 </style>

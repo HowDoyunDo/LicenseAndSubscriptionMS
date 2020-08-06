@@ -38,4 +38,10 @@ public class CategoryVo {
   public void setReg_date(String reg_date) {
     this.reg_date = reg_date;
   }
+@Override
+public String toString() {
+	return "CategoryVo [no=" + no + ", title=" + title + ", reg_date=" + reg_date + ", ca_title=" + ca_title
+			+ ", category_image=" + category_image + "]";
+}
+  
 }

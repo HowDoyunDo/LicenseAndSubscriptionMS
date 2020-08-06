@@ -12,12 +12,15 @@
 		]]>
 	</select>
 	
-	<select id="getUserList" parameterType="int" resultType="generaluservo">
+	<select id="getUserList" parameterType="int" resultType="agentvo">
 		<![CDATA[
-			select gu.*, ag.last_login, ag.activation
+			select ag.no, ag.user_no, ag.name as agent_name, ag.mac_address,
+			 ag.ip_address, ag.last_login, ag.activation, 
+			 gu.email, gu.password, gu.name, gu.dept_name
 			 from agent ag, general_user gu
 			 where ag.license_no = #{licenseNo}
 			 and ag.user_no = gu.no
+			 order by no ASC
 		]]>
 	</select>
 	
@@ -31,6 +34,7 @@
 			 and gu.name like CONCAT('%', #{name}, '%')
 			 and gu.dept_name like CONCAT('%', #{dept}, '%')
 			 and last_login between to_timestamp(#{start}, 'YYYY-MM-DD HH24:MI:SS') and to_timestamp(#{end}, 'YYYY-MM-DD HH24:MI:SS')
+			 order by no ASC
 		]]>
 	</select>
 	
@@ -43,22 +47,16 @@
 			 and gu.email like CONCAT('%', #{email}, '%')
 			 and gu.name like CONCAT('%', #{name}, '%')
 			 and gu.dept_name like CONCAT('%', #{dept}, '%')
+			 order by no ASC
 		]]>
 	</select>
-	
-	<delete id="delUser1" parameterType="string">
-		<![CDATA[
-			delete 
-			 from general_user
-			 where no in ${_parameter} 
-		]]>
-	</delete>
 
-	<delete id="delUser2" parameterType="string">
+	<delete id="delUser" parameterType="map">
 		<![CDATA[
 			delete 
 			 from agent
-			 where user_no in ${_parameter}
+			 where no in ${delUsrs}
+			 and license_no = #{licenseNo}
 		]]>
 	</delete>
 	
@@ -106,6 +104,7 @@
 			  where gu.email = #{email}
 			  and ag.license_no = #{licenseNo}
 			  and ag.user_no = gu.no
+			  order by no ASC
 		]]>
 	</select>
 	
@@ -152,28 +151,20 @@
 	<select id="getAgentList" parameterType="int" resultType="agentvo">
 		<![CDATA[
 			select ag.no, ag.user_no, ag.name as agent_name, ag.mac_address,
-			 ag.ip_address, ag.last_login,
+			 ag.ip_address, ag.last_login, ag.activation, 
 			 gu.email, gu.password, gu.name, gu.dept_name
 			 from agent ag, general_user gu
 			 where ag.license_no = #{licenseNo}
 			 and ag.user_no = gu.no
 		]]>
 	</select>
-	
-	<delete id="delAgent1" parameterType="string">
-		<![CDATA[
-			delete 
-			 from general_user
-			 where no in (select user_no from agent where no in ${_parameter})
-		]]>
-	</delete>
 
-	<delete id="delAgent2" parameterType="string">
+	<delete id="delAgent" parameterType="string">
 		<![CDATA[
-			delete 
-			 from agent
-			 where no in ${_parameter}
-		]]>
+ 			delete  
+ 			 from agent 
+ 			 where no in ${_parameter} 
+ 		]]> 
 	</delete>
 	
 	<select id="dupAgentMac" parameterType="map" resultType="agentvo">
@@ -314,4 +305,37 @@
 			 and ag.name like CONCAT('%', #{agentname}, '%')
 		]]>
 	</select>
+	
+	<update id="changeActive" parameterType="map">
+		<![CDATA[
+			update agent 
+			 set activation = not activation
+			 where no in ${activeUsrs}
+			 and license_no = #{licenseNo}
+		]]>
+	</update>
+	
+	<update id="updateCnt" parameterType="int">
+		<![CDATA[
+			update license
+			 set current_count = 
+			   (select 
+			     count(*) 
+			     from agent 
+			     where license_no = #{licenseNo}
+			     and activation = true)
+			 where no = #{licenseNo}
+		]]>
+	</update>
+	
+	
+	
+	
+	<update id="updateLicense" parameterType="map">
+		<![CDATA[
+			update license
+			 set end_date = to_timestamp(#{enddate}, 'YYYY-MM-DD HH24:MI:SS')
+			 where no = ${licenseNo}
+		]]>
+	</update>
 </mapper>

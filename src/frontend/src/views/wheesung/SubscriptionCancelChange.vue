@@ -19,11 +19,11 @@
         </h1>
       </div>
       <br />
-      <div style="margin: 0 0 10px 0;">
+      <div style="margin: 0 0 10px 0; height:40px">
         <select
           v-if="clicked === true"
           v-model="selected"
-          style="margin: 0 5px 0 0; height: 30px;"
+          style="margin: 0 5px 0 0; height: 40px; float:left"
         >
           <option value="co_name">기업명</option>
           <option value="name">관리자명</option>
@@ -31,14 +31,14 @@
         <select
           v-if="clicked === false"
           v-model="selected"
-          style="margin: 0 5px 0 0; height: 30px;"
+          style="margin: 0 5px 0 0; height: 40px;"
         >
           <option value="co_name">기업명</option>
           <option value="name">관리자명</option>
         </select>
         <input
           v-if="selected === 'co_name'"
-          style="margin: 8px 0 0 0;"
+          style="height: 40px; width:260px;"
           id="myInput"
           type="text"
           v-on:input="keyword = $event.target.value"
@@ -46,7 +46,7 @@
         />
         <input
           v-if="selected === 'name'"
-          style="margin: 8px 0 0 0;"
+          style="height: 40px; width:260px;"
           id="myInput"
           type="text"
           v-on:input="keyword = $event.target.value"
@@ -184,6 +184,7 @@ export default {
   height: 40px;
 }
 h1 {
+  display: inline;
   font-size: 4.5rem;
   color: #000000d9;
 }
@@ -197,6 +198,5 @@ h1 {
   font-size: 16px;
   padding: 12px 20px 12px 42px;
   border: 1px solid #ddd;
-  margin-bottom: 12px;
 }
 </style>

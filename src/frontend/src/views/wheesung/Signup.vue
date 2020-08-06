@@ -1,6 +1,6 @@
 <template>
   <div id="signup" class="contents">
-    <h2 style="text-align:center;">회원 가입</h2>
+    <h1 style="text-align:center;">회원 가입</h1>
     <br />
     <form @submit.prevent="signin">
       <div style="width: 460px; margin: 0 auto;">
@@ -11,7 +11,7 @@
           <div id="email">
             <span id="inputemail">
               <input
-                style="width:280px; border: none; outline:none;"
+                style="width:280px; height:30px; border: none; outline:none; vertical-align: middle"
                 type="email"
                 v-model="email"
                 @keyup="reset"
@@ -44,7 +44,7 @@
               />
               <input
                 type="button"
-                style="background-color: #3498db; border: none; color: #ffffff;"
+                style="background-color: #999; border: none; color: #ffffff; width:60px;height:100%; border-radius:4px"
                 value="전송"
                 @click="emailAuth"
               />
@@ -101,7 +101,7 @@
             개인정보 수집에 동의하시겠습니까?
             <br />
             <br />
-            <input id="cssbtn" style="width:200px; height: 40px;" type="submit" value="가입하기" />
+            <input id="cssbtn" style="border-radius: 4px; width:100%; height: 51px;" type="submit" value="가입하기" />
           </div>
         </div>
       </div>
@@ -251,7 +251,8 @@ export default {
   width: 100%;
   height: 51px;
   padding: 10px 14px;
-  border: 1px solid #3498db;
+  border: 1px solid #ccc;
+  border-radius: 4px;
   display: block;
   position: relative;
 }
@@ -268,11 +269,13 @@ export default {
 }
 #inputemail {
   display: inline-block;
-  border: 1px solid #3498db;
+  border: 1px solid #ccc;
   width: 100%;
   padding: 10px 15px 10px 14px;
   vertical-align: top;
   outline: none;
+  border-radius: 4px;
+  height: 51px;
 }
 .inputbtn {
   position: absolute;
@@ -287,6 +290,7 @@ export default {
   border: none;
   background-color: #3498db;
   color: #ffffff;
+  border-radius: 4px;
 }
 #stylelabel {
   font-size: 14px;

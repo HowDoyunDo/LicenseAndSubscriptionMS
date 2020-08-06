@@ -7,7 +7,6 @@
         <span class="signtext">
           <input class="signtextinput" type="text" placeholder="이메일을 입력하세요." v-model="email" />
         </span>
-        <br />
         <span class="signtext">
           <input
             class="signtextinput"
@@ -16,9 +15,8 @@
             v-model="password"
           />
         </span>
-        <br />
         <input
-          style="width: 100%; height: 51px; background-color: #3498db; border:none; color: #FFFFFF;"
+          style="width: 100%; height: 51px; background-color: #3498db; border:none; color: #FFFFFF; border-radius: 4px;"
           type="submit"
           value="로그인"
         />
@@ -105,9 +103,11 @@ export default {
   width: 100%;
   height: 51px;
   padding: 10px 14px;
-  border: 1px solid #3498db;
+  border: 1px solid #ccc;
   display: block;
   position: relative;
+  border-radius: 4px;
+  margin-bottom: 10px;
 }
 .signtextinput {
   width: 420px;

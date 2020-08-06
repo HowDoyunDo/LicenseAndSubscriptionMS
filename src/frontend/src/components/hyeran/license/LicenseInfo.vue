@@ -1,11 +1,12 @@
 <template>
   <div>
-    <div>
-      <h1>상세보기</h1>
-      <br />
-      <div v-if="pageT==true">
+    <h1>상세보기</h1>
+    <br />
+
+    <div id="inner">
+      <div v-if="pageT == true">
         <h4>관리자 정보</h4>
-        <LicenseUserInfo :license_no="license_no"/>
+        <LicenseUserInfo :license_no="license_no" />
         <br />
         <h4>라이선스 및 구독 정보</h4>
       </div>
@@ -13,52 +14,67 @@
         <table class="table_add">
           <tr>
             <th>라이선스 번호</th>
-            <td>{{licenseList.no}}</td>
+            <td>{{ licenseList.no }}</td>
           </tr>
           <tr>
             <th>라이선스 키</th>
-            <td>{{licenseList.license_key}}</td>
+            <td>{{ licenseList.license_key }}</td>
           </tr>
           <tr>
             <th>라이선스 상태</th>
             <td>
-              <div v-if="licenseList.activation=='A'">활성화</div>
-              <div v-if="licenseList.activation=='F'">수량 가득참</div>
-              <div v-if="licenseList.activation=='E'">기간종료</div>
-              <div v-if="licenseList.activation=='C'">취소신청</div>
+              <div v-if="licenseList.activation == 'A'">활성화</div>
+              <div v-if="licenseList.activation == 'F'">수량 가득참</div>
+              <div v-if="licenseList.activation == 'E'">기간종료</div>
+              <div v-if="licenseList.activation == 'C'">취소신청</div>
             </td>
           </tr>
           <tr>
             <th>구독 정책명</th>
-            <td>{{licenseList.policy_title}}</td>
+            <td>{{ licenseList.policy_title }}</td>
           </tr>
           <tr>
             <th>이용 기준</th>
-            <td>{{licenseList.standard=='A' ? '에이전트': '사용자'}}</td>
+            <td>{{ licenseList.standard == "A" ? "에이전트" : "사용자" }}</td>
           </tr>
           <tr>
             <th>현재 사용량 / 최대 사용 수량</th>
-            <td v-if="licenseList.max_count === 0">{{licenseList.current_count}} / 제한 없음</td>
-            <td v-if="licenseList.max_count !== 0">{{licenseList.current_count}} / {{licenseList.max_count}}</td>
+            <td v-if="licenseList.max_count === 0">
+              {{ licenseList.current_count }} / 제한 없음
+            </td>
+            <td v-if="licenseList.max_count !== 0">
+              {{ licenseList.current_count }} / {{ licenseList.max_count }}
+            </td>
           </tr>
           <tr>
             <th>사용 기간</th>
-            <td>{{licenseList.start_date | formatDate}} ~ {{licenseList.end_date | formatDate}}</td>
+            <td v-if="checkOver(licenseList.no)" style="color:#ff6384;">
+              {{ licenseList.start_date | formatDate }} ~
+              {{ licenseList.end_date | formatDate }}<br>
+              만료 예정
+            </td>
+            <td v-else>
+              {{ licenseList.start_date | formatDate }} ~
+              {{ licenseList.end_date | formatDate }}
+            </td>
           </tr>
 
           <tr>
             <th>결제 금액</th>
-            <td>{{licenseList.total_price | formatPrice}}</td>
+            <td>{{ licenseList.total_price | formatPrice }}</td>
           </tr>
           <tr>
             <th>결제 현황</th>
-            <td>{{licenseList.month_payment == true? '정기결제' : '일반결제'}}</td>
+            <td>
+              {{ licenseList.month_payment == true ? "정기결제" : "일반결제" }}
+            </td>
           </tr>
           <tr>
             <th>주문일</th>
-            <td>{{licenseList.reg_date | formatDate}}</td>
+            <td>{{ licenseList.reg_date | formatDate }}</td>
           </tr>
         </table>
+
         <br />
 
         <table class="table_add">
@@ -66,8 +82,12 @@
             <th>포함 제품</th>
           </tr>
         </table>
+
         <div class="select-product">
-          <ProductOneList :promotionProduct="productList" :pageType="'license'" />
+          <ProductOneList
+            :promotionProduct="productList"
+            :pageType="'license'"
+          />
         </div>
         <br />
 
@@ -94,12 +114,12 @@ export default {
       productList: "",
       licenseList: "",
       pageType: "",
-      pageTypeAdmin:'',
+      pageTypeAdmin: "",
     };
   },
   components: {
     ProductOneList,
-    LicenseUserInfo
+    LicenseUserInfo,
   },
   async created() {
     this.license_no = this.$route.params.license_no;
@@ -122,12 +142,15 @@ export default {
     this.licenseList = data[0];
   },
   computed: {
-    pageT(){
-      if(this.$route.params.pageTypeAdmin){
+    pageT() {
+      if (this.$route.params.pageTypeAdmin) {
         return true;
-      }else{
+      } else {
         return false;
       }
+    },
+    alertOverLicense: function() {
+      return this.$store.state.licenseStore.alertOverLicense;
     }
   },
   methods: {
@@ -144,20 +167,31 @@ export default {
       console.log("상세보기", productNo);
       // 상세보기 클릭 시 제품 설명 새창으로.
       this.showModal = true;
+    },
+    checkOver(lcNo) {
+      for(var i=0; i<this.alertOverLicense.length; i++) {
+        if(lcNo === this.alertOverLicense[i].no)
+          return true;
+      }
     }
-  }
+  },
 };
 </script>
 
-
 <style scoped>
 h1 {
-    font-size: 4.5rem;
-    color:#000000D9;
+  font-size: 4.5rem;
+  color: #000000d9;
 }
 button {
   width: auto;
   padding: 0 15px;
   margin: 10px;
+}
+#inner {
+  width: 100%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding: 10px;
 }
 </style>

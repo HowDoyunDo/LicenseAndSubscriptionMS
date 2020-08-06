@@ -1,14 +1,14 @@
 <template>
   <div>
     <div style="margin: 0 0 10px 0;">
-      <select v-model="selected" style="margin: 0 5px 0 0; height: 30px;">
+      <select v-model="selected" style="margin: 0 5px 0 0; height: 40px; float:left">
         <option value="policy_title">구독 정책명</option>
         <option value="co_name">기업명</option>
         <option value="name">관리자명</option>
       </select>
       <input
         v-if="selected==='policy_title'"
-        style="margin: 8px 0 0 0;"
+        style="margin: 0; height:40px; width: 260px;"
         id="myInput"
         type="text"
         v-on:input="keyword = $event.target.value"
@@ -16,7 +16,7 @@
       />
       <input
         v-if="selected==='co_name'"
-        style="margin: 8px 0 0 0;"
+        style="margin: 0; height:40px; width: 260px;"
         id="myInput"
         type="text"
         v-on:input="keyword = $event.target.value"
@@ -24,7 +24,7 @@
       />
       <input
         v-if="selected==='name'"
-        style="margin: 8px 0 0 0;"
+        style="margin: 0; height:40px; width: 260px;"
         id="myInput"
         type="text"
         v-on:input="keyword = $event.target.value"
@@ -132,6 +132,5 @@ export default {
   font-size: 16px;
   padding: 12px 20px 12px 42px;
   border: 1px solid #ddd;
-  margin-bottom: 12px;
 }
 </style>

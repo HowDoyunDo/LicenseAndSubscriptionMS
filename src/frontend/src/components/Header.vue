@@ -20,6 +20,11 @@
         style="width:155px; height:25px; margin-left:16px"
         src="../../public/logo.png"
     /></router-link>
+
+    <div v-if="alertOverLicense.length !== 0" style="float: right; margin:37px 20px 0 0;">
+      <router-link id="license" to="/license/list" style="text-decoration:none;">| 기간 만료 15일 이내 라이선스 존재 |</router-link>
+    </div>
+
     <ul
       v-if="
         this.userInfo.name !== undefined &&
@@ -27,20 +32,20 @@
       "
     >
       <li @click="remove">
-        <router-link id="white" to="/">로그아웃</router-link>
+        <router-link id="logout" to="/">로그아웃</router-link>
       </li>
       <li>관리자님 환영합니다.</li>
     </ul>
     <ul v-else-if="this.userInfo.co_number !== undefined">
       <li @click="remove">
-        <router-link id="white" to="/">로그아웃</router-link>
+        <router-link id="logout" to="/">로그아웃</router-link>
       </li>
       <li id="white">{{ this.userInfo.name }}님 어서오세요.</li>
     </ul>
     <ul v-else-if="this.userInfo.name === undefined">
-      <li><router-link id="white" to="/login">로그인</router-link></li>
+      <li><router-link id="login" to="/login">로그인</router-link></li>
       <li>|</li>
-      <li><router-link id="white" to="/signup">회원가입</router-link></li>
+      <li><router-link id="signup" to="/signup">회원가입</router-link></li>
     </ul>
   </div>
 </template>
@@ -54,6 +59,7 @@ export default {
   },
   methods: {
     remove() {
+      this.$store.commit("licenseStore/SELECT_AOL", []);
       console.log(this.userInfo.name);
       this.$store.commit("userinfo/setUserInfo", "");
       localStorage.removeItem("vuex");
@@ -65,6 +71,9 @@ export default {
     userInfo: function() {
       return this.$store.state.userinfo.userInfo;
     },
+    alertOverLicense: function() {
+      return this.$store.state.licenseStore.alertOverLicense;
+    }
   },
 };
 </script>
@@ -100,8 +109,14 @@ div #header li {
   margin-right: 10px;
 }
 
-#white {
+#login, #logout, #signup {
   color: white;
   text-decoration: none;
+}
+#login:hover, #logout:hover, #signup:hover, #license:hover {
+  color: #3498db;
+}
+#license {
+  color: rgba(255, 99, 132, 1);
 }
 </style>

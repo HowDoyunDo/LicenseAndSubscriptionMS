@@ -1,50 +1,52 @@
 <template>
   <div class="contents">
     <div>
-      <h2>내정보</h2>
+      <h1>내 정보</h1>
       <br />
-      <form class="form">
-        <table class="table_add">
-          <tr>
-            <th>이메일</th>
-            <td>{{ this.list.email }}</td>
-          </tr>
-          <tr>
-            <th>이름</th>
-            <td>{{ this.list.name }}</td>
-          </tr>
-          <tr>
-            <th>기업명</th>
-            <td>{{ this.list.co_name }}</td>
-          </tr>
-          <tr>
-            <th>기업 대표번호</th>
-            <td>{{ this.list.co_tel }}</td>
-          </tr>
-          <tr>
-            <th>기업 주소</th>
-            <td>{{ this.list.co_location }}</td>
-          </tr>
-          <tr>
-            <th>가입일</th>
-            <td>{{ this.$store.state.userinfo.userInfo.reg_date.substring(0,19) }}</td>
-          </tr>
-        </table>
-        <br />
-        <div style="text-align: center;">
-          <input class="cssbtn" type="button" value="수정" @click="clickChange" />
-        </div>
-        <br />
-        <table v-if="click" class="table_add">
-          <tr>
-            <th>비밀번호 입력</th>
-            <td>
-              <input style="height: 30px; width: 400px;" type="password" v-model="pw" />
-              <input style="float:right" type="button" class="inputpw" value="확인" @click="chkpw" />
-            </td>
-          </tr>
-        </table>
-      </form>
+      <div id="inner">
+        <form class="form">
+          <table class="table_add">
+            <tr>
+              <th>이메일</th>
+              <td>{{ this.list.email }}</td>
+            </tr>
+            <tr>
+              <th>이름</th>
+              <td>{{ this.list.name }}</td>
+            </tr>
+            <tr>
+              <th>기업명</th>
+              <td>{{ this.list.co_name }}</td>
+            </tr>
+            <tr>
+              <th>기업 대표번호</th>
+              <td>{{ this.list.co_tel }}</td>
+            </tr>
+            <tr>
+              <th>기업 주소</th>
+              <td>{{ this.list.co_location }}</td>
+            </tr>
+            <tr>
+              <th>가입일</th>
+              <td>{{ this.$store.state.userinfo.userInfo.reg_date.substring(0,19) }}</td>
+            </tr>
+          </table>
+          <br />
+          <div style="text-align: center;">
+            <input class="cssbtn" type="button" value="수정" @click="clickChange" />
+          </div>
+          <br />
+          <table v-if="click" class="table_add">
+            <tr>
+              <th>비밀번호 입력</th>
+              <td>
+                <input style="height: 30px; width: 400px;" type="password" v-model="pw" />
+                <input style="float:right; border-radius:4px" type="button" class="inputpw" value="확인" @click="chkpw" />
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -103,6 +105,7 @@ export default {
   border: none;
   width: 120px;
   height: 40px;
+  border-radius: 4px;
 }
 .inputpw {
   background-color: #3498db;
@@ -110,5 +113,11 @@ export default {
   border: none;
   width: 100px;
   height: 30px;
+}
+#inner {
+  width: 100%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding:10px;
 }
 </style>

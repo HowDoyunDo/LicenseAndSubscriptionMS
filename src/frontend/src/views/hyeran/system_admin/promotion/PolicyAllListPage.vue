@@ -1,9 +1,7 @@
 <template>
   <div class="contents">
     <h1>정책 프로모션 목록</h1>
-    <div class="btnn">
-      <button class="submit_btn" @click="promotionAdd">등록</button>
-    </div>
+    <br>
     <PromotionPolicyAllList />
   </div>
 </template>
@@ -15,9 +13,6 @@ export default {
     PromotionPolicyAllList,
   },
   methods: {
-    promotionAdd() {
-      this.$router.push("/promotion/add");
-    },
   },
 };
 </script>

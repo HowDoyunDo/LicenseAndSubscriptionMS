@@ -64,5 +64,10 @@ public class PromotionService {
 	public List<PromotionVO2> getPromotionPolicyCheckPNo(PromotionVO2 vo) {
 		return dao.getPromotionPolicyCheckPNo(vo);
 	}
+	
+	
+	public List<PromotionVO2> getPromotionPolicyCheckPNo(int policyNo) {
+		return dao.getPromotionPolicyCheckPNo(policyNo);
+	}
 }
 

@@ -1,7 +1,7 @@
 <template>
   <div class="contents">
     <div>
-      <h1>주문 내역</h1>
+      <h1>견적 문의 내역</h1>
       <br />
       <div class="search-wrapper btnn" style="height:50px">
         <select v-model="selected" style="margin: 0 5px 0 0; height: 40px; float: left">
@@ -25,33 +25,35 @@
           placeholder="검색어 입력"
         />
       </div>
+
       <table class="table_board">
         <tr style="float:center;">
           <th style="width:5%;">번호</th>
           <th style="width:20%;">기업명 [관리자]</th>
-          <th style="width:30%">구독 정책명</th>
-          <th style="width:10%;">시작일</th>
-          <th style="width:10%;">종료일</th>
-          <th style="width:10%;">주문일</th>
+          <th style="width:30%">인원(수량)</th>
+          <th style="width:10%;">정책 기준</th>
+          <th style="width:10%;">등록일</th>
+          <th style="width:10%;">상태</th>
         </tr>
         <tr
           onmouseover="this.style.background='#CEECF5';"
           onmouseout="this.style.background=''"
           style="cursor:pointer"
-          v-for="(order, idx) in filteredList"
-          :key="order.no"
-          @click="listClick(order.no)"
+          v-for="(pricequestion, idx) in filteredList"
+          :key="pricequestion.no"
+          @click="listClick(pricequestion.no)"
         >
           <td>{{ idx + 1 }}</td>
-          <td>{{ order.co_name }} [{{ order.name }}]</td>
-          <td>{{ order.policy_title }}</td>
-          <td>{{ order.start_date }}</td>
-          <td>{{ order.end_date }}</td>
-          <td>{{ order.reg_date }}</td>
+          <td>{{ pricequestion.co_name }} [{{ pricequestion.name }}]</td>
+          <td>{{ pricequestion.count }}</td>
+          <td v-if="pricequestion.standard ==='A'">에이전트</td>
+          <td v-if="pricequestion.standard ==='U'">사용자</td>
+          <td>{{ pricequestion.reg_date }}</td>
+          <td v-if="pricequestion.status ==='S'">답변완료</td>
+          <td v-if="pricequestion.status ==='W'">대기</td>
         </tr>
       </table>
     </div>
-    <br />
   </div>
 </template>
 
@@ -62,6 +64,8 @@ export default {
   data() {
     return {
       list: "",
+      no: "",
+
       keyword: "",
       selected: "co_name",
     };
@@ -69,7 +73,7 @@ export default {
   methods: {
     listClick(no) {
       this.$router.push({
-        name: "orderinfo",
+        name: "pricequestioninfo",
         params: { no: no },
       });
     },
@@ -86,37 +90,14 @@ export default {
     },
   },
   created() {
-    axios.get("/api/orderlist").then((result) => {
+    axios.get("/api/pricequestionlist").then((result) => {
       this.list = result.data;
-      console.log(result.data)
     });
   },
 };
 </script>
 
 <style scoped>
-h1 {
-  font-size: 4.5rem;
-  color: #000000d9;
-}
-.cssbtn {
-  background-color: #3498db;
-  color: #ffffff;
-  border: none;
-  width: 200px;
-  height: 40px;
-}
-
-.table_board th {
-  text-align: center;
-  font-size: 15px;
-  height: 40px;
-}
-
-.table_board td {
-  height: 40px;
-}
-
 #myInput {
   background-image: url("../../assets/images/searchIcon2.png");
   background-size: 23px;

@@ -1,7 +1,7 @@
 <template>
   <div class="contents">
     <div>
-      <h2>정보 수정</h2>
+      <h1>정보 수정</h1>
       <br />
       <form class="form">
         <table class="table_add">
@@ -189,5 +189,6 @@ h1 {
   border: none;
   width: 120px;
   height: 40px;
+  border-radius:4px;
 }
 </style>

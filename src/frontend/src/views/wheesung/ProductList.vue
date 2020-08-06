@@ -2,36 +2,48 @@
   <div class="contents">
     <div>
       <h1>제품 목록</h1>
-      <div style="margin: 0 0 10px 0;">
+      <br />
+      <div class="search-wrapper btnn" style="height:50px">
+        <select
+          v-model="selected"
+          style="margin: 0 5px 0 0; height: 40px; float: left"
+        >
+          <option value="category">카테고리</option>
+          <option value="product">제품명</option>
+        </select>
         <input
-          style="margin: 8px 0 0 0;"
+          style="margin: 0; width:260px; height:40px"
           id="myInput"
           type="text"
+          v-if="selected === 'category'"
           v-on:input="keyword = $event.target.value"
-          placeholder="제품명 입력"
+          placeholder="검색어 입력"
         />
         <input
-          style="float: right;"
-          class="cssbtn"
-          type="button"
-          value="등록"
-          @click="movetoadd"
+          style="margin: 0; width:260px; height:40px"
+          id="myInput"
+          type="text"
+          v-if="selected === 'product'"
+          v-on:input="keyword = $event.target.value"
+          placeholder="검색어 입력"
         />
       </div>
       <table class="table_board">
         <tr style="float:center;">
           <th style="width:5%;">번호</th>
-          <th style="width:30%;">제품명</th>
+          <th style="width:15%;">[카테고리] 제품명</th>
           <th style="width:30%;">제품 설명</th>
-          <th style="width:10%">가격</th>
-          <th style="width:15%">등록일</th>
-          <th style="width:15%;"></th>
+          <!-- 제품가격 -->
+          <!-- <th style="width:10%">가격</th> -->
+          <th style="width:8%">등록일</th>
+          <th style="width:8%;">수정 / 삭제</th>
         </tr>
-        <tr v-for="(product, idx) in filteredList" :key="product.no">
+        <tr v-for="(product, idx) in paginatedData" :key="product.no">
           <td>{{ idx + 1 }}</td>
-          <td>{{ product.name }}</td>
+          <td>[{{ product.title }}] {{ product.name }}</td>
           <td>{{ product.comments }}</td>
-          <td>{{ product.price | formatPrice }}</td>
+          <!-- 제품가격 -->
+          <!-- <td>{{ product.price | formatPrice }}</td> -->
           <td>{{ product.reg_date }}</td>
           <td>
             <a @click="productChangeForm(product.no)" style="cursor:pointer;"
@@ -45,13 +57,27 @@
         </tr>
       </table>
 
-      <!-- <Page
-        :total-pages="3"
-        :total="113"
-        :per-page="10"
-        :current-page="currentPage"
-        @pagechanged="onPageChange"
-      ></Page>-->
+      <!-- 페이징 -->
+      <br />
+      <div class="btn-cover" style="text-align: center">
+        <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
+          이전
+        </button>
+        <span class="page-count" v-if="filteredList.length === 0">
+          {{ pageNum + 1 }} / 1
+        </span>
+        <span class="page-count" v-else>
+          {{ pageNum + 1 }} / {{ pageCount }}
+        </span>
+        <button
+          :disabled="pageNum >= pageCount - 1"
+          @click="nextPage"
+          class="page-btn"
+        >
+          다음
+        </button>
+      </div>
+      <!-- 페이징 -->
     </div>
   </div>
 </template>
@@ -71,15 +97,42 @@ export default {
       comments: "",
       price: 0,
       currentPage: 1,
+
       keyword: "",
+      selected: "category",
+
+      /////////////////////////////페이징////////////////////
+      pageNum: 0,
+      pageSize: 10,
+      /////////////////////////////페이징////////////////////
     };
   },
   computed: {
     filteredList() {
       return Object.values(this.list).filter((post) => {
-        return post.name.toLowerCase().includes(this.keyword.toLowerCase());
+        if (this.selected === "category") {
+          return post.title.toLowerCase().includes(this.keyword.toLowerCase());
+        } else if (this.selected === "product") {
+          return post.name.toLowerCase().includes(this.keyword.toLowerCase());
+        }
       });
     },
+    /////////////////////////////페이징////////////////////
+    pageCount() {
+      let listLeng = this.filteredList.length,
+        listSize = this.pageSize,
+        page = Math.floor(listLeng / listSize);
+
+      if (listLeng % listSize > 0) page += 1;
+
+      return page;
+    },
+    paginatedData() {
+      const start = this.pageNum * this.pageSize,
+        end = start + this.pageSize;
+      return this.filteredList.slice(start, end);
+    },
+    /////////////////////////////페이징////////////////////
   },
   methods: {
     onPageChange(page) {
@@ -108,6 +161,14 @@ export default {
     movetoadd() {
       this.$router.push("/productadd");
     },
+    /////////////////////////////페이징////////////////////
+    nextPage() {
+      this.pageNum += 1;
+    },
+    prevPage() {
+      this.pageNum -= 1;
+    },
+    /////////////////////////////페이징////////////////////
   },
   created() {
     axios.get("/api/productlist").then((result) => {
@@ -157,5 +218,9 @@ h1 {
   padding: 12px 20px 12px 42px;
   border: 1px solid #ddd;
   margin-bottom: 12px;
+}
+
+.page-count {
+  font-size: 15px;
 }
 </style>

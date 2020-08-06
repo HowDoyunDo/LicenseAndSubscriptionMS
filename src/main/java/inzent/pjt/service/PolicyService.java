@@ -31,6 +31,10 @@ public class PolicyService {
 		
 		return policyDao.getPromotionList(map);
 	}
+
+	public PolicyVo getUpdatePolicy(int policyNo) {
+		return policyDao.getUpdatePolicy(policyNo);
+	}
 	
 	
 }

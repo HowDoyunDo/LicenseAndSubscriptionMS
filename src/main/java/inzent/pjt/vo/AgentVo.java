@@ -1,16 +1,17 @@
 package inzent.pjt.vo;
 
 public class AgentVo {
-	int no;
-	int user_no;
-	String agent_name;
-	String mac_address;
-	String ip_address;
-	String email;
-	String password;
-	String name;
-	String dept_name;
-	String last_login;
+	private int no;
+	private int user_no;
+	private String agent_name;
+	private String mac_address;
+	private String ip_address;
+	private String email;
+	private String password;
+	private String name;
+	private String dept_name;
+	private String last_login;
+	private boolean activation;
 	
 	public int getNo() {
 		return no;
@@ -71,6 +72,12 @@ public class AgentVo {
 	}
 	public void setLast_login(String last_login) {
 		this.last_login = last_login;
+	}
+	public boolean isActivation() {
+		return activation;
+	}
+	public void setActivation(boolean activation) {
+		this.activation = activation;
 	}
 	
 	@Override

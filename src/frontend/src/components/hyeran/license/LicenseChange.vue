@@ -3,64 +3,66 @@
     <div>
       <h1>구독 변경 신청</h1>
       <br />
-      <p class="tip">서로 다른 정책의 제품들의 일괄 구매를 원하시는 고객님께서는 견적 문의 부탁드립니다.</p>
-      <br />
-      <form class="form">
-        <table class="table_add">
-          <tr>
-            <th>현재 구독정책명</th>
-            <td>{{policy_title}}</td>
-          </tr>
-          <tr>
-            <th>변경할 구독 선택</th>
-            <td>
-              <select
-                v-model="standardBoth"
-                class="select-box"
-                style="width:400px"
-                @change="changeSubList"
-              >
-                <option disabled value>이용기준을 선택해주세요</option>
-                <option value="U">사용자</option>
-                <option value="A">에이전트</option>
-              </select>
-              <br />
-              <select v-model="selected" class="select-box" style="width:400px">
-                <option disabled value>정책을 선택해주세요</option>
-                <option v-for="list in policyList" :value="list.no" :key="list.no">
-                  {{list.policy_title}}&nbsp;&nbsp; [ ￦{{list.price | formatPrice}} ]
-                  사용수 : {{list.max_count}}
-                </option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <th>구독 이용 시작일</th>
-            <td>
-              <input type="date" v-model="startdate" /> &nbsp;
-            </td>
-          </tr>
-          <tr v-if="startdate!='' && usemonth!=''">
-            <th>구독 이용 종료일</th>
-            <td
-              style="font-weight: normal; letter-spacing: 1px;"
-            >{{ getEndDate=='Invalid date' ? '' : getEndDate }}</td>
-          </tr>
-          <tr>
-            <th>이용 개월 수</th>
-            <td>
-              <input type="number" min="1" max="36" v-model="usemonth" @change="usemonthCheck" /> 개월
-              <div style="font-size:12px; color:red;">* 개월 수는 30일로 계산됩니다.</div>
-            </td>
-          </tr>
-        </table>
+      <div id="inner">
+        <p class="tip">서로 다른 정책의 제품들의 일괄 구매를 원하시는 고객님께서는 견적 문의 부탁드립니다.</p>
         <br />
+        <form class="form">
+          <table class="table_add">
+            <tr>
+              <th>현재 구독정책명</th>
+              <td>{{policy_title}}</td>
+            </tr>
+            <tr>
+              <th>변경할 구독 선택</th>
+              <td>
+                <select
+                  v-model="standardBoth"
+                  class="select-box"
+                  style="width:400px"
+                  @change="changeSubList"
+                >
+                  <option disabled value>이용기준을 선택해주세요</option>
+                  <option value="U">사용자</option>
+                  <option value="A">에이전트</option>
+                </select>
+                <br />
+                <select v-model="selected" class="select-box" style="width:400px">
+                  <option disabled value>정책을 선택해주세요</option>
+                  <option v-for="list in policyList" :value="list.no" :key="list.no">
+                    {{list.policy_title}}&nbsp;&nbsp; [ ￦{{list.price | formatPrice}} ]
+                    사용수 : {{list.max_count}}
+                  </option>
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <th>구독 이용 시작일</th>
+              <td>
+                <input type="date" v-model="startdate" /> &nbsp;
+              </td>
+            </tr>
+            <tr v-if="startdate!='' && usemonth!=''">
+              <th>구독 이용 종료일</th>
+              <td
+                style="font-weight: normal; letter-spacing: 1px;"
+              >{{ getEndDate=='Invalid date' ? '' : getEndDate }}</td>
+            </tr>
+            <tr>
+              <th>이용 개월 수</th>
+              <td>
+                <input type="number" min="1" max="36" v-model="usemonth" @change="usemonthCheck" /> 개월
+                <div style="font-size:12px; color:red;">* 개월 수는 30일로 계산됩니다.</div>
+              </td>
+            </tr>
+          </table>
+          <br />
 
-        <div class="submit_btn">
-          <button type="button" @click="listClick">취소</button>
-          <button type="button" @click="changeSubmit">신청</button>
-        </div>
-      </form>
+          <div class="submit_btn">
+            <button type="button" @click="listClick">취소</button>
+            <button type="button" @click="changeSubmit">신청</button>
+          </div>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -185,5 +187,11 @@ input[type="date"] {
   padding: 0.5rem 0.75rem;
   margin: 5px;
    outline:none;
+}
+#inner {
+  width: 100%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding:10px;
 }
 </style>

@@ -3,7 +3,7 @@
 <mapper namespace="analysis">
 	<select id="getOrderListDay" resultType="add">
 	<![CDATA[
-		 select substring(to_char(start_date, 'YYYY-MM-DD HH:MI:SS'), 0, 11) as date, 
+		 select substring(to_char(reg_date, 'YYYY-MM-DD HH:MI:SS'), 0, 11) as date, 
 		   count(*) as order_cnt,
 		   count(distinct policy_no) as pol_cnt,
 		   sum(org_price) as org_price, 
@@ -18,8 +18,8 @@
 	<![CDATA[
 		select
 		  (ROW_NUMBER() OVER()) AS no,
-		  date_trunc('week', start_date) as week_start,
-		  date_trunc('week', start_date) + '6 days' as week_end,
+		  date_trunc('week', reg_date) as week_start,
+		  date_trunc('week', reg_date) + '6 days' as week_end,
 		  count(*) as order_cnt,
 		  count(distinct policy_no) as pol_cnt,
 		  sum(org_price) as org_price, 
@@ -35,7 +35,7 @@
 	<![CDATA[
 		select
 		  (ROW_NUMBER() OVER()) AS no,
-		  to_char(start_date, 'YYYY-MM') as year_month,
+		  to_char(reg_date, 'YYYY-MM') as year_month,
 		  count(*) as order_cnt,
 		  count(distinct policy_no) as pol_cnt,
 		  sum(org_price) as org_price, 

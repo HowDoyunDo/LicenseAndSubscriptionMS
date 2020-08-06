@@ -39,6 +39,15 @@ public class PolicyController {
 		return policyService.getPromotionList(startdate, policyno);
 	}
 	
+	@GetMapping("/getUpdatePolicy")
+	public PolicyVo getUpdatePolicy(
+			@RequestParam(value = "policyNo") int policyNo
+			) {
+		System.out.println(policyNo);
+		return policyService.getUpdatePolicy(policyNo);
+	}
+	
+	
 	// 정기 결제 구현 중 중단
 //	@PostMapping("/subscription/issue-billing")
 //	public CardVo getBillingInfo(

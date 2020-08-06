@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pricequestion">
+	<insert id="priceQuestion">
+		insert into price_question (email, name, co_name, co_tel, standard, count, contents)
+		values(#{email}, #{name}, #{co_name}, #{co_tel}, #{standard}, #{count}, #{contents})
+	</insert>
+	<select id="pricequestionOne" resultType="int">
+		select no from price_question where email=#{email} and name=#{name} and standard=#{standard} and count=#{count} and contents=#{contents}
+	</select>
+	<insert id="pricequestionproduct">
+		insert into price_question_product (question_no, product_no)
+		 values(#{no}, #{product})
+	</insert>
+	<select id="priceQuestionList" resultType="map">
+		select no, name, co_name, count, standard, status, to_char(reg_date, 'YYYY-MM-DD') reg_date
+		 from price_question
+	</select>
+	
+	<select id="productNameList" resultType="map">
+		select p.no, c.title, p.name from product p, category c where c.no = p.category_no;
+	</select>
+	
+	<select id="priceQuestionInfo" resultType="pricequestionvo">
+		select json_agg(p.name) pname, pq."no" , pq."co_name", pq.status, pq.email, pq."name", pq.count, pq.co_tel, pq.contents, pq.standard,  to_char(pq.reg_date, 'YYYY-MM-DD') reg_date
+ 		 from price_question pq
+ 		 left join price_question_product pqp
+ 		 on pq.no = pqp.question_no
+ 		 left join product p
+ 		 on pqp.product_no = p.no
+ 		 where pq.no = #{no}
+ 		 group by pq.no
+	</select>
+	
+	<select id="priceQuestionMailForm" resultType="pricequestionvo">
+		select json_agg(p.name) pname, pq."no" , pq."co_name", pq.email, pq."name", pq.count, pq.contents, pq.standard
+		 from price_question pq
+ 		 left join price_question_product pqp
+ 		 on pq.no = pqp.question_no
+ 		 left join product p
+ 		 on pqp.product_no = p.no
+ 		 where pq.no = #{no}
+ 		 group by pq.no
+	</select>
+	
+	<update id="stateChange">
+		update price_question set status = 'S'
+		 where no = #{no}
+	</update>
+</mapper>

@@ -26,4 +26,8 @@ public class PolicyDao {
 	public List<PromotionVo> getPromotionList(Map<String, Object> map) {
 		return sqlSession.selectList("policy.getPromotionList", map);
 	}
+
+	public PolicyVo getUpdatePolicy(int policyNo) {
+		return sqlSession.selectOne("policy.getUpdatePolicy", policyNo);
+	}
 }

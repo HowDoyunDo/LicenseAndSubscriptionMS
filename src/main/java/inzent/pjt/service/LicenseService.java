@@ -23,7 +23,7 @@ public class LicenseService {
 		return licenseDao.getLicenseList(adminNo);
 	}
 	
-	public List<GeneralUserVo> getUserList(int licenseNo) {
+	public List<AgentVo> getUserList(int licenseNo) {
 		return licenseDao.getUserList(licenseNo);
 	}
 
@@ -89,7 +89,7 @@ public class LicenseService {
 		return licenseDao.addUser(map);
 	}
 
-	public boolean addUsers(List<GeneralUserVo> userList, int adminUserNo, int licenseNo) {
+	public char addUsers(List<GeneralUserVo> userList, int adminUserNo, int licenseNo) {
 		return licenseDao.addUsers(userList, adminUserNo, licenseNo);
 	}
 
@@ -177,6 +177,22 @@ public class LicenseService {
 	}
 	public  List<UserVo> getLicenseAdminUser(LicenseVO2 vo) {
 		return licenseDao.getLicenseAdminUser(vo);
+	}
+
+	public boolean changeActive(int licenseNo, String activeUsrs) {
+		return licenseDao.changeActive(licenseNo, activeUsrs);
+	}
+
+	public List<LicenseVo> alertLicenseOver(int userAdminNo) {
+		return licenseDao.alertLicenseOver(userAdminNo);
+	}
+	
+	public boolean updateLicense(int licenseNo, String enddate) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("licenseNo", licenseNo);
+		map.put("enddate", enddate);
+		
+		return licenseDao.updateLicense(map);
 	}
 
 	

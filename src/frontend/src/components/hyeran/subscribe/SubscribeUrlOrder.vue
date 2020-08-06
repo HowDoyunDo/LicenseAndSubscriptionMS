@@ -1,6 +1,6 @@
 <template>
   <div class="contents">
-    <h1>구독 신청서 작성</h1>
+    <h1>구독 신청</h1>
     <p class="tip">서로 다른 정책의 제품들의 일괄 구매를 원하시는 고객님께서는 견적 문의 부탁드립니다.</p>
     <div class="info-border">
       <table class="info-table">
@@ -68,7 +68,7 @@
                   프로모션 명 : {{ promotion.title }}
                   <br />
                   할인률 : {{ promotion.discount }}%
-                  <br />제품 정가(할인액) : <span> {{ promotion.product_price |formatPrice}}원</span>
+                  <br />제품 정가/월(할인액) : <span> {{ promotion.product_price |formatPrice}}원</span>
                   <span style="color: red"> (- {{(promotion.discount/100 * promotion.product_price) | formatPrice}}원)</span>
                 </li>
               </ul>

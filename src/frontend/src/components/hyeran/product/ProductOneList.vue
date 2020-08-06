@@ -2,10 +2,11 @@
   <div>
     <table class="table_board">
       <tr>
-        <th>제품번호</th>
+        <th width="10%">제품번호</th>
         <th>카테고리명</th>
         <th>제품명</th>
-        <th>가격</th>
+        <!-- 제품 가격 -->
+        <!-- <th>가격</th> -->
         <th>등록일</th>
         <th>상세보기</th>
         <th v-if="promotionProduct == undefined" style="width:12%">삭제</th>
@@ -16,16 +17,17 @@
         <td>
           <span style="text-decoration-line: underline;">{{product.name}}</span>
         </td>
-        <td style="letter-spacing: 0.5px; word-spacing: 5px;">
+        <!-- 제품 가격 -->
+        <!-- <td style="letter-spacing: 0.5px; word-spacing: 5px;"> -->
           <!--discountPrice : 할인가, 원가 style 차이 -->
-          <span v-if="discountPrice" class="discountStyle">{{product.price | formatPrice}}</span>
-          <span v-else>{{product.price | formatPrice}}</span>
+          <!-- <span v-if="discountPrice" class="discountStyle">{{product.price | formatPrice}}</span> -->
+          <!-- <span v-else>{{product.price | formatPrice}}</span> -->
           <!-- 할인가격 출력 -->
-          <span
-            v-if="discountPrice"
-            style="color : red; padding : 5px"
-          >({{product.price - (product.price*discountPrice) | formatPrice}})</span>
-        </td>
+          <!-- <span -->
+            <!-- v-if="discountPrice" -->
+            <!-- style="color : red; padding : 5px" -->
+          <!-- >({{product.price - (product.price*discountPrice) | formatPrice}})</span> -->
+        <!-- </td> -->
         <td>{{product.reg_date | formatDate}}</td>
         <td>
           <a href="#" @click="openInfo(product.no)">상세보기</a>

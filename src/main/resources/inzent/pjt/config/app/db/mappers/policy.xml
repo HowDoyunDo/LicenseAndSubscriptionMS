@@ -32,4 +32,11 @@
 		 between start_date and end_date
 	]]>
 	</select>
+	
+	<select id="getUpdatePolicy" parameterType="int" resultType="policyvo">
+	<![CDATA[
+		select * from subscription_policy
+		 where no = ${_parameter}
+	]]>
+	</select>
 </mapper>

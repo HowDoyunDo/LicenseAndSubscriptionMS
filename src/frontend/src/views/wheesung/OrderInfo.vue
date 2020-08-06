@@ -4,6 +4,7 @@
       <br />
       <h1>주문 정보</h1>
       <br />
+      <div id="inner">
       <form class="form" @submit.prevent="productChange">
         <table class="table_add">
           <tr>
@@ -33,9 +34,11 @@
         </table>
         <br />
         <div style="text-align: center;">
-          <input class="cssbtn" type="button" value="목록" @click="goList" />
+          <input class="cssbtn" type="button" value="목록" @click="goList" style="border-radius:4px; width: 80px"/>
         </div>
+        <br>
       </form>
+      </div>
     </div>
   </div>
 </template>
@@ -78,5 +81,11 @@ export default {
   border: none;
   width: 120px;
   height: 40px;
+}
+#inner {
+  width: 100%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding:10px;
 }
 </style>

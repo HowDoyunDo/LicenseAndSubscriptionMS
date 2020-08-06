@@ -51,7 +51,7 @@ export default [
     {
         path: '/promotion',
         name: 'promotion',
-        component: () => import('@/views/hyeran/system_admin/promotion/AllListPage.vue'),
+        component: () => import('@/views/hyeran/system_admin/promotion/PolicyAllListPage.vue'),
     },
     {
         path: '/promotion/add',
@@ -61,8 +61,8 @@ export default [
     // 시스템 관리자 - 프로모션 상세보기
     {
         path: '/promotion/info/:promotion_no',
-        name: 'promotionInfo',
-        component: () => import('@/views/hyeran/system_admin/promotion/InfoPage.vue'),
+        name: 'promotionPolicyInfo',
+        component: () => import('@/views/hyeran/system_admin/promotion/PolicyInfoPage.vue'),
     },
 
 
@@ -124,7 +124,6 @@ export default [
         component: () => import('@/components/hyeran/subscribe/SubscribeUrlOrder.vue'),
         beforeEnter: requireAuthURL(),
     }
-
 
 ]
 

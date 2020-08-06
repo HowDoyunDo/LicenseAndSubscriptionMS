@@ -51,4 +51,8 @@ public class PromotionDAO {
 		return sqlSession.selectList("promotion.getPromotionPolicyCheckPNo",vo);
 	}
 
+	
+	public List<PromotionVO2> getPromotionPolicyCheckPNo(int policyNo) {
+		return sqlSession.selectList("promotion.getPromotionPolicyCheckPNo", policyNo);
+	}
 }

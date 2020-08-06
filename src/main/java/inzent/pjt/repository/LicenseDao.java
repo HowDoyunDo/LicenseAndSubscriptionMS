@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
+import org.modelmapper.internal.bytebuddy.dynamic.loading.PackageDefinitionStrategy.Definition.Undefined;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -23,7 +24,7 @@ public class LicenseDao {
 		return sqlSession.selectList("license.getLicenseList", adminNo);
 	}
 
-	public List<GeneralUserVo> getUserList(int licenseNo) {
+	public List<AgentVo> getUserList(int licenseNo) {
 		return sqlSession.selectList("license.getUserList", licenseNo);
 	}
 
@@ -43,9 +44,10 @@ public class LicenseDao {
 		}
 		
 		if(delUsrs.indexOf(")") != -1) {
-			System.out.println("hihihi");
-			sqlSession.delete("license.delUser1", delUsrs);
-			sqlSession.delete("license.delUser2", delUsrs);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("delUsrs", delUsrs);
+			map.put("licenseNo", licenseNo);
+			sqlSession.delete("license.delUser", map);
 			
 			for(int i = 0; i<cnt+1; i++) { 
 				sqlSession.update("license.downCurrentCount", licenseNo);
@@ -83,10 +85,10 @@ public class LicenseDao {
 		}
 	}
 
-	public boolean addUsers(List<GeneralUserVo> userList, int adminUserNo, int licenseNo) {
+	public char addUsers(List<GeneralUserVo> userList, int adminUserNo, int licenseNo) {
 		
 		if(userList.size() == 0) {
-			return false;
+			return 'F';
 		} else {
 			for(GeneralUserVo guv: userList) {
 				Map<String, Object> obj = new HashMap<String, Object>();
@@ -96,6 +98,9 @@ public class LicenseDao {
 				obj.put("dept", guv.getDept_name());
 				obj.put("licenseNo", licenseNo);
 				obj.put("adminUserNo", adminUserNo);
+				
+				if(sqlSession.selectOne("license.getCurCnt", licenseNo) == sqlSession.selectOne("license.getMaxCnt", licenseNo))
+					return 'M';
 				
 				if(sqlSession.selectOne("license.dupUserEmail", obj) == null) {	// 해당 라이센스 내 중복된 이메일을 가진 사용자가 존재하지 않으면
 					if(sqlSession.selectOne("license.dupUser", obj) == null) {	// 해당 이메일을 가진 사용자가 존재하지 않으면
@@ -113,7 +118,7 @@ public class LicenseDao {
 				}
 			}
 			
-			return true;
+			return 'T';
 		}
 	}
 
@@ -129,9 +134,7 @@ public class LicenseDao {
 		}
 		
 		if(delUsrs.indexOf(")") != -1) {
-			System.out.println("hihihi");
-			sqlSession.delete("license.delAgent1", delUsrs);
-			sqlSession.delete("license.delAgent2", delUsrs);
+			sqlSession.delete("license.delAgent", delUsrs);
 			
 			for(int i = 0; i<cnt+1; i++) { 
 				sqlSession.update("license.downCurrentCount", licenseNo);
@@ -232,5 +235,33 @@ public class LicenseDao {
 	}
 	public List<UserVo> getLicenseAdminUser(LicenseVO2 vo) {
 		return sqlSession.selectList("license.getLicenseAdminUser", vo);
+	}
+
+	public boolean changeActive(int licenseNo, String activeUsrs) {
+		int cnt = 0;
+		for(int i=0; i<activeUsrs.length(); i++) {
+			if(activeUsrs.charAt(i) == ',' ) 
+				cnt++;
+		}
+		
+		if(activeUsrs.indexOf(")") != -1) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("activeUsrs", activeUsrs);
+			map.put("licenseNo", licenseNo);
+			sqlSession.update("license.changeActive", map);
+			sqlSession.update("license.updateCnt", licenseNo);
+			
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public List<LicenseVo> alertLicenseOver(int userAdminNo) {
+		return sqlSession.selectList("alertLicenseOver", userAdminNo);
+	}
+
+	public boolean updateLicense(Map<String, Object> map) {
+		return sqlSession.update("license.updateLicense", map) == 1;
 	}
 }

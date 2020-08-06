@@ -8,9 +8,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import inzent.pjt.service.PromotionService;
+import inzent.pjt.vo.LicenseVo;
 import inzent.pjt.vo.PromotionVO2;
 
 @RestController
@@ -99,11 +101,22 @@ public class PromotionController {
 		return result;
 	}
 	@PostMapping("/promotionPolicyCheckPNo")
-	public List<PromotionVO2> promotionPolicyCheckPNo(@RequestBody PromotionVO2 PromotionVO2) {
+	public List<PromotionVO2> promotionPolicyCheckPNo(
+			@RequestBody PromotionVO2 PromotionVO2) {
 		System.out.println("/promotionPolicyCheckPNo");
 		
 		List<PromotionVO2> result = service.getPromotionPolicyCheckPNo(PromotionVO2);
 		return result;
+	}
+
+
+	
+	@GetMapping("/promotionPolicyCheckPNo")
+	public List<PromotionVO2> promotionPolicyCheckPNo(
+			@RequestParam(value = "policyNo") int policyNo
+			) {
+		System.out.println(policyNo); 
+		return service.getPromotionPolicyCheckPNo(policyNo);
 	}
 	
 }

@@ -60,7 +60,8 @@
               <img :src="this.info_image" width="100px" height="auto" />
             </td>
           </tr>
-          <tr>
+          <!-- 제품가격 -->
+          <!-- <tr>
             <th>가격</th>
             <td>
               <input
@@ -70,17 +71,17 @@
                 @keyup="numberFormat"
               />
             </td>
-          </tr>
+          </tr> -->
         </table>
 
         <br />
         <div style="text-align: center;">
-          <input class="cssbtn" type="submit" value="수정" />
+          <input class="cssbtn" type="submit" value="수정" style="border-radius: 4px"/>
           <input
             type="button"
             value="취소"
             class="cssbtn"
-            style="margin: 0 0 0 20px; border-radius: 0"
+            style="margin: 0 0 0 20px; border-radius: 4px"
             @click="movelist"
           />
         </div>
@@ -100,7 +101,7 @@ export default {
       categoryList: "",
       name: "",
       comments: "",
-      price: "",
+      price: "0",
       reg_date: "",
       selected: "",
       category_no: "",

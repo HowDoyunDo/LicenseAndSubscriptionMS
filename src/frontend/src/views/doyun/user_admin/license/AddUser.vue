@@ -67,7 +67,7 @@ export default {
                 alert('사용자의 이름을 입력해주세요.')
             } else if (this.dept === '') {
                 alert('사용자의 부서를 입력해주세요.')
-            } else if (this.license.current_count === this.license.max_count) {
+            } else if (this.license.current_count === this.license.max_count && this.license.max_count !== 0) {
                 alert('현재 사용자가 꽉 차 사용자를 추가할 수 없습니다.')
             } else {
                 // <!-- TODO -->

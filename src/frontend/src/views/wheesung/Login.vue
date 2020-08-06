@@ -5,17 +5,31 @@
         <h1 style="text-align:center;">로그인</h1>
         <br />
         <span class="signtext">
-          <input class="signtextinput" type="text" placeholder="이메일을 입력하세요." v-model="email" />
+          <input
+            class="signtextinput"
+            type="text"
+            placeholder="이메일을 입력하세요."
+            v-model="email"
+          />
         </span>
-        <br>
         <span class="signtext">
-          <input class="signtextinput" type="password" placeholder="비밀번호를 입력하세요." v-model="password" />
+          <input
+            class="signtextinput"
+            type="password"
+            placeholder="비밀번호를 입력하세요."
+            v-model="password"
+          />
         </span>
-        <br>
-        <input style="width: 100%; height: 51px; background-color: #3498db; border:none; color: #FFFFFF;" type="submit" value="로그인" />
+        <input
+          style="border-radius: 4px; width: 100%; height: 51px; background-color: #3498db; border:none; color: #FFFFFF;"
+          type="submit"
+          value="로그인"
+        />
       </form>
-      <br>
-      <router-link to="/adminlogin" style="float:right;">관리자 로그인</router-link>
+      <br />
+      <router-link to="/adminlogin" style="float:right;"
+        >관리자 로그인</router-link
+      >
     </div>
   </div>
 </template>
@@ -38,11 +52,11 @@ export default {
       reg_date: "",
       show: true,
       admin: "active",
-      user: ""
+      user: "",
     };
   },
   methods: {
-    login() {
+    async login() {
       if (this.email == "") {
         alert("이메일을 입력해주세요.");
         return;
@@ -51,21 +65,34 @@ export default {
         alert("비밀번호를 입력해주세요.");
         return;
       }
-      axios
+      await axios
         .post("/api/login", {
           email: this.email,
-          password: this.password
+          password: this.password,
         })
-        .then(result => {
+        .then((result) => {
           console.log(result);
-          if (result.data === "") {
-            alert("ID, PASSWORD CHECK PLEASE");
+          if (result.data === "") { // 로그인 실패
+            alert("ID와 PASSWORD를 다시 확인해주세요.");
             this.initForm();
             return;
           }
+
+          // 로그인 성공
           sessionStorage.setItem("license-token", result.data);
           this.parseJwt(result.data);
           this.$router.push("/");
+          
+          axios
+            .get("/api/alertLicenseOver", {
+              params: {
+                userAdminNo: this.userInfo.no,
+              },
+            })
+            .then((res) => {
+              this.$store.commit("licenseStore/SELECT_AOL", res.data);
+              console.log(res.data);
+            });
         });
     },
     parseJwt(token) {
@@ -90,23 +117,30 @@ export default {
     initForm() {
       this.email = "";
       this.password = "";
-    }
+    },
+  },
+  computed: {
+    userInfo: function() {
+      return this.$store.state.userinfo.userInfo;
+    },
   }
 };
 </script>
 
 <style scoped>
-  h1 {
-      font-size: 4.5rem;
-      color:#000000D9;
-  }
+h1 {
+  font-size: 4.5rem;
+  color: #000000d9;
+}
 .signtext {
   width: 100%;
   height: 51px;
   padding: 10px 14px;
-  border: 1px solid #3498db;
+  border: 1px solid #ccc;
   display: block;
   position: relative;
+  border-radius: 4px;
+  margin-bottom: 10px;
 }
 .signtextinput {
   width: 420px;

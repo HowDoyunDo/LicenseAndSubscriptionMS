@@ -16,10 +16,16 @@
                 <div style="border:1px solid #ccc; padding:10px; width:10%; min-width:150px; margin-left:7%;">
                     최근
                     <select v-model="selected" style="width:50px;">
-                        <option value=2 selected disabled hidden>{{2}}</option>
+                        <option value=10 selected disabled hidden>{{10}}</option>
                         <option v-for="no in nos" :key="no">{{no}}</option>
                     </select> 주
                 </div>
+            </div>
+            <br>
+
+            <div id='chart' style="border:1px solid #ccc; padding: 30px 30px 50px; width:100%; height:500px;">
+                <span id="per">차트</span> <br><br>
+                <canvas id="planet-chart"></canvas>
             </div>
             <br>
 
@@ -100,6 +106,7 @@
 
 <script>
 import axios from 'axios'
+import Chart from 'chart.js'
 
 export default {
     data() {
@@ -116,11 +123,14 @@ export default {
             analysisList: '',
             
             // 주 선택
-            selected: 2,
+            selected: 10,
             nos: [],
 
             // 주 시작일 모음
             weeks: '',
+
+            // 차트 변수
+            chart: '',
         }
     },
     methods: {
@@ -177,6 +187,49 @@ export default {
             
             return '(' + this.getDate(start) + ' ~ ' + this.getDate(end) + ')';
         },
+        createChart(chartId) {
+            var ctx = document.getElementById(chartId); 
+            var config = { 
+                type: 'bar',
+                data: {
+                    labels: this.label,
+                    datasets: [{
+                        label: '결제 금액(원)',
+                        data: this.total_price,
+                        backgroundColor: 
+                            // 'rgba(255, 99, 132, 0.2)',
+                            // 'rgba(54, 162, 235, 0.2)',
+                            // 'rgba(255, 206, 86, 0.2)',
+                            // 'rgba(75, 192, 192, 0.2)',
+                            // 'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)',
+                        borderColor: 
+                            // 'rgba(255, 99, 132, 1)',
+                            // 'rgba(54, 162, 235, 1)',
+                            // 'rgba(255, 206, 86, 1)',
+                            // 'rgba(75, 192, 192, 1)',
+                            // 'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)',
+                        borderWidth: 1,
+                    }]
+                },
+                options: {
+                    // responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    }
+                }
+            }
+
+            if(this.chart !== '') 
+                this.chart.destroy();
+            this.chart = new Chart(ctx, config);   // eslint-disable-line no-unused-vars
+        }
     },
     computed: {
         filteredList() {
@@ -205,12 +258,15 @@ export default {
 
                 for(var i = 0; i<this.selected; i++) {  // 선택한 주차까지의 
                     var temp = thisWeek;
+                    if(i === 0) 
+                        temp = this.getDate(new Date(temp));
                     
                     if(i !== 0) 
                         temp = this.getDate(new Date(temp.setDate(temp.getDate()-7)));
                 
-                    if(this.getDate(new Date(al.week_start)) === temp)
+                    if(this.getDate(new Date(al.week_start)) === temp) {
                         return true;
+                    }
                 }
                 return false;
             });
@@ -219,7 +275,7 @@ export default {
             var today = new Date();
             var start = today.getDate() - today.getDay() + 1;
             start = this.getDate(new Date(today.setDate(start)));
-            console.log(start);
+            // console.log(start);
 
             for(var i=0; i<this.analysisList.length; i++) {
                 if(this.analysisList[i].date === start)
@@ -231,7 +287,7 @@ export default {
             var today = new Date();
             var start = today.getDate() - today.getDay() - 6;
             start = this.getDate(new Date(today.setDate(start)));
-            console.log(start);
+            // console.log(start);
 
             for(var i=0; i<this.analysisList.length; i++) {
                 if(this.analysisList[i].date === start)
@@ -239,6 +295,20 @@ export default {
             }
             return '';
         },
+        label() {
+            var dates = [];
+            this.filteredList.forEach((element) => {
+                dates.push(this.getDate(new Date(element.week_start)) + ' ~ ' + this.getDate(new Date(element.week_end)));
+            });
+            return dates;
+        },
+        total_price() {
+            var price = [];
+            this.filteredList.forEach((element) => {
+                price.push(element.total_price);
+            });
+            return price;
+        }
     },
     async created() {
         for(var i=2; i<53; i++) {
@@ -250,6 +320,11 @@ export default {
                 this.analysisList = res.data;
                 console.log(res.data)
         });
+
+        this.createChart('planet-chart', this.planetChartData);
+    },
+    updated() {
+        this.createChart('planet-chart', this.planetChartData);
     }
 }
 </script>

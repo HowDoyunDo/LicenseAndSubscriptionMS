@@ -121,11 +121,13 @@ export default {
                         'licenseNo': this.license.no
                     }
                 }).then(res => {
-                    if(res.data === true) {
+                    if(res.data === 'T') {
                         alert('사용자 일괄 추가를 완료했습니다.\n중복된 이메일의 사용자가 존재할 경우 사용자의 \n정보가 업데이트됩니다.')
                         window.history.go(-1);
-                    } else {
+                    } else if(res.data === 'F') {
                         alert('파일 내에 추가할 사용자가 없습니다. \n다시 확인하고 업로드해주세요.')
+                    } else if(res.data === 'M') {
+                        alert('최대 사용량까지 추가 하였고, \n더 이상 사용자를 추가할 수 없습니다.')
                     }
                 }).catch(e => {
                     console.log(e);

@@ -10,6 +10,6 @@ module.exports = {
                 changeOrigin: true,
                 pathRewrite: { '^/api' : '' } // URL ^/api -> 공백 변경
             },
-        }
+        },
     }
 }

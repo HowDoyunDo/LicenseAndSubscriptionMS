@@ -39,8 +39,8 @@ public class ProductController2 {
   }
   
   @PostMapping("/categorydel")
-  public void categoryDel(@RequestBody CategoryVo vo) throws Exception{
-    productservice.categoryDel(vo);
+  public String categoryDel(@RequestBody CategoryVo vo) throws Exception{
+    return productservice.categoryDel(vo);
   }
   
   @GetMapping("/productlist")

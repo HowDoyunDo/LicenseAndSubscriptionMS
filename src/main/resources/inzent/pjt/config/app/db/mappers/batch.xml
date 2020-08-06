@@ -24,7 +24,7 @@
 			  login_limit_days = ${days},
 			  login_limit_hours = ${hours},
 			  recent_batch = current_timestamp,
-			  next_batch = current_timestamp + '${months} months' + '${days} days' + '${hours} hours'
+			  next_batch = current_timestamp + '${period} days' 
 			  where no = 1
 		]]>
 	</update>

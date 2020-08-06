@@ -34,7 +34,6 @@
             @change="changeDate()"
           />
         </div>
-        <br />
         <hr />
 
         <span id="per">정책 가격</span> <br /><br />
@@ -50,6 +49,15 @@
 
         <hr />
         <button style="margin-left:7%" @click="clrAll()">초기화</button>
+      </div>
+      <br />
+
+      <div
+        id="chart"
+        style="border:1px solid #ccc; padding: 30px 30px 50px; width:100%; height:500px;"
+      >
+        <span id="per">차트</span> <br /><br />
+        <canvas id="planet-chart"></canvas>
       </div>
       <br />
 
@@ -95,6 +103,7 @@
 
 <script>
 import axios from "axios";
+import Chart from "chart.js";
 
 export default {
   data() {
@@ -124,6 +133,9 @@ export default {
 
       // 정책 탭
       poltab: 1,
+
+      // 차트 변수
+      chart: "",
     };
   },
   methods: {
@@ -304,6 +316,52 @@ export default {
           this.analysisList = res.data;
         });
     },
+    createChart(chartId) {
+      var ctx = document.getElementById(chartId);
+      var config = {
+        type: "bar",
+        data: {
+          labels: this.label,
+          datasets: [
+            {
+              label: "결제 금액(원)",
+              data: this.total_price,
+              backgroundColor:
+                // 'rgba(255, 99, 132, 0.2)',
+                // 'rgba(54, 162, 235, 0.2)',
+                // 'rgba(255, 206, 86, 0.2)',
+                // "rgba(75, 192, 192, 0.2)",
+              // 'rgba(153, 102, 255, 0.2)',
+              'rgba(255, 159, 64, 0.2)',
+              borderColor:
+                // 'rgba(255, 99, 132, 1)',
+                // 'rgba(54, 162, 235, 1)',
+                // 'rgba(255, 206, 86, 1)',
+                // "rgba(75, 192, 192, 1)",
+              // 'rgba(153, 102, 255, 1)',
+              'rgba(255, 159, 64, 1)',
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          // responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                },
+              },
+            ],
+          },
+        },
+      };
+
+      if (this.chart !== "") this.chart.destroy();
+      this.chart = new Chart(ctx, config); // eslint-disable-line no-unused-vars
+    },
   },
   computed: {
     filteredList() {
@@ -331,6 +389,20 @@ export default {
         );
       });
     },
+    label() {
+      var dates = [];
+      this.filteredList.forEach((element) => {
+        dates.push(element.policy_title + '(' + element.policy_no+')');
+      });
+      return dates;
+    },
+    total_price() {
+      var price = [];
+      this.filteredList.forEach((element) => {
+        price.push(element.total_price);
+      });
+      return price;
+    },
   },
   async created() {
     await axios
@@ -344,6 +416,11 @@ export default {
         this.analysisList = res.data;
         console.log(res.data);
       });
+
+    this.createChart("planet-chart", this.planetChartData);
+  },
+  updated() {
+    this.createChart("planet-chart", this.planetChartData);
   },
 };
 </script>

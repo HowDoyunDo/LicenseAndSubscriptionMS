@@ -30,6 +30,7 @@
 		<typeAlias type="inzent.pjt.vo.CategoryVo" alias="categoryvo"/>
 		<typeAlias type="inzent.pjt.vo.ProductVo2" alias="productvo2"/>
 		<typeAlias type="inzent.pjt.vo.OrderVo" alias="ordervo"/>
+		<typeAlias type="inzent.pjt.vo.PriceQuestionVo" alias="pricequestionvo"/>
 	</typeAliases>
 	<mappers>
 		<mapper resource="inzent/pjt/config/app/db/mappers/policy.xml" />
@@ -44,5 +45,6 @@
 		<mapper resource="mybatis/mapper/User.xml"/>
 		<mapper resource="mybatis/mapper/promotion.xml"/>
 		<mapper resource="mybatis/mapper/license.xml"/>
+		<mapper resource="mybatis/mapper/pricequestion.xml"/>
 	</mappers>
 </configuration>

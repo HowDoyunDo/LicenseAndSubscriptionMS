@@ -15,7 +15,11 @@
    </delete>
    
    <select id="productList" resultType="map">
-      select p.no, p.name, p.comments, p.price, to_char(reg_date, 'YYYY-MM-DD') reg_date from product p order by no
+      select c.title, p.no, p.name, p.comments, p.price, to_char(p.reg_date, 'YYYY-MM-DD') reg_date 
+       from product p
+       left join category c
+       on p.category_no = c.no
+       order by no
    </select>
    <select id="productChk" resultType="int">
       select count(*) from product where name = #{name}
@@ -23,6 +27,9 @@
    <insert id="productAdd">
       insert into product (category_no, name, comments, price, product_image, info_image) values (#{category_no}, #{name}, #{comments}, #{price}, #{product_image}, #{info_image})
    </insert>
+   <select id="categoryproduct" resultType="int">
+   	select count(*) from product where category_no = (select no from category where title = #{ca_title})
+   </select>
    <delete id="productDel">
       delete from product where name = #{name}
    </delete>

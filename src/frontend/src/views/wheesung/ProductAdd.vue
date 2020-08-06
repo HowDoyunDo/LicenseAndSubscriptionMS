@@ -3,78 +3,82 @@
     <div>
       <h1>제품 등록</h1>
       <br />
-      <form
-        class="form"
-        enctype="multipart/form-data"
-        @submit.prevent="productAdd"
-      >
-        <table class="table_add">
-          <tr>
-            <th>카테고리 선택</th>
-            <td>
-              <select v-model="selected" class="select-box">
-                <option disabled value>제품을 선택해주세요</option>
-                <option
-                  v-for="list in categoryList"
-                  :value="list.no"
-                  :key="list.no"
-                  >{{ list.title }}</option
-                >
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <th>제품명</th>
-            <td>
-              <input type="text" v-model="name" />
-            </td>
-          </tr>
-          <tr>
-            <th>제품 설명</th>
-            <td>
-              <input type="text" v-model="comments"/>
-            </td>
-          </tr>
-          <tr>
-            <th>제품조회 이미지</th>
-            <td>
-              <input
-                type="file"
-                id="productimage"
-                @change="inputProductImage"
-                accept="image/gif, image/jpeg, image/png, image/jpg"
-              />
-            </td>
-          </tr>
-          <tr>
-            <th>상세정보 이미지</th>
-            <td>
-              <input
-                type="file"
-                id="infoimage"
-                @change="inputInfoImage"
-                accept="image/gif, image/jpeg, image/png, image/jpg"
-              />
-            </td>
-          </tr>
-          <tr>
-            <th>가격</th>
-            <td>
-              <input
-                type="text"
-                min="0"
-                v-model="price"
-                @keyup="numberFormat"
-              />
-            </td>
-          </tr>
-        </table>
+      <div id="inner">
+        <form
+          class="form"
+          enctype="multipart/form-data"
+          @submit.prevent="productAdd"
+        >
+          <table class="table_add">
+            <tr>
+              <th>카테고리 선택</th>
+              <td>
+                <select v-model="selected" class="select-box">
+                  <option disabled value>제품을 선택해주세요</option>
+                  <option
+                    v-for="list in categoryList"
+                    :value="list.no"
+                    :key="list.no"
+                    >{{ list.title }}</option
+                  >
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <th>제품명</th>
+              <td>
+                <input type="text" v-model="name" />
+              </td>
+            </tr>
+            <tr>
+              <th>제품 설명</th>
+              <td>
+                <input type="text" v-model="comments"/>
+              </td>
+            </tr>
+            <tr>
+              <th>제품조회 이미지</th>
+              <td>
+                <input
+                  type="file"
+                  id="productimage"
+                  @change="inputProductImage"
+                  accept="image/gif, image/jpeg, image/png, image/jpg"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>상세정보 이미지</th>
+              <td>
+                <input
+                  type="file"
+                  id="infoimage"
+                  @change="inputInfoImage"
+                  accept="image/gif, image/jpeg, image/png, image/jpg"
+                />
+              </td>
+            </tr>
+            <!-- 제품가격 -->
+            <!-- <tr>
+              <th>가격</th>
+              <td>
+                <input
+                  type="text"
+                  min="0"
+                  v-model="price"
+                  @keyup="numberFormat"
+                />
+              </td>
+            </tr> -->
+          </table>
 
-        <br />
-        <div style="text-align: center;">
-          <input class="cssbtn" type="submit" value="등록" />
-        </div>
-      </form>
+          <br />
+          <div style="text-align: center;">
+            <input class="cssbtn" type="submit" value="등록" style="border-radius:4px;"/>
+          </div>
+          <br>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -87,7 +91,7 @@ export default {
     return {
       name: "",
       comments: "",
-      price: "",
+      price: "0",
       product_image: "",
       info_image: "",
       selected: "",
@@ -240,5 +244,11 @@ export default {
   border: none;
   width: 120px;
   height: 40px;
+}
+#inner {
+  width: 100%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding:10px;
 }
 </style>

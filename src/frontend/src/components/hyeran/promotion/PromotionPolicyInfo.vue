@@ -3,6 +3,8 @@
     <h1 v-if="modifyToggle==true">프로모션 수정</h1>
     <h1 v-else>프로모션 상세보기</h1>
     <br />
+
+    <div id="inner">
     <form class="form" @submit.prevent="promotionAddSubmit">
       <table class="table_add">
         <tr>
@@ -79,6 +81,7 @@
         </div>
       </div>
     </form>
+    </div>
   </div>
 </template>
 <script>
@@ -139,7 +142,7 @@ export default {
     },
     // 목록
     listClick() {
-      this.$router.push("/promotion/policy");
+      this.$router.push("/promotion");
     },
     // 취소
     cancel() {
@@ -192,5 +195,11 @@ input[type="radio"] {
   padding: 0.5rem 0.75rem;
   margin: 5px;
   outline: none;
+}
+#inner {
+  width: 100%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding:10px;
 }
 </style>

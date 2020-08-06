@@ -23,7 +23,7 @@ import Navigator from "@/components/Navigator.vue";
 export default {
   components: {
     Header,
-    Navigator
+    Navigator,
   },
   beforeUpdate() {
     switch (document.location.pathname) {
@@ -31,7 +31,7 @@ export default {
         this.isChecked = true;
         break;
     }
-  }
+  },
 };
 </script>
 
@@ -44,8 +44,8 @@ export default {
 @import url(//fonts.googleapis.com/earlyaccess/jejugothic.css);
 
 #app {
-  color: #000000D9;
-  font-family: 'Jeju Gothic', sans-serif;
+  color: #000000d9;
+  font-family: "Jeju Gothic", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   width: 100%;
@@ -57,7 +57,17 @@ export default {
   display: flex;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1 {
+  font-size: 4.5rem;
+  color: #000000d9;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-weight: normal;
 }
 
@@ -65,11 +75,11 @@ button {
   font-weight: normal;
 }
 
-input[type=password] {
+input[type="password"] {
   font-family: Helvetica, Arial, sans-serif;
 }
 
 ::placeholder {
-  font-family: 'Jeju Gothic', sans-serif;
+  font-family: "Jeju Gothic", sans-serif;
 }
 </style>

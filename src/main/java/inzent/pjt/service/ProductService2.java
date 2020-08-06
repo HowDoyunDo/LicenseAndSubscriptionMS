@@ -27,8 +27,8 @@ public class ProductService2 {
     return productdao.categoryChk(vo);
   }
   
-  public void categoryDel(CategoryVo  vo) {
-    productdao.categoryDel(vo);
+  public String categoryDel(CategoryVo  vo) {
+    return productdao.categoryDel(vo);
   }
   
   public List<ProductVo2> productList(ProductVo2 vo) {

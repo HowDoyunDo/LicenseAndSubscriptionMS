@@ -1,128 +1,173 @@
 <template>
   <div>
-    <h1 v-if="modifyToggle==true || modifyAllToggle==true">구독 정책 수정</h1>
+    <h1 v-if="modifyToggle == true || modifyAllToggle == true">
+      구독 정책 수정
+    </h1>
     <h1 v-else>구독 정책 상세보기</h1>
     <br />
-    <form class="form">
-      <table class="table_add">
-        <tr>
-          <th>구독 정책명</th>
-          <td>
-            <input
-              v-if="modifyToggle==true || modifyAllToggle==true"
-              type="text"
-              v-model="policy_title"
-            />
-            <div v-else>{{ policy_title}}</div>
-          </td>
-        </tr>
-        <tr>
-          <th>공개 여부</th>
-          <td>
-            <div v-if="modifyToggle==true || modifyAllToggle==true">
-              <input type="radio" name="public_radio" value="true" v-model="visible" /> 공개
-              <input type="radio" name="public_radio" value="false" v-model="visible" /> 비공개
-            </div>
-            <div v-else>{{ visible ? '공개' : '비공개' }}</div>
-          </td>
-        </tr>
-        <tr>
-          <th>이용 기준</th>
-          <td v-if="modifyAllToggle==true">
-            <input type="radio" name="standard" value="U" v-model="standard" /> 사용자
-            <input type="radio" name="standard" value="A" v-model="standard" /> 에이전트
-          </td>
-          <td v-else>{{ standard=='U' ? '사용자' : '에이전트' }}</td>
-        </tr>
-        <tr>
-          <th>수량</th>
-          <td v-if="modifyAllToggle==true">
-            <input type="number" min="1" v-model="max_count" /> 개
-          </td>
-          <td v-else>{{max_count}} 개</td>
-        </tr>
-        <tr>
-          <th>가격</th>
-          <td v-if="modifyAllToggle==true">
-            <input
-              type="text"
-              min="0"
-              v-model="format"
-              @keyup="numberFormat"
-              style="width : 150px; text-align:center;"
-            /> 원
-            <!-- @blur="formatPrice" -->
-          </td>
-          <td v-else>{{format}} 원</td>
-        </tr>
-        <tr>
-          <th>URL</th>
-          <td>
-            <!-- <input v-if="modifyAllToggle==true" type="text" v-model="url" /> -->
-            <div>{{url}}</div>
-          </td>
-        </tr>
-        <tr>
-          <th>등록일</th>
-          <td>{{reg_date | formatDate}}</td>
-        </tr>
-      </table>
-      <br />
+    <div id="inner">
+      <form class="form">
+        <table class="table_add">
+          <tr>
+            <th>구독 정책명</th>
+            <td>
+              <input
+                v-if="modifyToggle == true || modifyAllToggle == true"
+                type="text"
+                v-model="policy_title"
+              />
+              <div v-else>{{ policy_title }}</div>
+            </td>
+          </tr>
+          <tr>
+            <th>공개 여부</th>
+            <td>
+              <div v-if="modifyToggle == true || modifyAllToggle == true">
+                <input
+                  type="radio"
+                  name="public_radio"
+                  value="true"
+                  v-model="visible"
+                />
+                공개
+                <input
+                  type="radio"
+                  name="public_radio"
+                  value="false"
+                  v-model="visible"
+                />
+                비공개
+              </div>
+              <div v-else>{{ visible ? "공개" : "비공개" }}</div>
+            </td>
+          </tr>
+          <tr>
+            <th>이용 기준</th>
+            <td v-if="modifyAllToggle == true">
+              <input
+                type="radio"
+                name="standard"
+                value="U"
+                v-model="standard"
+              />
+              사용자
+              <input
+                type="radio"
+                name="standard"
+                value="A"
+                v-model="standard"
+              />
+              에이전트
+            </td>
+            <td v-else>{{ standard == "U" ? "사용자" : "에이전트" }}</td>
+          </tr>
+          <tr>
+            <th>수량</th>
+            <td v-if="modifyAllToggle == true">
+              <input type="number" min="1" v-model="max_count" /> 개
+            </td>
+            <td v-else>{{ max_count }} 개</td>
+          </tr>
+          <tr>
+            <th>가격</th>
+            <td v-if="modifyAllToggle == true">
+              <input
+                type="text"
+                min="0"
+                v-model="format"
+                @keyup="numberFormat"
+                style="width : 150px; text-align:center;"
+              />
+              원
+              <!-- @blur="formatPrice" -->
+            </td>
+            <td v-else>{{ format }} 원</td>
+          </tr>
+          <tr>
+            <th>URL</th>
+            <td>
+              <!-- <input v-if="modifyAllToggle==true" type="text" v-model="url" /> -->
+              <div>{{ url }}</div>
+            </td>
+          </tr>
+          <tr>
+            <th>등록일</th>
+            <td>{{ reg_date | formatDate }}</td>
+          </tr>
+        </table>
 
-      <table class="table_add">
-        <tr>
-          <th>포함 제품</th>
-        </tr>
-      </table>
-      <div class="select-product">
-        <div>
-          <table class="table_board">
-            <tr>
-              <th style="width:15%;">제품번호</th>
-              <th style="width:15%;">카테고리명</th>
-              <th style="width:25%;">제품명</th>
-              <th style="width:15%;">가격</th>
-              <th style="width:15%;">등록일</th>
-              <th style="width:15%;">상세보기</th>
-            </tr>
-            <tr v-for="(product) in list" :key="product.id">
-              <td>{{product.no}}</td>
-              <td>{{product.category_title}}</td>
-              <td>
-                <span style="text-decoration-line: underline;">{{product.name}}</span>
-              </td>
-              <td>{{product.price | formatPrice}}</td>
-              <td>{{product.reg_date | formatDate}}</td>
-              <td>
+        <br />
+
+        <table class="table_add">
+          <tr>
+            <th>포함 제품</th>
+          </tr>
+        </table>
+
+        <div class="select-product">
+          <div>
+            <table class="table_board">
+              <tr>
+                <th style="width:5%;">제품번호</th>
+                <th style="width:15%;">카테고리명</th>
+                <th style="width:25%;">제품명</th>
+                <!-- 제품 가격 -->
+                <!-- <th style="width:15%;">가격</th> -->
+                <th style="width:15%;">등록일</th>
+                <!-- 제품 가격 -->
+                <!-- <th style="width:15%;">상세보기</th> -->
+              </tr>
+              <tr v-for="product in list" :key="product.id">
+                <td>{{ product.no }}</td>
+                <td>{{ product.category_title }}</td>
+                <td>
+                  <span style="text-decoration-line: underline;">{{
+                    product.name
+                  }}</span>
+                </td>
+                <!-- 제품 가격 -->
+                <!-- <td>{{product.price | formatPrice}}</td> -->
+                <td>{{ product.reg_date | formatDate }}</td>
+                <!-- 제품 가격 -->
+                <!-- <td>
                 <a href="#" @click="openInfo(product.no)">상세보기</a>
                 <modal v-if="showModal" @closeee="showModal=false" />
-              </td>
-            </tr>
-          </table>
+              </td> -->
+              </tr>
+            </table>
 
-          <hr />
-          <div class="product-sum" style="font-color : black;">제품 합계 : {{productPrice}} 원</div>
+            <hr />
+            <!-- 제품 가격 -->
+            <!-- <div class="product-sum" style="font-color : black;">제품 합계 : {{productPrice}} 원</div> -->
+          </div>
         </div>
-      </div>
 
-      <div class="submit_btn">
-        <div v-if="modifyToggle==true || modifyAllToggle==true">
-          <button type="button" @click="subscribeModifySubmit">수정 완료</button>
-          <button type="button" @click="cancel">취소</button>
+        <div class="submit_btn">
+          <div v-if="modifyToggle == true || modifyAllToggle == true">
+            <button type="button" @click="subscribeModifySubmit">
+              수정 완료
+            </button>
+            <button type="button" @click="cancel">취소</button>
+          </div>
+          <div v-else>
+            <button type="button" @click="modifyClick">수정</button>
+            <button type="button" @click="deleteClick">삭제</button>
+            <button type="button" @click="listClick">목록</button>
+          </div>
         </div>
-        <div v-else>
-          <button type="button" @click="modifyClick">수정</button>
-          <button type="button" @click="deleteClick">삭제</button>
-          <button type="button" @click="listClick">목록</button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </template>
 
 <script>
-import { subscribeModify, licenseCheck, subscribeDelete } from "@/api/shr/subscribe";
-import ProductModal from "@/components/hyeran/product/ProductModal.vue";
+import {
+  subscribeModify,
+  licenseCheck,
+  subscribeDelete,
+} from "@/api/shr/subscribe";
+// 제품 가격
+// import ProductModal from "@/components/hyeran/product/ProductModal.vue";
 import { formatMixin } from "../mixins/numberFormat";
 import { subscribeMixin } from "../mixins/subscribeInfo";
 
@@ -137,11 +182,12 @@ export default {
       list: "",
       modifyToggle: false,
       modifyAllToggle: false,
-      showModal: false
+      showModal: false,
     };
   },
   components: {
-    modal: ProductModal
+    // 제품 가격
+    // modal: ProductModal
   },
   async created() {
     this.subscribe_no = this.$route.params.subscribe_no;
@@ -164,7 +210,7 @@ export default {
           const subModifyData = {
             no: this.subscribe_no,
             policy_title: this.policy_title,
-            visible: this.visible
+            visible: this.visible,
           };
           res = await subscribeModify(subModifyData);
         } else if (this.modifyAllToggle == true) {
@@ -221,7 +267,7 @@ export default {
           alert("삭제 불가 - 라이선스가 발급되어 있습니다. ");
         } else {
           const { data } = await subscribeDelete({
-            no: this.subscribe_no
+            no: this.subscribe_no,
           });
           if (data == 1) {
             alert("삭제 완료");
@@ -244,16 +290,15 @@ export default {
       this.modifyToggle = false;
       this.modifyAllToggle = false;
       this.defaultSetting();
-    }
-  }
+    },
+  },
 };
 </script>
 
-
 <style scoped>
 h1 {
-    font-size: 4.5rem;
-    color:#000000D9;
+  font-size: 4.5rem;
+  color: #000000d9;
 }
 button {
   width: auto;
@@ -261,6 +306,12 @@ button {
   margin: 10px;
 }
 input {
-   outline:none;
+  outline: none;
+}
+#inner {
+  width: 100%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding:10px;
 }
 </style>

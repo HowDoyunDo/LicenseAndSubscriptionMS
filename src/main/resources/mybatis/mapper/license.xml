@@ -69,4 +69,14 @@
 			limit 1;
 	]]>
 	</select>
+	
+	<select id="alertLicenseOver" resultType="licensevo">
+	<![CDATA[
+		select * from license
+		 where user_admin_no = ${_parameter}
+		 and end_date > now()
+		 and activation = 'A'
+		 and (select end_date - now()::date) < INTERVAL '15 days' 	
+	]]>
+	</select>
 </mapper>

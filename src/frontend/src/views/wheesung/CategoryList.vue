@@ -24,7 +24,7 @@
           <td>{{ category.reg_date }}</td>
           <td>
             <input
-              style="background-color:#3498db; border:none; color: #ffffff; width: 60px; height: 30px;"
+              style="background-color:#3498db; border:none; color: #ffffff; width: 60px; height: 30px; border-radius:4px"
               type="button"
               value="삭제"
               @click="categoryDel(category.title)"
@@ -34,44 +34,47 @@
       </table>
     </div>
     <br />
-    <hr />
     <div>
       <form @submit.prevent="categoryAdd">
         <h1>카테고리 등록</h1>
         <br />
-        <table class="table_add form">
-          <tr>
-            <th>카테고리 명</th>
-            <td>
-              <input
-                style="width:600px; margin: 0 15px; 0 0"
-                type="text"
-                placeholder="카테고리 명을 입력하세요."
-                v-model="title"
-              />
-            </td>
-          </tr>
-          <tr>
-            <th>카테고리 이미지</th>
-            <td>
-              <input
-                type="file"
-                style="width:450px; margin: 0 15px; 0 0"
-                id="categoryimage"
-                @change="inputCategoryImage"
-                accept="image/gif, image/jpeg, image/png, image/jpg, image/ico"
-              />
-            </td>
-          </tr>
-        </table>
+        <div id="inner">
+          <table class="table_add form">
+            <tr>
+              <th>카테고리 명</th>
+              <td>
+                <input
+                  style="width:600px; margin: 0 15px; 0 0"
+                  type="text"
+                  placeholder="카테고리 명을 입력하세요."
+                  v-model="title"
+                />
+              </td>
+            </tr>
+            <tr>
+              <th>카테고리 이미지</th>
+              <td>
+                <input
+                  type="file"
+                  style="width:450px; margin: 0 15px; 0 0"
+                  id="categoryimage"
+                  @change="inputCategoryImage"
+                  accept="image/gif, image/jpeg, image/png, image/jpg, image/ico"
+                />
+              </td>
+            </tr>
+          </table>
+        
 
-        <br />
-        <div style="text-align:center">
-          <input
-            style="background-color:#3498db; border:none; color: #ffffff; width: 60px; height: 30px;"
-            type="submit"
-            value="등록"
-          />
+          <br />
+          <div style="text-align:center">
+            <input
+              style="background-color:#3498db; border:none; color: #ffffff; width: 60px; height: 30px; border-radius:4px"
+              type="submit"
+              value="등록"
+            />
+          </div>
+          <br>
         </div>
       </form>
     </div>
@@ -127,10 +130,13 @@ export default {
           ca_title: title,
         })
         .then((result) => {
-          if (result.status == 200) {
+          console.log(result);
+          if (result.data == "S") {
             axios.get("api/categorylist").then((result) => {
               this.list = result.data;
             });
+          } else {
+            alert("카테고리 하위 제품이 있습니다.");
           }
         });
     },
@@ -214,5 +220,11 @@ export default {
 
 .table_board td img {
   background: gray;
+}
+#inner {
+  width: 100%;
+  display: inline-block;
+  border: 1px solid #ccc;
+  padding:10px;
 }
 </style>

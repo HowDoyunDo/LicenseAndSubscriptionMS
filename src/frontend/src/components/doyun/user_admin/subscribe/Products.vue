@@ -3,7 +3,7 @@
     <ul>
       <li v-for="product in productList" v-bind:key="product.no">
         <div class="panel panel-info" @click="detail(product)">
-          <router-link to='/product'>
+          <router-link to='/product' style="text-decoration: none;">
             <div class="panel-heading">
               {{ product.name }}
               <img src='@/assets/arrow_01.png' align="right"/>
@@ -29,7 +29,6 @@
 
 <script>
 import axios from 'axios';
-
 export default {
     data() {
         return {
@@ -37,11 +36,19 @@ export default {
         }
     },
     methods: {
-        detail(product) {
+        async detail(product) {
             this.$store.commit('productStore/CHANGE_PDT', product);
 
+            await axios.get('/api/productsInCategory', {
+                params: {
+                    sol: product.title
+                }
+            }).then(res => { 
+                this.$store.commit('productStore/CHANGE_TABS', res.data);
+            });
+            
             // solution store와 일치하는 User구독정책 table에서 검색
-            axios.get('/api/userpolicylist', {
+            await axios.get('/api/userpolicylist', {
                 params: {
                     sol : product.title
                 }
@@ -49,9 +56,8 @@ export default {
                 this.$store.commit('productStore/CHANGE_UPLCY', res.data);
                 console.log(this.$store.state.productStore.uPolicies);
             });
-
             // solution store와 일치하는 Agent구독정책 table에서 검색
-            axios.get('/api/agentpolicylist', {
+            await axios.get('/api/agentpolicylist', {
                 params: {
                     sol : product.title
                 }
@@ -70,8 +76,8 @@ export default {
         },
     },
     async created() {
-        await axios.get('/api/getProductList', {}
-        ).then(res => { 
+        await axios.get('/api/getProductList', {
+        }).then(res => {
             this.productList = res.data;
         });
     }
@@ -79,4 +85,8 @@ export default {
 </script>
 
 <style scoped>
+.panel:hover .panel-body {
+  background-color: #D9EDF7;
+  background-blend-mode: multiply;
+}
 </style>

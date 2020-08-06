@@ -40,7 +40,7 @@ public class LicenseController {
 	}
 	
 	@GetMapping("/license/userlist")
-	public List<GeneralUserVo> getUserList(
+	public List<AgentVo> getUserList(
 			@RequestParam(value = "licenseNo") int licenseNo
 			) {
 		return licenseService.getUserList(licenseNo);
@@ -142,7 +142,7 @@ public class LicenseController {
 	}
 	
 	@PostMapping("/addUsers")
-	public boolean addUsers(
+	public char addUsers(
 			@RequestPart MultipartFile file,
 			@RequestParam(value = "adminUserNo") int adminUserNo,
 			@RequestParam(value = "licenseNo") int licenseNo
@@ -165,7 +165,7 @@ public class LicenseController {
 		}
 		List<GeneralUserVo> userList = sheet.map(GeneralUserVo.class);
 		if(userList == null) {
-			return false;
+			return 'F';
 		}
 		
 		convFile.delete();
@@ -228,5 +228,36 @@ public class LicenseController {
 		System.out.println("hehehehe");
 		System.out.println(licenseNo + " " + email + " " + name + " " + dept + " " + start + " " + end + " " + agentname + " " + macaddr + " " + ipaddr);
 		return licenseService.getSearchAgent(licenseNo, email, name, dept, start, end, agentname, macaddr, ipaddr);
+	}
+	
+	
+	
+	// 활성화 변경
+	@GetMapping("/userActive")
+	public boolean changeActive(
+			@RequestParam(value = "licenseNo") int licenseNo,
+			@RequestParam(value = "activeUsrs") String activeUsrs
+			) {
+//		System.out.println(licenseNo);
+//		System.out.println(activeUsrs);
+		return licenseService.changeActive(licenseNo, activeUsrs);
+	}
+	
+	// 라이센스 만료 알림 
+	@GetMapping("/alertLicenseOver")
+	public List<LicenseVo> alertLicenseOver(
+			@RequestParam(value = "userAdminNo") int userAdminNo
+			) {
+		return licenseService.alertLicenseOver(userAdminNo);
+	}
+	
+	@GetMapping("/updateLicense")
+	public boolean updateLicense(
+			@RequestParam(value = "licenseNo") int licenseNo,
+			@RequestParam(value = "enddate") String enddate
+			) {
+		System.out.println(licenseNo);
+		System.out.println(enddate);
+		return licenseService.updateLicense(licenseNo, enddate);
 	}
 }

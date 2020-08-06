@@ -47,7 +47,7 @@ export default [
         component: () => import('@/views/doyun/user_admin/product/Product.vue')
       },
       {
-        path: '/subscribe/order/:policyidx/:policytype',
+        path: '/subscribe/order/:policyidx/:policytype/:per',
         name: 'SubscribeOrder',
         component: () => import('@/views/doyun/user_admin/product/SubscribeOrder.vue')
       },
@@ -70,5 +70,10 @@ export default [
         path: '/addagent',
         name: 'AddAgent',
         component: () => import('@/views/doyun/user_admin/license/AddAgent.vue')
+      },
+      {
+        path: '/update/License',
+        name: 'UpdateLicense',
+        component: () => import('@/views/doyun/user_admin/license/UpdateLicense.vue')
       },
 ]
