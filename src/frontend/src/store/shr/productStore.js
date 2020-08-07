@@ -20,7 +20,6 @@ export default {
         },
         //제품선택 중복확인
         productIncludes(state, payload) {
-            // console.log('중복? : ', state.productNoList.includes(payload));
             state.productNoList.push(payload);
         },
         // 제품선택 전체 초기화

@@ -8,7 +8,7 @@
         <!-- 제품 가격 -->
         <!-- <th>가격</th> -->
         <th>등록일</th>
-        <th>상세보기</th>
+        <!-- <th>상세보기</th> -->
         <th v-if="promotionProduct == undefined" style="width:12%">삭제</th>
       </tr>
       <tr v-for="(product, index) in productList" :key="product.id">
@@ -29,10 +29,10 @@
           <!-- >({{product.price - (product.price*discountPrice) | formatPrice}})</span> -->
         <!-- </td> -->
         <td>{{product.reg_date | formatDate}}</td>
-        <td>
-          <a href="#" @click="openInfo(product.no)">상세보기</a>
+        <!-- <td> -->
+          <!-- <a href="#" @click="openInfo(product.no)">상세보기</a> -->
           <modal v-if="showModal" @closeee="showModal=false" />
-        </td>
+        <!-- </td> -->
         <td v-if="promotionProduct == undefined ">
           <a class="minus" @click="prodctDelete(index)">
             <img src="@/assets/images/minus.png" class="minusImage" />
@@ -54,8 +54,7 @@
     <!--  프로모션 등록 시 합 안보이게-->
     <div v-else-if="pageType==true"></div>
     <div v-else class="product-sum">
-      <hr />
-      제품 합계 : {{productsSum | formatPrice}} 원
+      <br>
     </div>
   </div>
 </template>

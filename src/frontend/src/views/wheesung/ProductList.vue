@@ -17,6 +17,7 @@
           type="text"
           v-if="selected === 'category'"
           v-on:input="keyword = $event.target.value"
+          @input="resetPageNum"
           placeholder="검색어 입력"
         />
         <input
@@ -25,6 +26,7 @@
           type="text"
           v-if="selected === 'product'"
           v-on:input="keyword = $event.target.value"
+          @input="resetPageNum"
           placeholder="검색어 입력"
         />
       </div>
@@ -33,8 +35,6 @@
           <th style="width:5%;">번호</th>
           <th style="width:15%;">[카테고리] 제품명</th>
           <th style="width:30%;">제품 설명</th>
-          <!-- 제품가격 -->
-          <!-- <th style="width:10%">가격</th> -->
           <th style="width:8%">등록일</th>
           <th style="width:8%;">수정 / 삭제</th>
         </tr>
@@ -42,8 +42,6 @@
           <td>{{ idx + 1 }}</td>
           <td>[{{ product.title }}] {{ product.name }}</td>
           <td>{{ product.comments }}</td>
-          <!-- 제품가격 -->
-          <!-- <td>{{ product.price | formatPrice }}</td> -->
           <td>{{ product.reg_date }}</td>
           <td>
             <a @click="productChangeForm(product.no)" style="cursor:pointer;"
@@ -56,6 +54,8 @@
           </td>
         </tr>
       </table>
+      <div v-if="filteredList.length === 0" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.</div>
+      <hr>
 
       <!-- 페이징 -->
       <br />
@@ -84,19 +84,14 @@
 
 <script>
 import axios from "axios";
-// import Page from "../../components/wheesung/Page";
 
 export default {
-  // components: {
-  //   Page
-  // },
   data() {
     return {
       list: "",
       name: "",
       comments: "",
       price: 0,
-      currentPage: 1,
 
       keyword: "",
       selected: "category",
@@ -108,6 +103,7 @@ export default {
     };
   },
   computed: {
+    // 제품 정보 필터링
     filteredList() {
       return Object.values(this.list).filter((post) => {
         if (this.selected === "category") {
@@ -135,10 +131,7 @@ export default {
     /////////////////////////////페이징////////////////////
   },
   methods: {
-    onPageChange(page) {
-      console.log(page);
-      this.currentPage = page;
-    },
+    // 제품 삭제
     productDel(pname) {
       axios
         .post("/api/productdel", {
@@ -152,12 +145,14 @@ export default {
           }
         });
     },
+    // 제품 정보 수정
     productChangeForm(no) {
       this.$router.push({
         name: "productchangeform",
         params: { no: no },
       });
     },
+    // 제품 등록 페이지 이동
     movetoadd() {
       this.$router.push("/productadd");
     },
@@ -168,6 +163,9 @@ export default {
     prevPage() {
       this.pageNum -= 1;
     },
+    resetPageNum(){
+      this.pageNum = 0;
+    }
     /////////////////////////////페이징////////////////////
   },
   created() {

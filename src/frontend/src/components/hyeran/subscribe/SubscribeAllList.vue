@@ -6,6 +6,7 @@
         id="myInput"
         type="text"
         v-on:input="keyword = $event.target.value"
+        @input="resetPageNum"
         placeholder="검색어 입력"
       />
       <button class="submit_btn" @click="subscribeAdd">등록</button>
@@ -25,22 +26,47 @@
         onmouseover="this.style.background='#CEECF5';"
         onmouseout="this.style.background=''"
         style="cursor:pointer"
-        v-for="(list, index) in filteredList"
+        v-for="(list, index) in paginatedData"
         :key="list.no"
         @click="listClick(index)"
       >
-        <td>{{ list.no }}</td>
+        <td>{{ index+1 }}</td>
         <td style="text-align: left;">
           <span style="text-decoration-line: underline;">{{ list.policy_title }}</span>
         </td>
         <td>{{ list.standard=='U' ? '사용자' : '에이전트' }}</td>
-        <td>{{ list.max_count | formatPrice}}</td>
+        <td v-if="list.max_count === 0">제한 없음</td>
+        <td v-else>{{ list.max_count | formatPrice}}</td>
         <td>{{ list.price | formatPrice }}</td>
         <td>{{ list.visible==true?'공개':'비공개'}}</td>
         <td>{{ list.url }}</td>
         <td>{{ list.reg_date | formatDate }}</td>
       </tr>
     </table>
+    <div v-if="filteredList.length === 0" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.</div>
+    <hr>
+
+    <!-- 페이징 -->
+      <br />
+      <div class="btn-cover" style="text-align: center">
+        <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
+          이전
+        </button>
+        <span class="page-count" v-if="filteredList.length === 0">
+          {{ pageNum + 1 }} / 1
+        </span>
+        <span class="page-count" v-else>
+          {{ pageNum + 1 }} / {{ pageCount }}
+        </span>
+        <button
+          :disabled="pageNum >= pageCount - 1"
+          @click="nextPage"
+          class="page-btn"
+        >
+          다음
+        </button>
+      </div>
+      <!-- 페이징 -->
   </div>
 </template>
 
@@ -52,6 +78,11 @@ export default {
     return {
       subAllList: "",
       keyword: "",
+
+      /////////////////////////////페이징////////////////////
+      pageNum: 0,
+      pageSize: 10,
+      /////////////////////////////페이징////////////////////
     };
   },
   computed: {
@@ -62,6 +93,22 @@ export default {
           .includes(this.keyword.toLowerCase());
       });
     },
+    /////////////////////////////페이징////////////////////
+    pageCount() {
+      let listLeng = this.filteredList.length,
+        listSize = this.pageSize,
+        page = Math.floor(listLeng / listSize);
+
+      if (listLeng % listSize > 0) page += 1;
+
+      return page;
+    },
+    paginatedData() {
+      const start = this.pageNum * this.pageSize,
+        end = start + this.pageSize;
+      return this.filteredList.slice(start, end);
+    },
+    /////////////////////////////페이징////////////////////
   },
   created() {
     this.listData();
@@ -82,6 +129,18 @@ export default {
         params: { subscribe_no: subscribeNo },
       });
     },
+    /////////////////////////////페이징////////////////////
+    nextPage() {
+      this.pageNum += 1;
+    },
+    prevPage() {
+      this.pageNum -= 1;
+    },
+    resetPageNum(){
+      this.pageNum = 0;
+    }
+    /////////////////////////////페이징////////////////////
+    
   },
 };
 </script>

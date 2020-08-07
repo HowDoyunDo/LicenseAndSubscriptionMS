@@ -11,7 +11,6 @@ export default  {
         // 선택 솔루션에 대한 정책정보 저장
         uPolicies: [],
         aPolicies: [],
-        // polno: '',
 
         // 구독 신청 시 구독 시작일
         startdate: '',
@@ -30,7 +29,6 @@ export default  {
         },
 
         CHANGE_UPLCY(state, data) {
-            // state.polNo = data[0].no;
             state.uPolicies = data;
         },
         CHANGE_APLCY(state, data) {

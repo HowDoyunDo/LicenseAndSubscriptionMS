@@ -64,7 +64,7 @@
           <tr>
             <th>수량</th>
             <td v-if="modifyAllToggle == true">
-              <input type="number" min="1" v-model="max_count" /> 개
+              <input type="number" min="0" v-model="max_count" /> 개
             </td>
             <td v-else>{{ max_count }} 개</td>
           </tr>
@@ -177,7 +177,7 @@ export default {
     return {
       subscribe_no: "",
       productPrice: "",
-      // url: "",
+      url: "",
       reg_date: "",
       list: "",
       modifyToggle: false,
@@ -204,6 +204,8 @@ export default {
     // 수정완료 submit
     async subscribeModifySubmit() {
       if (!this.formValidation()) {
+        console.log('maxcount: ' + this.max_count);
+
         let res = null;
         if (this.modifyToggle == true) {
           // 라이선스 발급된 정책 수정
@@ -221,7 +223,7 @@ export default {
             max_count: this.max_count,
             price: this.uncomma(this.format),
             visible: this.visible,
-            // url: this.url
+            url: this.url
           };
           res = await subscribeModify(sunModifyData);
         }

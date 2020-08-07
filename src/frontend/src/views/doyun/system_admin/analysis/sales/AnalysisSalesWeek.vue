@@ -86,7 +86,6 @@
                         <th width="15%">할인 금액</th>
                         <th width="5%" style="visibility: hidden;"></th>
                         <th width="15%">결제 금액</th>
-                        <!-- <th width="15%">환불 합계</th> -->
                     </tr>
                     <tr v-for="al in filteredList" :key="al.date">
                         <td>{{al.week_start | formatDate2}} ~<br>{{al.week_end | formatDate2}}</td>
@@ -96,9 +95,10 @@
                         <td>{{al.dc_price | formatPrice}}원</td>
                         <td style="visibility: hidden; width: 5%"></td>
                         <td>{{al.total_price | formatPrice}}원</td>
-                        <!-- <td>d</td> -->
                     </tr>
                 </table>
+                <div v-if="filteredList.length === 0" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.</div>
+                <hr>
             </div>
         </div>
     </div>
@@ -275,7 +275,6 @@ export default {
             var today = new Date();
             var start = today.getDate() - today.getDay() + 1;
             start = this.getDate(new Date(today.setDate(start)));
-            // console.log(start);
 
             for(var i=0; i<this.analysisList.length; i++) {
                 if(this.analysisList[i].date === start)
@@ -287,7 +286,6 @@ export default {
             var today = new Date();
             var start = today.getDate() - today.getDay() - 6;
             start = this.getDate(new Date(today.setDate(start)));
-            // console.log(start);
 
             for(var i=0; i<this.analysisList.length; i++) {
                 if(this.analysisList[i].date === start)
@@ -318,7 +316,6 @@ export default {
         await axios.get('/api/analysis/sales/week', {
             }).then(res => {
                 this.analysisList = res.data;
-                console.log(res.data)
         });
 
         this.createChart('planet-chart', this.planetChartData);

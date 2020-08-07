@@ -1,206 +1,339 @@
 <template>
   <div id="order" class="contents">
     <h1>구독 신청</h1>
-        <p class="tip">
-            서로 다른 정책의 제품들의 일괄 구매를 원하시는 고객님께서는 견적 문의 부탁드립니다.
-        </p>
-        <div class="info-border">
+    <p class="tip">
+      서로 다른 정책의 제품들의 일괄 구매를 원하시는 고객님께서는 견적 문의
+      부탁드립니다.
+    </p>
+    <div class="info-border">
+      <template v-if="type === 'U'">
+        <table class="info-table">
+          <tr>
+            <th>정책명</th>
+            <td>{{ uPolicies[idx].policy_title }}</td>
+          </tr>
+          <tr>
+            <th>이용 기준</th>
+            <td>사용자</td>
+          </tr>
+          <tr>
+            <th>최대 사용 수</th>
+            <td v-if="uPolicies[idx].max_count === 0">
+              제한 없음
+            </td>
+            <td v-if="uPolicies[idx].max_count !== 0">
+              {{ uPolicies[idx].max_count }} 명
+            </td>
+          </tr>
+          <tr v-if="per === 0">
+            <th>이용 개월 수</th>
+            <td v-if="uPolicies[idx].price === 0">30일</td>
+            <td v-else>
+              <input type="number" min="1" id="usemonth" v-model="usemonth" />
+              개월
+              <div style="font-size:13px; color:red;">
+                * 개월 수는 30일로 계산됩니다.
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>구독 시작일</th>
+            <td>{{ getStartDate() }}</td>
+          </tr>
+          <tr>
+            <th>구독 종료일</th>
+            <td v-if="per === 0">{{ getEndDate() }}</td>
+            <td v-if="per === 1">
+              {{ getEndDate()
+              }}<span style="color:rgba(255, 159, 64, 1)">
+                [무료 1개월 포함]</span
+              >
+            </td>
+            <td v-if="per === 2">
+              {{ getEndDate()
+              }}<span style="color:rgba(255, 99, 132, 1)">
+                [무료 2개월 포함]</span
+              >
+            </td>
+          </tr>
+          <tr>
+            <th>프로모션 적용</th>
+            <td>
+              <template
+                v-if="this.$store.state.productStore.promotions.length !== 0"
+              >
+                <ul>
+                  <li
+                    v-for="promotion in promotions"
+                    v-bind:key="promotion.no"
+                    style="margin-bottom:10px"
+                  >
+                    프로모션 명 : {{ promotion.title }} <br />
+                    할인률 : {{ promotion.discount }}% <br />
+                    할인 금액 :
+                    <span style="color: red"
+                      >{{
+                        numberWithCommas(
+                          promotion.policy_price *
+                            (promotion.discount / 100) *
+                            usemonth
+                        )
+                      }}원</span
+                    >
+                  </li>
+                </ul>
+              </template>
+              <template
+                v-if="this.$store.state.productStore.promotions.length === 0"
+              >
+                적용된 프로모션이 없습니다.
+              </template>
+            </td>
+          </tr>
+        </table>
 
-            <template  v-if="type === 'U'">
-                <table class="info-table">
-                    <tr>
-                        <th>정책명</th>
-                        <td>{{ uPolicies[idx].policy_title }}</td>
-                    </tr>
-                    <tr>
-                        <th>이용 기준</th>
-                        <td>사용자</td>
-                    </tr>
-                    <tr>
-                        <th>최대 사용 수</th>
-                        <td v-if="uPolicies[idx].max_count === 0">
-                            제한 없음
-                        </td>
-                        <td v-if="uPolicies[idx].max_count !== 0">
-                            {{ uPolicies[idx].max_count }} 명
-                        </td>
-                    </tr>
-                    <tr v-if="per === 0">
-                        <th>이용 개월 수</th>
-                        <td><input type="number" min="1" id="usemonth" v-model="usemonth"> 개월 
-                            <div style="font-size:13px; color:red;">* 개월 수는 30일로 계산됩니다.</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>구독 시작일</th>
-                        <td>{{ getStartDate() }}</td>
-                    </tr>     
-                    <tr>
-                        <th>구독 종료일</th>
-                        <td v-if="per === 0">{{ getEndDate() }}</td>
-                        <td v-if="per === 1">{{ getEndDate() }}<span style="color:rgba(255, 159, 64, 1)"> [무료 1개월 포함]</span></td>
-                        <td v-if="per === 2">{{ getEndDate() }}<span style="color:rgba(255, 99, 132, 1)"> [무료 2개월 포함]</span></td>
-                    </tr>    
-                    <tr>
-                        <th>프로모션 적용</th>
-                        <td>
-                            <template v-if="this.$store.state.productStore.promotions.length !== 0">
-                            <ul>
-                                <li v-for="promotion in promotions" v-bind:key="promotion.no" style="margin-bottom:10px">
-                                    프로모션 명 : {{ promotion.title }} <br>
-                                    할인률 : {{ promotion.discount }}% <br>
-                                    할인 금액 : <span style="color: red">{{ numberWithCommas(promotion.policy_price * (promotion.discount/100) * usemonth) }}원</span>
-                                </li>
-                            </ul>
-                            </template>
-                            <template v-if="this.$store.state.productStore.promotions.length === 0">
-                                적용된 프로모션이 없습니다.
-                            </template>
-
-                        </td>
-                    </tr>
-                </table>
-
-                <hr style="border-top: 1px solid black;">
-                    <div id="price-title" style="width: 80%; text-align:right; font-size:17px; font-weight: normal; float:left">
-                        <p style="color: gray">정가 : </p>
-                        <p style="color: red">할인 금액 : </p>
-                    </div>
-                    <div id="final-price" style="width: 20%; text-align:right; font-size:17px; font-weight: normal; float:left">
-                        <p style="color: gray">{{ numberWithCommas(uPolicies[idx].price * usemonth) }}원</p>
-                        <p style="color: red">- {{ numberWithCommas(alldiscount) }}원</p>
-                    </div>
-                <br><br><br>
-                <hr style="border-top: 1px solid gray;">
-                    <div id="price-title" style="width: 80%; text-align:right; font-size:17px; font-weight: normal; float:left">
-                        <p style="color: black">결제 금액 : </p>
-                    </div>
-                    <div id="final-price" style="width: 20%; text-align:right; font-size:17px; font-weight: normal; float:left">
-                        {{ numberWithCommas( (uPolicies[idx].price * usemonth) - alldiscount ) }}원
-                    </div>
-                <br><br>
-
-                <hr style="border-top: 1px solid #ccc;">
-                <div class="selPayM" align="center">
-                    <h4 style="font-weight: normal;">결제 방식 선택</h4>
-                    <button id="cards" @click="selPayM('cards')"
-                        :style="{background: cardsCol}">
-                        신용카드
-                    </button>
-                    <button id="trans" @click="selPayM('trans')"
-                        :style="{background: transCol}">
-                        실시간계좌이체
-                    </button>
-                </div>
-                <hr style="border-top: 1px solid #ccc;">
-                <br>
-                <p align="center" style="font-size:17px"><input type="checkbox" v-model="chk"/> 다음 결제정보에 대해 이해하고 있으며, 결제를 진행합니다.</p>
-                <div align="center">
-                    <button style="width:110px" @click="gopay()">
-                        결제하기
-                    </button>
-                </div>
-                <br>
-            </template> 
-
-            <template v-if="type === 'A'">
-                <table class="info-table">
-                    <tr>
-                        <th>정책명</th>
-                        <td>{{ aPolicies[idx].policy_title }}</td>
-                    </tr>
-                    <tr>
-                        <th>이용 기준</th>
-                        <td>에이전트 정책</td>
-                    </tr>
-                    <tr>
-                        <th>최대 사용 수</th>
-                        <td v-if="aPolicies[idx].max_count === 0">
-                            제한 없음
-                        </td>
-                        <td v-if="aPolicies[idx].max_count !== 0">
-                            {{ aPolicies[idx].max_count }}
-                        </td>
-                    </tr>
-                    <tr v-if="per === 0">
-                        <th>이용 개월 수</th>
-                        <td><input type="number" min="1" id="usemonth" v-model="usemonth"> 개월
-                            <div style="font-size:12px; color:red;">* 개월 수는 30일로 계산됩니다.</div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>구독 시작일</th>
-                        <td>{{ getStartDate() }}</td>
-                    </tr>              
-                    <tr>
-                        <th>구독 종료일</th>
-                        <td v-if="per === 0">{{ getEndDate() }}</td>
-                        <td v-if="per === 1">{{ getEndDate() }}<span style="color:rgba(255, 159, 64, 1)"> [무료 1개월 포함]</span></td>
-                        <td v-if="per === 2">{{ getEndDate() }}<span style="color:rgba(255, 99, 132, 1)"> [무료 2개월 포함]</span></td>
-                    </tr> 
-                    <tr>
-                        <th>프로모션 적용</th>
-                        <td>
-                            <template v-if="this.$store.state.productStore.promotions.length !== 0">
-                                <ul>
-                                    <li v-for="promotion in promotions" v-bind:key="promotion.no" style="margin-bottom:10px">
-                                        프로모션 명 : {{ promotion.title }} <br>
-                                        할인률 : {{ promotion.discount }}% <br>
-                                        할인 금액 : <span style="color: red">{{ numberWithCommas(promotion.policy_price * (promotion.discount/100) * usemonth) }}원</span>
-                                    </li>
-                                </ul>
-                            </template>
-                            <template v-if="this.$store.state.productStore.promotions.length === 0">
-                                적용된 프로모션이 없습니다.
-                            </template>
-                        </td>
-                    </tr>                
-                </table>
-
-                <hr style="border-top: 1px solid black;">
-                    <div>
-                        <div id="price-title" style="width: 80%; text-align:right; font-size:17px; font-weight: normal; float:left">
-                            <p style="color: gray">정가 : </p>
-                            <p style="color: red">할인 금액 : </p>
-                        </div>
-                        <div id="final-price" style="width: 20%; text-align:right; font-size:17px; font-weight: normal; float:left">
-                            <p style="color: gray">{{ numberWithCommas(aPolicies[idx].price * usemonth) }} 원</p>
-                            <p style="color: red">- {{ numberWithCommas(alldiscount) }} 원</p>
-                        </div>
-                    </div>
-                <br><br><br>
-                <hr style="border-top: 1px solid gray;">
-                    <div id="price-title" style="width: 80%; text-align:right; font-size:17px; font-weight: normal; float:left">
-                        <p style="color: black">결제 금액 : </p>
-                    </div>
-                    <div id="final-price" style="width: 20%; text-align:right; font-size:17px; font-weight: normal; float:left">
-                        {{ numberWithCommas( (aPolicies[idx].price * usemonth) - alldiscount ) }} 원
-                    </div>
-                <br><br>
-                <hr style="border-top: 1px solid #ccc;">
-                <div class="selPayM" align="center">
-                    <h4 style="font-weight: normal">결제 방식 선택</h4>
-                    <button id="cards" @click="selPayM('cards')"
-                        :style="{background: cardsCol}">
-                        신용카드
-                    </button>
-                    <button id="trans" @click="selPayM('trans')"
-                        :style="{background: transCol}">
-                        실시간계좌이체
-                    </button>
-                </div>
-                <hr style="border-top: 1px solid #ccc;">
-                <br>
-                <p align="center" style="font-size:17px"><input type="checkbox" v-model="chk"/> 다음 결제정보에 대해 이해하고 있으며, 결제를 진행합니다.</p>
-                <div align="center">
-                    <button style="width:110px" @click="gopay()">
-                        결제하기
-                    </button>
-                </div>
-                <br>
-            </template>
-
+        <hr style="border-top: 1px solid black;" />
+        <div
+          id="price-title"
+          style="width: 80%; text-align:right; font-size:17px; font-weight: normal; float:left"
+        >
+          <p style="color: gray">정가 :</p>
+          <p style="color: red">할인 금액 :</p>
         </div>
+        <div
+          id="final-price"
+          style="width: 20%; text-align:right; font-size:17px; font-weight: normal; float:left"
+        >
+          <p style="color: gray">
+            {{ numberWithCommas(uPolicies[idx].price * usemonth) }}원
+          </p>
+          <p style="color: red">- {{ numberWithCommas(alldiscount) }}원</p>
+        </div>
+        <br /><br /><br />
+        <hr style="border-top: 1px solid gray;" />
+        <div
+          id="price-title"
+          style="width: 80%; text-align:right; font-size:17px; font-weight: normal; float:left"
+        >
+          <p style="color: black">결제 금액 :</p>
+        </div>
+        <div
+          id="final-price"
+          style="width: 20%; text-align:right; font-size:17px; font-weight: normal; float:left"
+        >
+          {{
+            numberWithCommas(uPolicies[idx].price * usemonth - alldiscount)
+          }}원
+        </div>
+        <br /><br />
+
+        <template v-if="uPolicies[idx].price !== 0">
+          <hr style="border-top: 1px solid #ccc;" />
+          <div class="selPayM" align="center">
+            <h4 style="font-weight: normal;">결제 방식 선택</h4>
+            <button
+              id="cards"
+              @click="selPayM('cards')"
+              :style="{ background: cardsCol }"
+            >
+              신용카드
+            </button>
+            <button
+              id="trans"
+              @click="selPayM('trans')"
+              :style="{ background: transCol }"
+            >
+              실시간계좌이체
+            </button>
+          </div>
+        </template>
+
+        <hr style="border-top: 1px solid #ccc;" />
+        <br />
+        <p align="center" style="font-size:17px" v-if="uPolicies[idx].price !== 0">
+          <input type="checkbox" v-model="chk" /> 다음 결제정보에 대해 이해하고
+          있으며, 결제를 진행합니다.
+        </p>
+        <div align="center">
+          <button
+            v-if="uPolicies[idx].price === 0"
+            style="width:110px"
+            @click="exper()"
+          >
+            체험판 발급
+          </button>
+
+          <button v-else style="width:110px" @click="gopay()">
+            결제하기
+          </button>
+        </div>
+        <br />
+      </template>
+
+      <template v-if="type === 'A'">
+        <table class="info-table">
+          <tr>
+            <th>정책명</th>
+            <td>{{ aPolicies[idx].policy_title }}</td>
+          </tr>
+          <tr>
+            <th>이용 기준</th>
+            <td>에이전트 정책</td>
+          </tr>
+          <tr>
+            <th>최대 사용 수</th>
+            <td v-if="aPolicies[idx].max_count === 0">
+              제한 없음
+            </td>
+            <td v-if="aPolicies[idx].max_count !== 0">
+              {{ aPolicies[idx].max_count }}
+            </td>
+          </tr>
+          <tr v-if="per === 0">
+            <th>이용 개월 수</th>
+            <td v-if="aPolicies[idx].price === 0">30일</td>
+            <td v-else>
+              <input type="number" min="1" id="usemonth" v-model="usemonth" />
+              개월
+              <div style="font-size:12px; color:red;">
+                * 개월 수는 30일로 계산됩니다.
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <th>구독 시작일</th>
+            <td>{{ getStartDate() }}</td>
+          </tr>
+          <tr>
+            <th>구독 종료일</th>
+            <td v-if="per === 0">{{ getEndDate() }}</td>
+            <td v-if="per === 1">
+              {{ getEndDate()
+              }}<span style="color:rgba(255, 159, 64, 1)">
+                [무료 1개월 포함]</span
+              >
+            </td>
+            <td v-if="per === 2">
+              {{ getEndDate()
+              }}<span style="color:rgba(255, 99, 132, 1)">
+                [무료 2개월 포함]</span
+              >
+            </td>
+          </tr>
+          <tr>
+            <th>프로모션 적용</th>
+            <td>
+              <template
+                v-if="this.$store.state.productStore.promotions.length !== 0"
+              >
+                <ul>
+                  <li
+                    v-for="promotion in promotions"
+                    v-bind:key="promotion.no"
+                    style="margin-bottom:10px"
+                  >
+                    프로모션 명 : {{ promotion.title }} <br />
+                    할인률 : {{ promotion.discount }}% <br />
+                    할인 금액 :
+                    <span style="color: red"
+                      >{{
+                        numberWithCommas(
+                          promotion.policy_price *
+                            (promotion.discount / 100) *
+                            usemonth
+                        )
+                      }}원</span
+                    >
+                  </li>
+                </ul>
+              </template>
+              <template
+                v-if="this.$store.state.productStore.promotions.length === 0"
+              >
+                적용된 프로모션이 없습니다.
+              </template>
+            </td>
+          </tr>
+        </table>
+
+        <hr style="border-top: 1px solid black;" />
+        <div>
+          <div
+            id="price-title"
+            style="width: 80%; text-align:right; font-size:17px; font-weight: normal; float:left"
+          >
+            <p style="color: gray">정가 :</p>
+            <p style="color: red">할인 금액 :</p>
+          </div>
+          <div
+            id="final-price"
+            style="width: 20%; text-align:right; font-size:17px; font-weight: normal; float:left"
+          >
+            <p style="color: gray">
+              {{ numberWithCommas(aPolicies[idx].price * usemonth) }} 원
+            </p>
+            <p style="color: red">- {{ numberWithCommas(alldiscount) }} 원</p>
+          </div>
+        </div>
+        <br /><br /><br />
+        <hr style="border-top: 1px solid gray;" />
+        <div
+          id="price-title"
+          style="width: 80%; text-align:right; font-size:17px; font-weight: normal; float:left"
+        >
+          <p style="color: black">결제 금액 :</p>
+        </div>
+        <div
+          id="final-price"
+          style="width: 20%; text-align:right; font-size:17px; font-weight: normal; float:left"
+        >
+          {{ numberWithCommas(aPolicies[idx].price * usemonth - alldiscount) }}
+          원
+        </div>
+        <br /><br />
+
+        <template v-if="uPolicies[idx].price !== 0">
+          <hr style="border-top: 1px solid #ccc;" />
+          <div class="selPayM" align="center">
+            <h4 style="font-weight: normal">결제 방식 선택</h4>
+            <button
+              id="cards"
+              @click="selPayM('cards')"
+              :style="{ background: cardsCol }"
+            >
+              신용카드
+            </button>
+            <button
+              id="trans"
+              @click="selPayM('trans')"
+              :style="{ background: transCol }"
+            >
+              실시간계좌이체
+            </button>
+          </div>
+        </template>
+
+        <hr style="border-top: 1px solid #ccc;" />
+        <br />
+        <p align="center" style="font-size:17px" v-if="uPolicies[idx].price !== 0">
+          <input type="checkbox" v-model="chk" /> 다음 결제정보에 대해 이해하고
+          있으며, 결제를 진행합니다.
+        </p>
+        <div align="center">
+          <button
+            v-if="uPolicies[idx].price === 0"
+            style="width:110px"
+            @click="exper()"
+          >
+            체험판 발급
+          </button>
+          <button v-else style="width:110px" @click="gopay()">
+            결제하기
+          </button>
+        </div>
+        <br />
+      </template>
+    </div>
   </div>
 </template>
 
@@ -237,10 +370,10 @@ export default {
             // 1/2년 구독 정책 시
             if(this.per === 1) {
                 this.usemonth = 12;
-                this.enddate.setMonth(this.enddate.getMonth() + 13);    
+                this.enddate.setMonth(this.enddate.getMonth() + 13);
             } else if(this.per === 2) {
                 this.usemonth = 24;
-                this.enddate.setMonth(this.enddate.getMonth() + 26);    
+                this.enddate.setMonth(this.enddate.getMonth() + 26);
             } else {
                 this.enddate.setDate(this.enddate.getDate() + (this.usemonth*30));
             }
@@ -294,14 +427,14 @@ export default {
                                 endDate: this.enddate,
                                 orgPrice: this.type === 'U' ? this.uPolicies[this.idx].price * this.usemonth : this.aPolicies[this.idx].price * this.usemonth,
                                 dcPrice: this.alldiscount,
-                                totalPrice: this.type === 'U' ? (this.uPolicies[this.idx].price * this.usemonth) - this.alldiscount 
+                                totalPrice: this.type === 'U' ? (this.uPolicies[this.idx].price * this.usemonth) - this.alldiscount
                                     : (this.aPolicies[this.idx].price * this.usemonth) - this.alldiscount,
                                 monthPay: false,
                             }
-                        }).then(res => { 
+                        }).then(res => {
                             console.log(res.data);
                         });
-                        
+
                         // 2. 라이센스 추가
                         await axios.get('/api/addLicense', {
                             params: {
@@ -313,7 +446,7 @@ export default {
                                 startDate: this.startdate,
                                 endDate: this.enddate,
                             }
-                        }).then(res => { 
+                        }).then(res => {
                             console.log(res.data);
                         });
 
@@ -328,6 +461,43 @@ export default {
                     }
                 });
             }
+        },
+        async exper() {
+            // 1. 주문내역 추가
+                await axios.get('/api/addOrderList', {
+                    params: {
+                        policyNo: this.type === 'U' ? this.uPolicies[this.idx].no : this.aPolicies[this.idx].no,
+                        userNo: this.userInfo.no,
+                        monthCount: this.usemonth,
+                        startDate: this.startdate,
+                        endDate: this.enddate,
+                        orgPrice: this.type === 'U' ? this.uPolicies[this.idx].price * this.usemonth : this.aPolicies[this.idx].price * this.usemonth,
+                        dcPrice: this.alldiscount,
+                        totalPrice: this.type === 'U' ? (this.uPolicies[this.idx].price * this.usemonth) - this.alldiscount
+                            : (this.aPolicies[this.idx].price * this.usemonth) - this.alldiscount,
+                        monthPay: false,
+                    }
+                }).then(res => {
+                    console.log(res.data);
+                });
+
+            // 2. 라이센스 추가
+            await axios.get('/api/addLicense', {
+                params: {
+                    userAdminNo: this.userInfo.no,
+                    policyNo: this.type === 'U' ? this.uPolicies[this.idx].no : this.aPolicies[this.idx].no,
+                    licenseKey: 'INZENTS' + this.startdate.toISOString(),
+                    currentCount: 0,
+                    maxCount: this.type === 'U' ? this.uPolicies[this.idx].max_count : this.aPolicies[this.idx].max_count,
+                    startDate: this.startdate,
+                    endDate: this.enddate,
+                }
+            }).then(res => {
+                console.log(res.data);
+            });
+
+            alert('체험판 신청이 완료되었습니다.')
+            this.$router.push("/license/list");
         },
         selPayM(payM) {
             this.paymethod = payM;   // 결제 방식 선택
@@ -392,7 +562,6 @@ export default {
         this.enddate = new Date();
         // alert((new Date).toISOString());
 
-        console.log(this.per)
     },
     beforeUpdate() {
         this.enddate = new Date();
@@ -401,58 +570,58 @@ export default {
 </script>
 
 <style scoped>
-    h1 {
-        font-size: 4.5rem;
-        color:#000000D9;
-    }
-    .tip {
-        border: 2px solid gray;
-        color: red;
-        font-size: 15px;
-        padding: 20px;
-        border-radius: 5px;
-    }
-    .info-border {
-        border: 2px solid lightgray;
-        border-radius: 5px;
-        padding: 10px;
-    }
-    .info-table {
-        border-top: 2px solid #ccc;
-        border-bottom: 2px solid #ccc;
-        width: 100%;
-        max-width: 100%;
-        border-spacing: 0;
-        border-collapse: collapse;
-        table-layout: fixed;
-    }
-    .info-table tr {
-        border-bottom: 1px solid #ccc;    
-        font-size: 15px;
-    }
-    .info-table th {
-        background: #eaeaea;
-        font-weight: normal;
-        border: none;
-        width: 20%;
-        text-align: center;
-        padding: 15px;
-    }
-    .info-table td {
-        padding: 15px;
-        font-weight: normal;
-    }
-    .info-table input {
-        width: 100px;
-    }
-    .selPayM button {
-        width:20%; 
-        height:80px; 
-        margin: 0 20px 0; 
-        background:gray;
-        font-size: 20px;
-    }
-    .nav-tabs li.active a {
-        background-color: #d9edf7;
-    }
+h1 {
+  font-size: 4.5rem;
+  color: #000000d9;
+}
+.tip {
+  border: 2px solid gray;
+  color: red;
+  font-size: 15px;
+  padding: 20px;
+  border-radius: 5px;
+}
+.info-border {
+  border: 2px solid lightgray;
+  border-radius: 5px;
+  padding: 10px;
+}
+.info-table {
+  border-top: 2px solid #ccc;
+  border-bottom: 2px solid #ccc;
+  width: 100%;
+  max-width: 100%;
+  border-spacing: 0;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+.info-table tr {
+  border-bottom: 1px solid #ccc;
+  font-size: 15px;
+}
+.info-table th {
+  background: #eaeaea;
+  font-weight: normal;
+  border: none;
+  width: 20%;
+  text-align: center;
+  padding: 15px;
+}
+.info-table td {
+  padding: 15px;
+  font-weight: normal;
+}
+.info-table input {
+  width: 100px;
+}
+.selPayM button {
+  width: 20%;
+  height: 80px;
+  margin: 0 20px 0;
+  background: gray;
+  font-size: 20px;
+}
+.nav-tabs li.active a {
+  background-color: #d9edf7;
+}
 </style>

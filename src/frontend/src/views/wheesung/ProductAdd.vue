@@ -58,18 +58,6 @@
                 />
               </td>
             </tr>
-            <!-- 제품가격 -->
-            <!-- <tr>
-              <th>가격</th>
-              <td>
-                <input
-                  type="text"
-                  min="0"
-                  v-model="price"
-                  @keyup="numberFormat"
-                />
-              </td>
-            </tr> -->
           </table>
 
           <br />
@@ -99,6 +87,7 @@ export default {
     };
   },
   methods: {
+    // 제품 등록
     productAdd() {
       if (
         this.name == null ||
@@ -130,7 +119,6 @@ export default {
             category_no: this.selected,
           })
           .then((result) => {
-            console.log(result.data);
             if (result.status == 200) {
               alert("제품을 등록하였습니다.");
               this.$router.push("/productlist");

@@ -91,7 +91,6 @@ export default {
         no: this.$route.params.no,
       })
       .then((result) => {
-        console.log(result.data);
         this.list = result.data;
         this.product = JSON.parse(result.data.pname);
       });

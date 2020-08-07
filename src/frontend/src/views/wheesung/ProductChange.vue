@@ -60,18 +60,6 @@
               <img :src="this.info_image" width="100px" height="auto" />
             </td>
           </tr>
-          <!-- 제품가격 -->
-          <!-- <tr>
-            <th>가격</th>
-            <td>
-              <input
-                type="text"
-                min="0"
-                v-model="price"
-                @keyup="numberFormat"
-              />
-            </td>
-          </tr> -->
         </table>
 
         <br />
@@ -124,6 +112,7 @@ export default {
       str = String(str);
       return str.replace(/[^\d]+/g, "");
     },
+    // 제품 수정
     productChange() {
       if (
         this.name == null ||
@@ -149,7 +138,6 @@ export default {
           product_image: this.product_image,
         })
         .then((result) => {
-          console.log(result);
           if (result.status == 200) {
             alert("수정되었습니다.");
             this.$router.push("/productlist");

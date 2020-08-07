@@ -42,6 +42,7 @@
           id="myInput"
           type="text"
           v-on:input="keyword = $event.target.value"
+          @input="resetPageNum"
           placeholder="검색어 입력"
         />
         <input
@@ -50,6 +51,7 @@
           id="myInput"
           type="text"
           v-on:input="keyword = $event.target.value"
+          @input="resetPageNum"
           placeholder="검색어 입력"
         />
       </div>
@@ -64,7 +66,7 @@
         </tr>
         <tr
           style="cursor:default"
-          v-for="(change, idx) in changefilteredList"
+          v-for="(change, idx) in changepaginatedData"
           :key="change.no"
         >
           <td>{{ idx + 1 }}</td>
@@ -75,6 +77,28 @@
           <td>{{ change.change_date }}</td>
         </tr>
       </table>
+      <div v-if="changefilteredList.length === 0 && clicked" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.<hr></div>
+      <!-- 페이징 -->
+      <br v-if="clicked" />
+      <div v-if="clicked" class="btn-cover" style="text-align: center">
+        <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
+          이전
+        </button>
+        <span class="page-count" v-if="changefilteredList.length === 0">
+          {{ pageNum + 1 }} / 1
+        </span>
+        <span class="page-count" v-else>
+          {{ pageNum + 1 }} / {{ changepageCount }}
+        </span>
+        <button
+          :disabled="pageNum >= changepageCount - 1"
+          @click="nextPage"
+          class="page-btn"
+        >
+          다음
+        </button>
+      </div>
+      <!-- 페이징 -->
 
       <table v-if="!clicked" class="table_board">
         <tr style="float:center;">
@@ -85,7 +109,7 @@
         </tr>
         <tr
           style="cursor:default"
-          v-for="(cancel, idx) in cancelfilteredList"
+          v-for="(cancel, idx) in cancelpaginatedData"
           :key="cancel.no"
         >
           <td>{{ idx + 1 }}</td>
@@ -94,6 +118,28 @@
           <td>{{ cancel.cancel_date }}</td>
         </tr>
       </table>
+      <div v-if="cancelfilteredList.length === 0 && !clicked" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.<hr></div>
+      <!-- 페이징 -->
+      <br v-if="!clicked" />
+      <div v-if="!clicked" class="btn-cover" style="text-align: center">
+        <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
+          이전
+        </button>
+        <span class="page-count" v-if="cancelfilteredList.length === 0">
+          {{ pageNum + 1 }} / 1
+        </span>
+        <span class="page-count" v-else>
+          {{ pageNum + 1 }} / {{ cancelpageCount }}
+        </span>
+        <button
+          :disabled="pageNum >= cancelpageCount - 1"
+          @click="nextPage"
+          class="page-btn"
+        >
+          다음
+        </button>
+      </div>
+      <!-- 페이징 -->
     </div>
     <br />
   </div>
@@ -112,9 +158,14 @@ export default {
       cancelColor: "black",
       selected: "co_name",
       keyword: "",
+      /////////////////////////////페이징////////////////////
+      pageNum: 0,
+      pageSize: 10,
+      /////////////////////////////페이징////////////////////
     };
   },
   computed: {
+    // 변경 내역 필터링 리스트
     changefilteredList() {
       return Object.values(this.changelist).filter((post) => {
         if (this.selected === "name") {
@@ -126,6 +177,7 @@ export default {
         }
       });
     },
+    // 취소 내역 필터링 리스트
     cancelfilteredList() {
       return Object.values(this.cancellist).filter((post) => {
         if (this.selected === "name") {
@@ -137,8 +189,39 @@ export default {
         }
       });
     },
+    /////////////////////////////페이징////////////////////
+    changepageCount() {
+      let listLeng = this.changefilteredList.length,
+        listSize = this.pageSize,
+        page = Math.floor(listLeng / listSize);
+
+      if (listLeng % listSize > 0) page += 1;
+
+      return page;
+    },
+    changepaginatedData() {
+      const start = this.pageNum * this.pageSize,
+        end = start + this.pageSize;
+      return this.changefilteredList.slice(start, end);
+    },
+    cancelpageCount() {
+      let listLeng = this.cancelfilteredList.length,
+        listSize = this.pageSize,
+        page = Math.floor(listLeng / listSize);
+
+      if (listLeng % listSize > 0) page += 1;
+
+      return page;
+    },
+    cancelpaginatedData() {
+      const start = this.pageNum * this.pageSize,
+        end = start + this.pageSize;
+      return this.cancelfilteredList.slice(start, end);
+    },
+    /////////////////////////////페이징////////////////////
   },
   methods: {
+    // 변경 페이지 css 활성화
     changeclick() {
       this.clicked = true;
       if (this.clicked == true) {
@@ -146,6 +229,7 @@ export default {
         this.cancelColor = "black";
       }
     },
+    // 취소 페이지 css 활성화
     cancelclick() {
       this.clicked = false;
       if (this.clicked == false) {
@@ -153,6 +237,17 @@ export default {
         this.changeColor = "black";
       }
     },
+    /////////////////////////////페이징////////////////////
+    nextPage() {
+      this.pageNum += 1;
+    },
+    prevPage() {
+      this.pageNum -= 1;
+    },
+    resetPageNum(){
+      this.pageNum = 0;
+    }
+    /////////////////////////////페이징////////////////////
   },
   created() {
     axios.get("/api/cancellist").then((result) => {

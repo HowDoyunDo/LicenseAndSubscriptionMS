@@ -101,7 +101,6 @@
                         <th width="15%">할인 금액</th>
                         <th width="5%" style="visibility: hidden;"></th>
                         <th width="15%">결제 금액</th>
-                        <!-- <th width="15%">환불 합계</th> -->
                     </tr>
                     <tr v-for="al in filteredList" :key="al.date">
                         <td>{{al.year_month}}</td>
@@ -111,9 +110,10 @@
                         <td>{{al.dc_price | formatPrice}}원</td>
                         <td style="visibility: hidden; width: 5%"></td>
                         <td>{{al.total_price | formatPrice}}원</td>
-                        <!-- <td>d</td> -->
                     </tr>
                 </table>
+                <div v-if="filteredList.length === 0" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.</div>
+                <hr>
             </div>
         </div>
     </div>

@@ -59,6 +59,7 @@ export default {
     };
   },
   methods: {
+    // 사용자 목록으로 이동
     goList() {
       this.$router.push("/userlist");
     },

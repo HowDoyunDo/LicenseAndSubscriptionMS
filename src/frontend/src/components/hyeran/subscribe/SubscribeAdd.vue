@@ -25,7 +25,7 @@
         <tr>
           <th>수량</th>
           <td>
-            <input type="number" min="1" v-model="max_count" /> 개
+            <input type="number" min="0" v-model="max_count" /> 개
             <!--v-model.number="maxCount" -->
           </td>
         </tr>

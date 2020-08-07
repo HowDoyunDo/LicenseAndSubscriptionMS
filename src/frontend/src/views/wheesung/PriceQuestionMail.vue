@@ -53,9 +53,11 @@ export default {
     };
   },
   methods: {
+    // 견적문의 리스트로 이동
     goList() {
       this.$router.push("/pricequestionlist");
     },
+    // 견적문의 답변 메일 전송
     emailSend() {
       if (this.contents === "") {
         alert("답변 내용을 입력해 주세요.");

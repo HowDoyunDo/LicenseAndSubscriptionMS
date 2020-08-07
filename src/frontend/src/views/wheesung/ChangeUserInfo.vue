@@ -82,13 +82,9 @@ export default {
   },
   methods: {
     changeUserInfo() {
-      console.log(this.list.password + " : password");
-      console.log(this.changePw);
-      console.log(this.changePw2);
       if (this.changePw !== this.changePw2) {
         alert("비밀번호와 비밀번호확인이 같지 않습니다.");
       } else if (this.changePw === "" && this.changePw2 === "") {
-        console.log("비밀번호 빈칸!");
         axios
           .post("/api/changeuserinfo", {
             no: this.list.no,
@@ -99,7 +95,6 @@ export default {
             co_tel: this.list.co_tel,
           })
           .then((result) => {
-            console.log(result);
             if (result.status == 200) {
               axios
                 .post("/api/updatetoken", {
@@ -107,7 +102,6 @@ export default {
                   email: this.$store.state.userinfo.userInfo.email,
                 })
                 .then((result) => {
-                  console.log(result.data);
                   sessionStorage.setItem("license-token", result.data);
                   localStorage.removeItem("vuex");
                   this.parseJwt(result.data);
@@ -127,7 +121,6 @@ export default {
             co_tel: this.list.co_tel,
           })
           .then((result) => {
-            console.log(result);
             if (result.status == 200) {
               axios
                 .post("/api/updatetoken", {
@@ -135,7 +128,6 @@ export default {
                   email: this.$store.state.userinfo.userInfo.email,
                 })
                 .then((result) => {
-                  console.log(result.data);
                   sessionStorage.setItem("license-token", result.data);
                   localStorage.removeItem("vuex");
                   this.parseJwt(result.data);

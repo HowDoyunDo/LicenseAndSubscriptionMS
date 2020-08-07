@@ -8,7 +8,7 @@
           <h4 style="color:gray">{{ product.title }} _사용자 정책</h4>
           <li v-for="(upolicy, i) in uPolicies" v-bind:key="upolicy.no">
             <div class="panel panel-info">
-              <div class="panel-heading">{{ product.title }}</div>
+              <div class="panel-heading">{{ product.title }}<span v-if="upolicy.price === 0"> _체험판</span></div>
               <div class="panel-body">
                 <table align="center">
                   <tr>
@@ -30,24 +30,36 @@
                 </div>
                 <br />
 
-                <button
-                  style="width:110px; margin-bottom:10px"
-                  @click="getPromotionAndOrder(i, upolicy.standard, 0)"
-                >
-                  일반 구독
-                </button>
-                <button
-                  style="width:110px; margin-bottom:10px; background-color:#0078d4"
-                  @click="getPromotionAndOrder(i, upolicy.standard, 1)"
-                >
-                  1년 구독
-                </button>
-                <button
-                  style="width:110px; margin-bottom:10px; background-color:#345497"
-                  @click="getPromotionAndOrder(i, upolicy.standard, 2)"
-                >
-                  2년 구독
-                </button>
+                <template v-if="upolicy.price === 0">
+                  <button
+                    style="width:110px; margin-bottom:10px"
+                    @click="getPromotionAndOrder(i, upolicy.standard, 0)"
+                  >
+                    체험판 구독
+                  </button>
+                  <button style="visibility: hidden">asd</button><br>
+                  <button style="visibility: hidden">asd</button>
+                </template>
+                <template v-else>
+                  <button
+                    style="width:110px; margin-bottom:10px"
+                    @click="getPromotionAndOrder(i, upolicy.standard, 0)"
+                  >
+                    일반 구독
+                  </button>
+                  <button
+                    style="width:110px; margin-bottom:10px; background-color:#0078d4"
+                    @click="getPromotionAndOrder(i, upolicy.standard, 1)"
+                  >
+                    1년 구독
+                  </button>
+                  <button
+                    style="width:110px; margin-bottom:10px; background-color:#345497"
+                    @click="getPromotionAndOrder(i, upolicy.standard, 2)"
+                  >
+                    2년 구독
+                  </button>
+                </template>
               </div>
             </div>
           </li>
@@ -64,7 +76,7 @@
           <h4 style="color:gray">{{ product.title }} _에이전트 정책</h4>
           <li v-for="(apolicy, i) in aPolicies" v-bind:key="apolicy.no">
             <div class="panel panel-info">
-              <div class="panel-heading">{{ product.title }}</div>
+              <div class="panel-heading">{{ product.title }}<span v-if="apolicy.price === 0"> _체험판</span></div>
               <div class="panel-body">
                 <table align="center">
                   <tr>
@@ -86,24 +98,36 @@
                 </div>
                 <br />
 
-                <button
-                  style="width:110px"
-                  @click="getPromotionAndOrder(i, apolicy.standard, 0)"
-                >
-                  일반 구독
-                </button>
-                <button
-                  style="width:110px; margin-bottom:10px; background-color:#0078d4"
-                  @click="getPromotionAndOrder(i, apolicy.standard, 1)"
-                >
-                  1년 구독
-                </button>
-                <button
-                  style="width:110px; margin-bottom:10px; background-color:#345497"
-                  @click="getPromotionAndOrder(i, apolicy.standard, 2)"
-                >
-                  2년 구독
-                </button>
+                <template v-if="apolicy.price === 0">
+                  <button
+                    style="width:110px; margin-bottom:10px"
+                    @click="getPromotionAndOrder(i, apolicy.standard, 0)"
+                  >
+                    체험판 구독
+                  </button>
+                  <button style="visibility: hidden">asd</button><br>
+                  <button style="visibility: hidden">asd</button>
+                </template>
+                <template v-else>
+                  <button
+                    style="width:110px"
+                    @click="getPromotionAndOrder(i, apolicy.standard, 0)"
+                  >
+                    일반 구독
+                  </button>
+                  <button
+                    style="width:110px; margin-bottom:10px; background-color:#0078d4"
+                    @click="getPromotionAndOrder(i, apolicy.standard, 1)"
+                  >
+                    1년 구독
+                  </button>
+                  <button
+                    style="width:110px; margin-bottom:10px; background-color:#345497"
+                    @click="getPromotionAndOrder(i, apolicy.standard, 2)"
+                  >
+                    2년 구독
+                  </button>
+                </template>
               </div>
             </div>
           </li>

@@ -5,15 +5,15 @@
       <br />
       <table class="table_board">
         <tr style="float:center;">
-          <th style="width:100px;">번호</th>
-          <th style="width:100px;">아이콘</th>
-          <th style="width:300px;text-align: left; padding: 0 0 0 40px;">
+          <th style="width:5%">번호</th>
+          <th style="width:10%">아이콘</th>
+          <th style="width:30%;text-align: left; padding: 0 0 0 40px;">
             카테고리 명
           </th>
-          <th>등록일</th>
-          <th></th>
+          <th style="width:10%">등록일</th>
+          <th style="width:10%">삭제</th>
         </tr>
-        <tr v-for="(category, idx) in list" :key="category.no">
+        <tr v-for="(category, idx) in list" :key="category.no" style="width:20%">
           <td>{{ idx + 1 }}</td>
           <td>
             <img :src="category.category_image" width="30px" height="30px" />
@@ -102,7 +102,6 @@ export default {
       } else if (this.category_image == "" || this.category_image == null) {
         alert("카테고리 이미지를 넣어주세요");
       } else {
-        console.log(this.category_image);
         axios
           .post("/api/categoryadd", {
             title: this.title,
@@ -130,7 +129,6 @@ export default {
           ca_title: title,
         })
         .then((result) => {
-          console.log(result);
           if (result.data == "S") {
             axios.get("api/categorylist").then((result) => {
               this.list = result.data;

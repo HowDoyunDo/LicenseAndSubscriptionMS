@@ -14,23 +14,26 @@
           <tr>
             <th>이메일</th>
             <td style="text-align:left">
-              <input type="text" style="width:300px" v-model="useremail" />
+              <input type="text" style="width:300px" v-model="useremail" @input="resetPageNum"/>
             </td>
           </tr>
           <tr>
             <th>사용자 이름</th>
             <td style="text-align:left">
               <input
+                id="username"
                 type="text"
                 style="width:300px"
                 @input="username = $event.target.value"
+                v-model="username"
+                v-on:input="resetPageNum"
               />
             </td>
           </tr>
           <tr>
             <th>사용자 부서</th>
             <td style="text-align:left">
-              <input type="text" style="width:300px" v-model="userdept" />
+              <input type="text" style="width:300px" v-model="userdept" @input="resetPageNum"/>
             </td>
           </tr>
           <tr>
@@ -40,14 +43,19 @@
                 type="datetime-local"
                 style="width:200px"
                 v-model="startdate"
+                @input="resetPageNum"
               />
               ~
               <input
                 type="datetime-local"
                 style="width:200px"
                 v-model="enddate"
+                @input="resetPageNum"
               />
             </td>
+          </tr>
+          <tr>
+            <td colspan="2" style="text-align:center; padding:5px;"><button style="vertical-align:middle; margin:0" @click="reset()">초기화</button></td>
           </tr>
         </table>
 
@@ -110,7 +118,7 @@
               <th style="width:30%">마지막 로그인</th>
               <th style="width:15%">활성화 여부</th>
             </tr>
-            <tr v-for="(gu, idx) in filteredList" v-bind:key="gu.no">
+            <tr v-for="(gu, idx) in paginatedData" v-bind:key="gu.no">
               <td>{{ idx + 1 }}</td>
               <td>{{ gu.name }}</td>
               <td>{{ gu.email }}</td>
@@ -125,6 +133,29 @@
               <td v-if="gu.activation === false" />
             </tr>
           </table>
+          <div v-if="filteredList.length === 0" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.</div>
+          <hr>
+
+          <br />
+          <div class="btn-cover" style="text-align: center">
+            <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
+              이전
+            </button>
+            <span class="page-count" v-if="filteredList.length === 0">
+              {{ pageNum + 1 }} / 1
+            </span>
+            <span class="page-count" v-else>
+              {{ pageNum + 1 }} / {{ pageCount }}
+            </span>
+            <button
+              :disabled="pageNum >= pageCount - 1"
+              @click="nextPage"
+              class="page-btn"
+            >
+              다음
+            </button>
+          </div>
+
         </template>
         <!-- 삭제 버튼 누를 시 -->
         <template v-if="this.delete === true">
@@ -152,6 +183,8 @@
               </td>
             </tr>
           </table>
+          <div v-if="filteredList.length === 0" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.</div>
+          <hr>
         </template>
         <!-- 활성화 버튼 누를 시 -->
         <template v-if="this.active === true">
@@ -164,7 +197,7 @@
               <th style="width:30%">마지막 로그인</th>
               <th style="width:15%; color:#3498db">활성화 변경</th>
             </tr>
-            <tr v-for="(gu, idx) in filteredList" v-bind:key="gu.no">
+            <tr v-for="(gu, idx) in paginatedData" v-bind:key="gu.no">
               <td>{{ idx + 1 }}</td>
               <td>{{ gu.name }}</td>
               <td>{{ gu.email }}</td>
@@ -180,6 +213,8 @@
               </td>
             </tr>
           </table>
+          <div v-if="filteredList.length === 0" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.</div>
+          <hr>
         </template>
         <br />
       </div>
@@ -337,6 +372,8 @@
               <td v-if="gu.activation === false" />
             </tr>
           </table>
+          <div v-if="filteredList.length === 0" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.</div>
+          <hr>
         </template>
 
         <template v-if="this.delete === true">
@@ -354,7 +391,7 @@
               <th style="width:20%">마지막 로그인</th>
               <th style="width:10%; color: #3498db">삭제</th>
             </tr>
-            <tr v-for="(gu, idx) in filteredList" v-bind:key="gu.no">
+            <tr v-for="(gu, idx) in paginatedData" v-bind:key="gu.no">
               <td>{{ idx + 1 }}</td>
               <td>{{ gu.name }}</td>
               <td>{{ gu.email }}</td>
@@ -374,6 +411,8 @@
               </td>
             </tr>
           </table>
+          <div v-if="filteredList.length === 0" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.</div>
+          <hr>
         </template>
         <br />
 
@@ -413,6 +452,8 @@
               </td>
             </tr>
           </table>
+          <div v-if="filteredList.length === 0" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.</div>
+          <hr>
         </template>
         <br />
       </div>
@@ -445,6 +486,11 @@ export default {
       addrtab: true,
       macstyle: "#eaeaea",
       ipstyle: "",
+
+      /////////////////////////////페이징////////////////////
+      pageNum: 0,
+      pageSize: 10,
+      /////////////////////////////페이징////////////////////
     };
   },
   computed: {
@@ -475,6 +521,23 @@ export default {
         );
       });
     },
+
+    /////////////////////////////페이징////////////////////
+    pageCount() {
+      let listLeng = this.filteredList.length,
+        listSize = this.pageSize,
+        page = Math.floor(listLeng / listSize);
+
+      if (listLeng % listSize > 0) page += 1;
+
+      return page;
+    },
+    paginatedData() {
+      const start = this.pageNum * this.pageSize,
+        end = start + this.pageSize;
+      return this.filteredList.slice(start, end);
+    },
+    /////////////////////////////페이징////////////////////
   },
   methods: {
     date_to_str(format) {
@@ -540,7 +603,6 @@ export default {
           if (i == this.delUsrNos.length - 1) str += this.delUsrNos[i] + ")";
           else str += this.delUsrNos[i] + ", ";
         }
-        console.log(str);
 
         if (this.type === "U") {
           await axios
@@ -639,6 +701,28 @@ export default {
       this.ipstyle = "#eaeaea";
       this.macaddr = "";
     },
+    /////////////////////////////페이징////////////////////
+    nextPage() {
+      this.pageNum += 1;
+    },
+    prevPage() {
+      this.pageNum -= 1;
+    },
+    resetPageNum(){
+      this.pageNum = 0;
+    },
+    /////////////////////////////페이징////////////////////
+    reset() {
+      document.getElementById('username').values = ''
+      this.useremail='';
+      this.username='';
+      this.userdept='';
+      this.startdate='';
+      this.enddate='';
+      this.agentname='';
+      this.macaddr='';
+      this.ipaddr='';
+    }
   },
   async created() {
     if (this.type === "U") {

@@ -20,14 +20,14 @@
         onmouseenter="this.style.background='#CEECF5';"
         onmouseleave="this.style.background=''"
         style="cursor:pointer;"
-        v-for="(list, index) in licenses"
+        v-for="(list, index) in paginatedData"
         :key="list.no"
         @click="licenseInfoForm(index, list.no, list.policy_no)"
       >
         <td>{{ index + 1 }}</td>
         <td style=" text-decoration: underline">
           {{ list.policy_title
-          }}<!--[{{list.policy_no}}]-->
+          }}
         </td>
         <td>{{ list.standard == "A" ? "에이전트" : "사용자" }}</td>
         <td v-if="list.max_count !== 0">
@@ -60,10 +60,12 @@
           </button>
         </td>
         <td onclick="event.cancelBubble=true">
-          <a @click="licneseUpdate(list.no, list.policy_no, list.activation, list.end_date)"
-            >갱신</a
-          >
-          /
+          <template v-if="!list.policy_title.includes('체험판')">
+            <a @click="licneseUpdate(list.no, list.policy_no, list.activation, list.end_date)"
+              >갱신</a
+            >
+            /
+          </template>
           <a
             @click="
               licneseChange(
@@ -96,6 +98,28 @@
         </td>
       </tr>
     </table>
+    <div v-if="licenses.length === 0" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.<hr></div>
+    <!-- 페이징 -->
+      <br />
+      <div class="btn-cover" style="text-align: center">
+        <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
+          이전
+        </button>
+        <span class="page-count" v-if="licenses.length === 0">
+          {{ pageNum + 1 }} / 1
+        </span>
+        <span class="page-count" v-else>
+          {{ pageNum + 1 }} / {{ pageCount }}
+        </span>
+        <button
+          :disabled="pageNum >= pageCount - 1"
+          @click="nextPage"
+          class="page-btn"
+        >
+          다음
+        </button>
+      </div>
+      <!-- 페이징 -->
   </div>
 </template>
 
@@ -108,6 +132,10 @@ export default {
     return {
       showModal: "",
       modalData: "",
+      /////////////////////////////페이징////////////////////
+      pageNum: 0,
+      pageSize: 10,
+      /////////////////////////////페이징////////////////////
     };
   },
   props: ["licenses"],
@@ -196,11 +224,38 @@ export default {
         if (lcNo === this.alertOverLicense[i].no) return true;
       }
     },
+    /////////////////////////////페이징////////////////////
+    nextPage() {
+      this.pageNum += 1;
+    },
+    prevPage() {
+      this.pageNum -= 1;
+    },
+    resetPageNum(){
+      this.pageNum = 0;
+    }
+    /////////////////////////////페이징////////////////////
   },
   computed: {
     alertOverLicense: function() {
       return this.$store.state.licenseStore.alertOverLicense;
     },
+    /////////////////////////////페이징////////////////////
+    pageCount() {
+      let listLeng = this.licenses.length,
+        listSize = this.pageSize,
+        page = Math.floor(listLeng / listSize);
+
+      if (listLeng % listSize > 0) page += 1;
+
+      return page;
+    },
+    paginatedData() {
+      const start = this.pageNum * this.pageSize,
+        end = start + this.pageSize;
+      return this.licenses.slice(start, end);
+    },
+    /////////////////////////////페이징////////////////////
   },
 };
 </script>

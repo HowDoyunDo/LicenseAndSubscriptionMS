@@ -8,6 +8,7 @@ import promotionStore from '@/store/shr/promotionStore'
 import productStore from '@/store/doyun/productStore.js'
 import productStore_shr from '@/store/shr/productStore'
 import licenseStore from '@/store/doyun/licenseStore.js'
+import menuStore from '@/store/doyun/menuStore.js'
 import userinfo from '@/store/wheesung/userinfo.js'
 
 export default new Vuex.Store({
@@ -18,6 +19,7 @@ export default new Vuex.Store({
     subscribeStore: subscribeStore,
     productStore_shr: productStore_shr,
     promotionStore : promotionStore,
+    menuStore : menuStore
   },
   plugins: [
     createPersistedState()

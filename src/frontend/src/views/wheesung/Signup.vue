@@ -130,8 +130,8 @@ export default {
       auth_number_chk: "",
     };
   },
-  components: {},
   methods: {
+    // 회원가입 신청
     signin() {
       if (
         this.email == null ||
@@ -150,7 +150,6 @@ export default {
         this.co_number == ""
       ) {
         alert("필수 정보를 입력해 주세요");
-        console.log(this.chk);
       } else if (this.show === false || this.show === "") {
         alert("이메일 중복체크를 하세요.");
       } else if (this.chk == false) {
@@ -183,8 +182,8 @@ export default {
           });
       }
     },
+    // 이메일 중복 체크
     emailchk() {
-      console.log("이메일체크");
       if (!this.validEmail(this.email)) {
         this.show = "";
         alert("이메일 형식을 확인하세요.");
@@ -194,7 +193,6 @@ export default {
             email: this.email,
           })
           .then((result) => {
-            console.log(result);
             if (result.data == "s") {
               this.show = true;
             } else if (result.data == "f") {
@@ -203,6 +201,7 @@ export default {
           });
       }
     },
+    // 이메일 인증번호 전송
     emailAuth(e) {
       if (this.show == true) {
         e.target.value = "재전송";
@@ -211,13 +210,13 @@ export default {
             email: this.email,
           })
           .then((result) => {
-            console.log("번호 : " + result.data.text.substr(17, 5));
             this.auth_number_chk = Number(result.data.text.substr(17, 5));
           });
       } else {
         alert("이메일 중복 확인 하세요.");
       }
     },
+    // 이메일 인증번호 체크
     authNumberChkForm() {
       if (this.auth_number == "") {
         alert("인증번호를 입력 해주세요.");
@@ -228,6 +227,7 @@ export default {
         alert("인증번호 맞지 않음");
       }
     },
+    // 이메일 형식 체크
     validEmail: function (email) {
       var re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(String(email).toLowerCase());

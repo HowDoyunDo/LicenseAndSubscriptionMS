@@ -55,7 +55,6 @@ export default {
                 password: this.password
                 })
             .then(result => {
-                console.log(result);
                 if (result.data === "") {
                     alert("ID, PASSWORD CHECK PLEASE");
                     this.initForm();
@@ -83,7 +82,6 @@ export default {
                 return JSON.parse(jsonPayload);
             } catch (e) {
                 console.log(e);
-                console.log("error");
             }
         },
         initForm() {

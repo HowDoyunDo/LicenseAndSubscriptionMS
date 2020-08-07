@@ -8,7 +8,7 @@
 			 where lc.policy_no = sp.no 
 			 and lc.user_admin_no = #{adminNo}
 			 and lc.order_no = ol.no
-			 order by no ASC
+			 order by lc.no ASC
 		]]>
 	</select>
 	
@@ -20,7 +20,7 @@
 			 from agent ag, general_user gu
 			 where ag.license_no = #{licenseNo}
 			 and ag.user_no = gu.no
-			 order by no ASC
+			 order by gu.no ASC
 		]]>
 	</select>
 	
@@ -34,7 +34,7 @@
 			 and gu.name like CONCAT('%', #{name}, '%')
 			 and gu.dept_name like CONCAT('%', #{dept}, '%')
 			 and last_login between to_timestamp(#{start}, 'YYYY-MM-DD HH24:MI:SS') and to_timestamp(#{end}, 'YYYY-MM-DD HH24:MI:SS')
-			 order by no ASC
+			 order by gu.no ASC
 		]]>
 	</select>
 	
@@ -47,7 +47,7 @@
 			 and gu.email like CONCAT('%', #{email}, '%')
 			 and gu.name like CONCAT('%', #{name}, '%')
 			 and gu.dept_name like CONCAT('%', #{dept}, '%')
-			 order by no ASC
+			 order by gu.no ASC
 		]]>
 	</select>
 
@@ -104,7 +104,7 @@
 			  where gu.email = #{email}
 			  and ag.license_no = #{licenseNo}
 			  and ag.user_no = gu.no
-			  order by no ASC
+			  order by gu.no ASC
 		]]>
 	</select>
 	
@@ -156,6 +156,7 @@
 			 from agent ag, general_user gu
 			 where ag.license_no = #{licenseNo}
 			 and ag.user_no = gu.no
+			 order by ag.no asc
 		]]>
 	</select>
 
@@ -173,6 +174,7 @@
 			  from agent
 			  where license_no = #{licenseNo}
 			  and mac_address = #{macaddr}
+			  order by no asc
 		]]>
 	</select>
 	
@@ -181,6 +183,7 @@
 			select * 
 			  from general_user
 			  where email = #{email}
+			  order by no asc
 		]]>
 	</select>
 	
@@ -198,6 +201,7 @@
 			  from agent
 			  where license_no = #{licenseNo}
 			  and ip_address = #{ipaddr}
+			  order by ag.no asc
 		]]>
 	</select>
 	
@@ -223,6 +227,7 @@
 			 and ag.name like CONCAT('%', #{agentname}, '%')
 			 and ag.ip_address like CONCAT('%', #{dept}, '%')
 			 and last_login between to_timestamp(#{start}, 'YYYY-MM-DD HH24:MI:SS') and to_timestamp(#{end}, 'YYYY-MM-DD HH24:MI:SS')
+			 order by ag.no asc
 		]]>
 	</select>
 	
@@ -240,6 +245,7 @@
 			 and ag.name like CONCAT('%', #{agentname}, '%')
 			 and ag.mac_address like CONCAT('%', #{dept}, '%')
 			 and last_login between to_timestamp(#{start}, 'YYYY-MM-DD HH24:MI:SS') and to_timestamp(#{end}, 'YYYY-MM-DD HH24:MI:SS')
+			 order by ag.no asc
 		]]>
 	</select>
 	
@@ -256,6 +262,7 @@
 			 and gu.dept_name like CONCAT('%', #{dept}, '%')
 			 and ag.name like CONCAT('%', #{agentname}, '%')
 			 and ag.ip_address like CONCAT('%', #{ipaddr}, '%')
+			 order by ag.no asc
 		]]>
 	</select>
 	
@@ -272,6 +279,7 @@
 			 and gu.dept_name like CONCAT('%', #{dept}, '%')
 			 and ag.name like CONCAT('%', #{agentname}, '%')
 			 and ag.mac_address like CONCAT('%', #{macaddr}, '%')
+			 order by ag.no asc
 		]]>
 	</select>
 	
@@ -288,6 +296,7 @@
 			 and gu.dept_name like CONCAT('%', #{dept}, '%')
 			 and ag.name like CONCAT('%', #{agentname}, '%')
 			 and last_login between to_timestamp(#{start}, 'YYYY-MM-DD HH24:MI:SS') and to_timestamp(#{end}, 'YYYY-MM-DD HH24:MI:SS')
+			 order by ag.no asc
 		]]>
 	</select>
 	
@@ -303,6 +312,7 @@
 			 and gu.name like CONCAT('%', #{name}, '%')
 			 and gu.dept_name like CONCAT('%', #{dept}, '%')
 			 and ag.name like CONCAT('%', #{agentname}, '%')
+			 order by ag.no asc
 		]]>
 	</select>
 	
@@ -338,4 +348,21 @@
 			 where no = ${licenseNo}
 		]]>
 	</update>
+	
+	
+	
+	<select id="getCurCnt" parameterType="int" resultType="int">
+		<![CDATA[
+			select current_count from license
+			 where no = ${_parameter}
+		]]>
+	</select>
+	
+	<select id="getMaxCnt" parameterType="int" resultType="int">
+		<![CDATA[
+			select max_count from license
+			 where no = ${_parameter}
+		]]>
+	</select>
+	
 </mapper>

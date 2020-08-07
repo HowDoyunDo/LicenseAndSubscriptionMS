@@ -11,6 +11,7 @@
         type="text"
         style="float: left; height: 40px; width: 260px;"
         v-on:input="keyword = $event.target.value"
+        @input="resetPageNum"
         placeholder="검색어 입력"
       />
       <input
@@ -19,9 +20,10 @@
         type="text"
         style="float: left; height: 40px; width: 260px;"
         v-on:input="keyword = $event.target.value"
+        @input="resetPageNum"
         placeholder="검색어 입력"
       />
-      <button class="submit_btn" @click="promotionAdd" style="height:40px">등록</button>
+      <button class="submit_btn" @click="promotionAdd" style="height:40px; float: right;">등록</button>
     </div>
 
     <table class="table_board">
@@ -38,7 +40,7 @@
         onmouseover="this.style.background='#CEECF5';"
         onmouseout="this.style.background=''"
         style="cursor:pointer"
-        v-for="(list, index) in filteredList"
+        v-for="(list, index) in paginatedData"
         @click="listClick(index)"
         :key="list.no"
       >
@@ -54,6 +56,30 @@
        
       </tr>
     </table>
+    <div v-if="filteredList.length === 0" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.</div>
+    <hr>
+
+    <!-- 페이징 -->
+      <br />
+      <div class="btn-cover" style="text-align: center">
+        <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
+          이전
+        </button>
+        <span class="page-count" v-if="filteredList.length === 0">
+          {{ pageNum + 1 }} / 1
+        </span>
+        <span class="page-count" v-else>
+          {{ pageNum + 1 }} / {{ pageCount }}
+        </span>
+        <button
+          :disabled="pageNum >= pageCount - 1"
+          @click="nextPage"
+          class="page-btn"
+        >
+          다음
+        </button>
+      </div>
+      <!-- 페이징 -->
   </div>
 </template>
 
@@ -66,6 +92,10 @@ export default {
       promotionPolicyAllList: "",
       keyword: "",
       selected: "title",
+      /////////////////////////////페이징////////////////////
+      pageNum: 0,
+      pageSize: 10,
+      /////////////////////////////페이징////////////////////
     };
   },
   computed: {
@@ -80,6 +110,22 @@ export default {
         }
       });
     },
+    /////////////////////////////페이징////////////////////
+    pageCount() {
+      let listLeng = this.filteredList.length,
+        listSize = this.pageSize,
+        page = Math.floor(listLeng / listSize);
+
+      if (listLeng % listSize > 0) page += 1;
+
+      return page;
+    },
+    paginatedData() {
+      const start = this.pageNum * this.pageSize,
+        end = start + this.pageSize;
+      return this.filteredList.slice(start, end);
+    },
+    /////////////////////////////페이징////////////////////
   },
   async created() {
     const { data } = await promotionPolicyAllList();
@@ -98,6 +144,17 @@ export default {
     promotionAdd() {
       this.$router.push("/promotion/add");
     },
+    /////////////////////////////페이징////////////////////
+    nextPage() {
+      this.pageNum += 1;
+    },
+    prevPage() {
+      this.pageNum -= 1;
+    },
+    resetPageNum(){
+      this.pageNum = 0;
+    }
+    /////////////////////////////페이징////////////////////
   },
 };
 </script>
@@ -105,7 +162,6 @@ export default {
 <style scoped>
 button {
   width: 80px;
-  float: right;
 }
 #myInput {
   background-image: url("../../../assets/images/searchIcon2.png");

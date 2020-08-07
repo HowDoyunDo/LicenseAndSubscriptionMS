@@ -64,7 +64,6 @@ export default {
         })
         .then(result => {
             this.list = result.data;
-            console.log(this.list)
         })
     }
 }

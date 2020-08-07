@@ -52,7 +52,6 @@ export default {
                     adminNo: this.userInfo.no
                 }
         }).then(res => { 
-            console.log(res.data);
             this.licenses = res.data;
         });
     },
@@ -64,7 +63,6 @@ export default {
             this.indexcolor = '#fff';
         },
         mouseclick(idx, standard) {
-            console.log(this.licenses[idx].policy_title);
             this.$store.commit('licenseStore/SELECT_LIC', this.licenses[idx]);
             this.$router.push({ name: "LicenseInfo", params: { licenseno: idx, licensetype: standard }});
         },

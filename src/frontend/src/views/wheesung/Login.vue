@@ -91,7 +91,6 @@ export default {
             })
             .then((res) => {
               this.$store.commit("licenseStore/SELECT_AOL", res.data);
-              console.log(res.data);
             });
         });
     },

@@ -14,6 +14,7 @@ export const subscribeMixin = {
     methods: {
         // 구독 정책 폼 유효성 검사
         formValidation() {
+            console.log(this.max_count);
             if (
                 this.format == "" ||
                 this.productList == "" ||
@@ -21,7 +22,7 @@ export const subscribeMixin = {
                 this.policy_title == "" ||
                 this.visible == "" ||
                 this.standard == "" ||
-                this.max_count == ""
+                this.max_count === ""
             ) {
                 alert("필수 입력 값을 입력해주세요");
                 return true;
@@ -35,6 +36,7 @@ export const subscribeMixin = {
             const resList = await this.$store.getters[
                 "subscribeStore/getSubscribeOneList"
             ];
+            console.log(resList);
             // default 세팅
             this.policy_title = resList.policy_title;
             this.visible = resList.visible ? true : false;

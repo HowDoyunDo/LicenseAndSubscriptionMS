@@ -2,12 +2,12 @@
   <div id="header">
     <router-link to="/" v-if="this.userInfo.name === undefined"
       ><img
-        style="width:155px; height:25px; margin-left:16px"
+        style="width:155px; height:25px; margin-left:16px" @click="clrMenu()"
         src="../../public/logo.png"
     /></router-link>
     <router-link to="/" v-if="this.userInfo.co_number !== undefined"
       ><img
-        style="width:155px; height:25px; margin-left:16px"
+        style="width:155px; height:25px; margin-left:16px" @click="clrMenu()"
         src="../../public/logo.png"
     /></router-link>
     <router-link
@@ -17,12 +17,12 @@
           this.userInfo.co_number === undefined
       "
       ><img
-        style="width:155px; height:25px; margin-left:16px"
+        style="width:155px; height:25px; margin-left:16px" @click="clrMenu()"
         src="../../public/logo.png"
     /></router-link>
 
     <div v-if="alertOverLicense.length !== 0" style="float: right; margin:37px 20px 0 0;">
-      <router-link id="license" to="/license/list" style="text-decoration:none;">| 기간 만료 15일 이내 라이선스 존재 |</router-link>
+      <router-link id="license" to="/license/list" style="text-decoration:none;" @click.native="clrMenu(16)">| 기간 만료 15일 이내 라이선스 존재 |</router-link>
     </div>
 
     <ul
@@ -32,13 +32,13 @@
       "
     >
       <li @click="remove">
-        <router-link id="logout" to="/">로그아웃</router-link>
+        <router-link id="logout" to="/" @click.native="clrMenu()">로그아웃</router-link>
       </li>
       <li>관리자님 환영합니다.</li>
     </ul>
     <ul v-else-if="this.userInfo.co_number !== undefined">
       <li @click="remove">
-        <router-link id="logout" to="/">로그아웃</router-link>
+        <router-link id="logout" to="/" @click.native="clrMenu()">로그아웃</router-link>
       </li>
       <li id="white">{{ this.userInfo.name }}님 어서오세요.</li>
     </ul>
@@ -66,6 +66,9 @@ export default {
       sessionStorage.removeItem("license-token");
       console.log(this.userInfo.name);
     },
+    clrMenu(value) {
+      this.$store.commit("menuStore/SEL_MENU", value);
+    }
   },
   computed: {
     userInfo: function() {
