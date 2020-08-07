@@ -34,14 +34,14 @@
           >
         </li>
       </ul>
-      <h4>구독 관리</h4>
+      <h4>구독 정책 관리</h4>
       <ul>
         <li>
           <router-link
             to="/subscribe/alllist"
             :class="subscribeAlllist"
             @click.native="selMenu(4)"
-            >구독 목록</router-link
+            >정책 목록</router-link
           >
         </li>
         <li>
@@ -49,7 +49,7 @@
             to="/subscribe/add"
             :class="subscribeAdd"
             @click.native="selMenu(5)"
-            >구독 등록</router-link
+            >정책 등록</router-link
           >
         </li>
       </ul>
@@ -202,7 +202,7 @@
       </h4>
       <ul>
         <li>
-          <router-link to="/" :class="home">제품 조회</router-link>
+          <router-link to="/" :class="home" @click.native="selMenu(15)">제품 조회</router-link>
         </li>
       </ul>
     </div>

@@ -44,7 +44,7 @@
         @click="listClick(index)"
         :key="list.no"
       >
-        <td>{{ list.promotion_no }}</td>
+        <td>{{ index+1 }}</td>
         <td style="text-align: left;">
           <span style="text-decoration-line: underline;">{{ list.title }}</span>
         </td>

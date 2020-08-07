@@ -5,7 +5,7 @@
 
 	<select id="getLicenseAllList" resultType="licensevo2">
 	<![CDATA[
-		select ua.name ,ua.co_name, sp.policy_title , l.*
+		select ua.name ,ua.co_name, sp.policy_title , l.*, sp.standard as standard
 			 from license l, user_admin ua , subscription_policy sp 
 		 where l.user_admin_no = ua.no 
 			and l.policy_no = sp.no;	

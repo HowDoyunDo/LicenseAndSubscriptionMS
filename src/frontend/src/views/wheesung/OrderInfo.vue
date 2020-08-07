@@ -25,7 +25,7 @@
           </tr>
           <tr>
             <th>결제 금액</th>
-            <td>{{ list.total_price }} 원</td>
+            <td>{{ list.total_price | formatPrice}} 원</td>
           </tr>
           <tr>
             <th>주문일</th>

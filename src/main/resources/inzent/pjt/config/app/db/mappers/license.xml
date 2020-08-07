@@ -201,7 +201,7 @@
 			  from agent
 			  where license_no = #{licenseNo}
 			  and ip_address = #{ipaddr}
-			  order by ag.no asc
+			  order by no asc
 		]]>
 	</select>
 	

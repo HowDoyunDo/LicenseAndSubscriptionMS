@@ -187,7 +187,7 @@ export default {
             const res = await promotionPolicyAdd(promotionAddData);
             if (res.data == 1) {
               alert("등록 완료");
-              this.$router.push("/promotion/policy");
+              this.$router.push("/promotion");
             } else {
               alert("등록 실패");
             }

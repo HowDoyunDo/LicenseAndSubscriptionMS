@@ -3,6 +3,30 @@
     <div>
       <h1>관리자 목록</h1>
       <br />
+      <div class="search-wrapper btnn" style="height:50px">
+        <select v-model="selected" style="margin: 0 5px 0 0; height: 40px; float: left">
+          <option value="co_name">기업명</option>
+          <option value="name">관리자명</option>
+        </select>
+        <input
+          style="margin: 0; width:260px; height:40px"
+          id="myInput"
+          type="text"
+          v-if="selected === 'co_name'"
+          v-on:input="keyword = $event.target.value"
+          @input="resetPageNum"
+          placeholder="검색어 입력"
+        />
+        <input
+          style="margin: 0; width:260px; height:40px"
+          id="myInput"
+          type="text"
+          v-if="selected === 'name'"
+          v-on:input="keyword = $event.target.value"
+          @input="resetPageNum"
+          placeholder="검색어 입력"
+        />
+      </div>
       <table class="table_board">
         <tr style="float:center;">
           <th width="5%">번호</th>
@@ -26,7 +50,7 @@
           <td>{{user.reg_date}}</td>
         </tr>
       </table>
-      <div v-if="list.length === 0" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.</div>
+      <div v-if="filteredList.length === 0" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.</div>
       <hr>
       <!-- 페이징 -->
       <br />
@@ -34,7 +58,7 @@
         <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
           이전
         </button>
-        <span class="page-count" v-if="list.length === 0">
+        <span class="page-count" v-if="filteredList.length === 0">
           {{ pageNum + 1 }} / 1
         </span>
         <span class="page-count" v-else>
@@ -64,6 +88,8 @@ export default {
       list: "",
       title: "",
       ca_title: "",
+      keyword: "",
+      selected: "co_name",
       /////////////////////////////페이징////////////////////
       pageNum: 0,
       pageSize: 10,
@@ -71,9 +97,18 @@ export default {
     };
   },
   computed:{
+    filteredList() {
+      return Object.values(this.list).filter((post) => {
+        if (this.selected === "co_name") {
+          return post.co_name.toLowerCase().includes(this.keyword.toLowerCase());
+        } else if (this.selected === "name") {
+          return post.name.toLowerCase().includes(this.keyword.toLowerCase());
+        }
+      });
+    },
     /////////////////////////////페이징////////////////////
     pageCount() {
-      let listLeng = this.list.length,
+      let listLeng = this.filteredList.length,
         listSize = this.pageSize,
         page = Math.floor(listLeng / listSize);
 
@@ -84,7 +119,7 @@ export default {
     paginatedData() {
       const start = this.pageNum * this.pageSize,
         end = start + this.pageSize;
-      return this.list.slice(start, end);
+      return this.filteredList.slice(start, end);
     },
     /////////////////////////////페이징////////////////////
   },
@@ -103,6 +138,9 @@ export default {
     prevPage() {
       this.pageNum -= 1;
     },
+    resetPageNum(){
+      this.pageNum = 0;
+    }
     /////////////////////////////페이징////////////////////
   },
   created() {

@@ -3,68 +3,72 @@
     <div>
       <h1>정보 수정</h1>
       <br />
-      <form class="form">
-        <table class="table_add">
-          <tr>
-            <th>이메일</th>
-            <td>{{ this.list.email }}</td>
-          </tr>
-          <tr>
-            <th>이름</th>
-            <td>
-              <input type="text" v-model="list.name" />
-            </td>
-          </tr>
-          <tr>
-            <th>변경할 비밀번호</th>
-            <td>
-              <input type="password" v-model="changePw" />
-            </td>
-          </tr>
-          <tr>
-            <th>비밀번호 재입력</th>
-            <td>
-              <input type="password" v-model="changePw2" />
-            </td>
-          </tr>
-          <tr>
-            <th>기업명</th>
-            <td>
-              <input type="text" v-model="list.co_name" />
-            </td>
-          </tr>
-          <tr>
-            <th>기업 대표번호</th>
-            <td>
-              <input type="text" v-model="list.co_tel" />
-            </td>
-          </tr>
-          <tr>
-            <th>기업 주소</th>
-            <td>
-              <input type="text" v-model="list.co_location" />
-            </td>
-          </tr>
-          <tr>
-            <th>가입일</th>
-            <td>
-              {{
-                this.$store.state.userinfo.userInfo.reg_date.substring(0, 19)
-              }}
-            </td>
-          </tr>
-        </table>
+      
+      <div id="inner">
+        <form class="form">
+          <table class="table_add">
+            <tr>
+              <th>이메일</th>
+              <td>{{ this.list.email }}</td>
+            </tr>
+            <tr>
+              <th>이름</th>
+              <td>
+                <input type="text" v-model="list.name" />
+              </td>
+            </tr>
+            <tr>
+              <th>변경할 비밀번호</th>
+              <td>
+                <input type="password" v-model="changePw" />
+              </td>
+            </tr>
+            <tr>
+              <th>비밀번호 재입력</th>
+              <td>
+                <input type="password" v-model="changePw2" />
+              </td>
+            </tr>
+            <tr>
+              <th>기업명</th>
+              <td>
+                <input type="text" v-model="list.co_name" />
+              </td>
+            </tr>
+            <tr>
+              <th>기업 대표번호</th>
+              <td>
+                <input type="text" v-model="list.co_tel" />
+              </td>
+            </tr>
+            <tr>
+              <th>기업 주소</th>
+              <td>
+                <input type="text" v-model="list.co_location" />
+              </td>
+            </tr>
+            <tr>
+              <th>가입일</th>
+              <td>
+                {{
+                  this.$store.state.userinfo.userInfo.reg_date.substring(0, 19)
+                }}
+              </td>
+            </tr>
+          </table>
 
-        <br />
-        <div style="text-align: center;">
-          <input
-            class="cssbtn"
-            type="button"
-            value="완료"
-            @click="changeUserInfo"
-          />
-        </div>
-      </form>
+          <br />
+          <div style="text-align: center;">
+            <input
+              class="cssbtn"
+              type="button"
+              value="완료"
+              @click="changeUserInfo"
+            />
+          </div>
+          <br>
+        </form>
+      </div>
     </div>
   </div>
 </template>
@@ -182,5 +186,9 @@ h1 {
   width: 120px;
   height: 40px;
   border-radius:4px;
+}
+#inner {
+  border: 1px solid #ccc;
+  padding: 10px;
 }
 </style>
