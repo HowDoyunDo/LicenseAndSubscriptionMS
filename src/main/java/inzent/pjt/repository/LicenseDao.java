@@ -66,22 +66,25 @@ public class LicenseDao {
 		return sqlSession.insert("addLicense", map) == 1;
 	}
 
-	public boolean addUser(Map<String, Object> map) {
+	public char addUser(Map<String, Object> map) {
+		if(sqlSession.selectOne("license.getCurCnt", map.get("licenseNo")) == sqlSession.selectOne("license.getMaxCnt", map.get("licenseNo")))
+			return 'M';
+		
 		if(sqlSession.selectOne("license.dupUserEmail", map) == null || sqlSession.selectOne("dupUserEmail", map) == "") {	
 			if(sqlSession.selectOne("license.dupUser", map) == null) {	// 해당하는 이메일을 가진 사용자가 라이센스 내부, 외부 모두 없는 경우
 				sqlSession.insert("license.addUser", map);	// 사용자 인덱스 추가
 				sqlSession.insert("license.addAgent", map);	// 에이전트 인덱스 추가
 				sqlSession.update("license.upCurrentCount", map.get("licenseNo"));	//사용량 증가
-				return true;
+				return 'T';
 			} else {	// 해당하는 이메일을 가진 사용자가 라이센스 내부에는 없지만 외부에는 존재하는 경우
 				sqlSession.update("license.updateUserInfo", map); // 사용자 업데이트
 				sqlSession.insert("license.addAgent", map);	// 에이전트 인덱스 추가
 				sqlSession.update("license.upCurrentCount", map.get("licenseNo"));	//사용량 증가
-				return true;
+				return 'T';
 			}
 		} else {	// 해당하는 이메일을 가진 사용자가 라이센스 내부에 존재하는 경우 
 			sqlSession.update("license.updateUserInfo", map);
-			return false;
+			return 'F';
 		}
 	}
 
@@ -145,39 +148,45 @@ public class LicenseDao {
 		}
 	}
 
-	public boolean addAgentMac(Map<String, Object> map) {
+	public char addAgentMac(Map<String, Object> map) {
+		if(sqlSession.selectOne("license.getCurCnt", map.get("licenseNo")) == sqlSession.selectOne("license.getMaxCnt", map.get("licenseNo")))
+			return 'M';
+		
 		if(sqlSession.selectOne("license.dupAgentMac", map) == null) {
 			if(sqlSession.selectOne("license.dupUser", map) == null) {
 				sqlSession.insert("license.addUser", map);
 				sqlSession.insert("license.addAgentMac", map);
 				sqlSession.update("license.upCurrentCount", map.get("licenseNo"));
-				return true;
+				return 'T';
 			} else {
 				sqlSession.update("license.updateUserInfo", map); // 사용자 업데이트
 				sqlSession.insert("addAgentMac", map);
 				sqlSession.update("license.upCurrentCount", map.get("licenseNo"));
-				return true;
+				return 'T';
 			}
 		} else {
-			return false;
+			return 'F';
 		}
 	}
 
-	public boolean addAgentIp(Map<String, Object> map) {
+	public char addAgentIp(Map<String, Object> map) {
+		if(sqlSession.selectOne("license.getCurCnt", map.get("licenseNo")) == sqlSession.selectOne("license.getMaxCnt", map.get("licenseNo")))
+			return 'M';
+		
 		if(sqlSession.selectOne("license.dupAgentIp", map) == null) {	// 라이센스 내부에 해당 ip를 가진 에이전트가 존재X
 			if(sqlSession.selectOne("license.dupUser", map) == null) {	// 해당 사용자 정보X
 				sqlSession.insert("license.addUser", map);
 				sqlSession.insert("license.addAgentIp", map);
 				sqlSession.update("license.upCurrentCount", map.get("licenseNo"));
-				return true;
+				return 'T';
 			} else {	// 해당 사용자 정보O
 				sqlSession.update("license.updateUserInfo", map); // 사용자 업데이트
 				sqlSession.insert("addAgentIp", map);
 				sqlSession.update("license.upCurrentCount", map.get("licenseNo"));
-				return true;
+				return 'T';
 			}
 		} else {	// 라이센스 내부에 해당 ip를 가진 에이전트가 존재O
-			return false;
+			return 'F';
 		}
 	}
 
@@ -237,23 +246,28 @@ public class LicenseDao {
 		return sqlSession.selectList("license.getLicenseAdminUser", vo);
 	}
 
-	public boolean changeActive(int licenseNo, String activeUsrs) {
+	public char changeActive(int licenseNo, String activeUsrs) {
 		int cnt = 0;
 		for(int i=0; i<activeUsrs.length(); i++) {
 			if(activeUsrs.charAt(i) == ',' ) 
 				cnt++;
 		}
 		
-		if(activeUsrs.indexOf(")") != -1) {
-			Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("activeUsrs", activeUsrs);
+		map.put("licenseNo", licenseNo);
+		sqlSession.update("license.changeActive", map);
+		sqlSession.update("license.updateCnt", licenseNo);
+		
+		if((int) sqlSession.selectOne("license.getCurCnt", map.get("licenseNo")) > (int) sqlSession.selectOne("license.getMaxCnt", map.get("licenseNo"))) {
 			map.put("activeUsrs", activeUsrs);
 			map.put("licenseNo", licenseNo);
 			sqlSession.update("license.changeActive", map);
 			sqlSession.update("license.updateCnt", licenseNo);
 			
-			return true;
+			return 'M';
 		} else {
-			return false;
+			return 'T';
 		}
 	}
 

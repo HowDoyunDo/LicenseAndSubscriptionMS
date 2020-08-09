@@ -87,11 +87,14 @@ export default {
                     }
                 })
                 .then(res => { 
-                    if(res.data === false) {
+                    if(res.data === 'F') {
                         alert('해당 라이선스 내 중복된 이메일이 존해하여, \n입력한 사용자의 정보를 수정했습니다.');
                         window.history.go(-1);
-                    } else {
+                    } else if (res.data === 'T') {
                         alert('사용자를 추가했습니다.');
+                        window.history.go(-1);
+                    } else if (res.data === 'M') {
+                        alert('사용량이 꽉 차 더 이상 사용자를 추가할 수 없습니다.');
                         window.history.go(-1);
                     }
                 });

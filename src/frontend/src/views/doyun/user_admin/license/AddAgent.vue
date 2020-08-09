@@ -120,13 +120,16 @@ export default {
                     }
                 })
                 .then(res => { 
-                    if(res.data === false) {
+                    if(res.data === 'F') {
                         if(this.addrtab)
                             alert('해당 라이선스 내 중복된 MAC Address를 가진 에이전트가 존재합니다.\n확인 후 다시 입력해주세요.');
                         else
                             alert('해당 라이선스 내 중복된 IP Address를 가진 에이전트가 존재합니다.\n확인 후 다시 입력해주세요.');
-                    } else {
+                    } else if(res.data === 'T') {
                         alert('에이전트를 추가했습니다.');
+                        window.history.go(-1);
+                    } else if(res.data === 'M') {
+                        alert('사용량이 꽉 차 더 이상 사용자를 추가할 수 없습니다.');
                         window.history.go(-1);
                     }
                 });

@@ -77,7 +77,7 @@ public class LicenseService {
 		return licenseDao.addLicense(map);
 	}
 
-	public boolean addUser(String email, String password, String name, String dept, int adminUserNo, int licenseNo) {
+	public char addUser(String email, String password, String name, String dept, int adminUserNo, int licenseNo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("email", email);
 		map.put("password", password);
@@ -101,7 +101,7 @@ public class LicenseService {
 		return licenseDao.delAgent(delUsrs, licenseNo);
 	}
 
-	public boolean addAgent(String email, String password, String name, String dept, String agentname, String macaddr,
+	public char addAgent(String email, String password, String name, String dept, String agentname, String macaddr,
 			String ipaddr, int adminUserNo, int licenseNo) {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("email", email);
@@ -179,7 +179,7 @@ public class LicenseService {
 		return licenseDao.getLicenseAdminUser(vo);
 	}
 
-	public boolean changeActive(int licenseNo, String activeUsrs) {
+	public char changeActive(int licenseNo, String activeUsrs) {
 		return licenseDao.changeActive(licenseNo, activeUsrs);
 	}
 

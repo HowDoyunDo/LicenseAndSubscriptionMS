@@ -558,7 +558,7 @@ export default {
 
       /////////////////////////////페이징////////////////////
       pageNum: 0,
-      pageSize: 3,
+      pageSize: 10,
       /////////////////////////////페이징////////////////////
     };
   },
@@ -748,11 +748,16 @@ export default {
             },
           })
           .then((res) => {
-            console.log(res.data);
+            if(res.data === 'T') {
+              alert('활성화가 변경되었습니다.')
+              window.history.go(0);
+            } else if (res.data === 'M') {
+              alert('최대 사용량을 초과해 활성화를 변경할 수 없습니다.')
+              window.history.go(0);
+            }
           });
 
         this.active = false;
-        alert("활성화를 변경했습니다.");
       } else {
         //취소
         return;

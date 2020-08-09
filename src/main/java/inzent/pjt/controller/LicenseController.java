@@ -130,7 +130,7 @@ public class LicenseController {
 	}
 	
 	@PostMapping("/addUser")
-	public boolean addUser(
+	public char addUser(
 			@RequestParam(value = "email") String email,
 			@RequestParam(value = "password") String password,
 			@RequestParam(value = "name") String name,
@@ -196,7 +196,7 @@ public class LicenseController {
 	}
 	
 	@PostMapping("/addAgent")
-	public boolean addAgent(
+	public char addAgent(
 			@RequestParam(value = "email") String email,
 			@RequestParam(value = "password") String password,
 			@RequestParam(value = "name") String name,
@@ -234,7 +234,7 @@ public class LicenseController {
 	
 	// 활성화 변경
 	@GetMapping("/userActive")
-	public boolean changeActive(
+	public char changeActive(
 			@RequestParam(value = "licenseNo") int licenseNo,
 			@RequestParam(value = "activeUsrs") String activeUsrs
 			) {
