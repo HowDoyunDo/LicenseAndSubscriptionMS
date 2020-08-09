@@ -8,7 +8,7 @@
           <th style="width:25%">이메일</th>
           <th style="width:15%">부서명</th>
           <th style="width:20%">전화번호</th>
-          <th style="width:30%">마지막 로그인</th>
+          <th style="width:30%">가입일</th>
         </tr>
         <tr v-for="(gu, idx) in adminUserList" v-bind:key="gu.no">
           <td>{{ idx+1 }}</td>
@@ -16,7 +16,7 @@
           <td>{{ gu.email }}</td>
           <td>{{ gu.co_name }}</td>
           <td>{{ gu.co_tel | phoneFomatter}}</td>
-          <td>{{ gu.last_login | format}}</td>
+          <td>{{ gu.reg_date | format}}</td>
         </tr>
       </table>
     </form>

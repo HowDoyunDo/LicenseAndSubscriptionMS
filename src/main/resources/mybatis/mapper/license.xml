@@ -8,7 +8,7 @@
 		select ua.name ,ua.co_name, sp.policy_title , l.*, sp.standard as standard
 			 from license l, user_admin ua , subscription_policy sp 
 		 where l.user_admin_no = ua.no 
-			and l.policy_no = sp.no;	
+			and l.policy_no = sp.no;
 	]]>
 	</select>
 	<select id="getLicenseOneList" resultType="licensevo2"
@@ -47,7 +47,8 @@
 		 where no=#{no} ;
 	]]>
 	</update>
-	<select id="getLicenseUserList" resultType="licensevo2" parameterType="uservo">
+	<select id="getLicenseUserList" resultType="licensevo2"
+		parameterType="uservo">
 	<![CDATA[
 		select ua.name , sp.policy_title , sp.standard,  l.*
 			 from license l, user_admin ua , subscription_policy sp 
@@ -61,14 +62,13 @@
 	<select id="getLicenseAdminUser" resultType="uservo">
 	<![CDATA[
 		  select ua.*
-				from license l , user_admin ua , agent a
-		    where l.user_admin_no = ua.no
-			 	  and l.no= #{no}
-		   order by last_login desc 
-			limit 1;
+ from license l , user_admin ua
+ where l.user_admin_no = ua.no
+ and l.no= #{no}
+  order by l.start_date desc
 	]]>
 	</select>
-	
+
 	<select id="alertLicenseOver" resultType="licensevo">
 	<![CDATA[
 		select * from license
