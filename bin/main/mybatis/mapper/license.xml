@@ -60,10 +60,9 @@
 	</select>
 	<select id="getLicenseAdminUser" resultType="uservo">
 	<![CDATA[
-		  select  a.last_login ,ua.*
+		  select ua.*
 				from license l , user_admin ua , agent a
 		    where l.user_admin_no = ua.no
-				  and a.user_admin_no =ua.no
 			 	  and l.no= #{no}
 		   order by last_login desc 
 			limit 1;

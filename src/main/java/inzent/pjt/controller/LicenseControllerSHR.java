@@ -65,7 +65,6 @@ public class LicenseControllerSHR {
 	public List<UserVo> licenseAdminUser(@RequestBody LicenseVO2 vo) {
 		System.out.println("/licenseAdminUser");
 		List<UserVo> list = service.getLicenseAdminUser(vo);
-		
 		return list;
 	}
 }
