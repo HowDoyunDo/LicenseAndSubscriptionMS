@@ -128,6 +128,7 @@ export default {
                         alert('파일 내에 추가할 사용자가 없습니다. \n다시 확인하고 업로드해주세요.')
                     } else if(res.data === 'M') {
                         alert('최대 사용량까지 추가 하였고, \n더 이상 사용자를 추가할 수 없습니다.')
+                        window.history.go(-1);
                     }
                 }).catch(e => {
                     console.log(e);

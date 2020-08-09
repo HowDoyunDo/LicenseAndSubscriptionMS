@@ -32,11 +32,11 @@
 
                 <template v-if="upolicy.price === 0">
                   <button
-                    style="width:110px; margin-bottom:10px"
+                    style="width:110px; margin-bottom:10px;"
                     @click="getPromotionAndOrder(i, upolicy.standard, 0)"
                   >
                     체험판 구독
-                  </button>
+                  </button><br>
                   <button style="visibility: hidden">asd</button><br>
                   <button style="visibility: hidden">asd</button>
                 </template>
@@ -104,7 +104,7 @@
                     @click="getPromotionAndOrder(i, apolicy.standard, 0)"
                   >
                     체험판 구독
-                  </button>
+                  </button><br>
                   <button style="visibility: hidden">asd</button><br>
                   <button style="visibility: hidden">asd</button>
                 </template>
@@ -267,7 +267,7 @@ h1 {
   text-align: center;
 }
 .panel {
-  width: 210px;
+  width: 230px;
   margin: 0;
 }
 .user table ul,
