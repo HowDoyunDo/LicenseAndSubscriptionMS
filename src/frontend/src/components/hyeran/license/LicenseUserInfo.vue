@@ -29,16 +29,17 @@ import moment from "moment";
 export default {
   data() {
     return {
-      adminUserList: ""
+      adminUserList: "",
     };
   },
   props: ["license_no"],
   async created() {
     const { data } = await licenseAdminUser({ no: this.license_no });
+    console.log(data);
     this.adminUserList = data;
   },
   filters: {
-    format: function(value) {
+    format: function (value) {
       return moment(value).format("YYYY-MM-DD HH:mm:ss");
     },
 
@@ -68,8 +69,8 @@ export default {
         }
       }
       return formatNum;
-    }
-  }
+    },
+  },
 };
 </script>
 

@@ -71,28 +71,22 @@
         </td>
       </tr>
     </table>
-    <div v-if="filteredList.length === 0" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.<hr></div>
+    <div
+      v-if="filteredList.length === 0"
+      style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;"
+    >
+      존재하지 않습니다.
+      <hr />
+    </div>
     <!-- 페이징 -->
-      <br />
-      <div class="btn-cover" style="text-align: center">
-        <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
-          이전
-        </button>
-        <span class="page-count" v-if="filteredList.length === 0">
-          {{ pageNum + 1 }} / 1
-        </span>
-        <span class="page-count" v-else>
-          {{ pageNum + 1 }} / {{ pageCount }}
-        </span>
-        <button
-          :disabled="pageNum >= pageCount - 1"
-          @click="nextPage"
-          class="page-btn"
-        >
-          다음
-        </button>
-      </div>
-      <!-- 페이징 -->
+    <br />
+    <div class="btn-cover" style="text-align: center">
+      <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">이전</button>
+      <span class="page-count" v-if="filteredList.length === 0">{{ pageNum + 1 }} / 1</span>
+      <span class="page-count" v-else>{{ pageNum + 1 }} / {{ pageCount }}</span>
+      <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn">다음</button>
+    </div>
+    <!-- 페이징 -->
   </div>
 </template>
 
@@ -169,9 +163,9 @@ export default {
     prevPage() {
       this.pageNum -= 1;
     },
-    resetPageNum(){
+    resetPageNum() {
       this.pageNum = 0;
-    }
+    },
     /////////////////////////////페이징////////////////////
   },
 };
