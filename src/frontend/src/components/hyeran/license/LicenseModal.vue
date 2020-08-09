@@ -46,29 +46,27 @@ export default {
     return {
       pwCheck: false,
       adminPw: "",
-      endDate:""
+      endDate: "",
     };
   },
   props: ["modalData"],
   computed: {
     //  구독 취소 날짜 지정
     endMonth() {
-      const startOfMonth = moment()
-        .startOf("month")
-        .format("YYYY-MM");
+      const startOfMonth = moment().startOf("month").format("YYYY-MM");
 
       const dataMonth = moment(this.modalData.end_date).format("YYYY-MM");
-      
+
       if (startOfMonth < dataMonth) {
         const endOfMonth = moment()
           .endOf("month")
           .format("YYYY-MM-DD HH:mm:ss");
-          // this.endDate = moment(endOfMonth).format
+        // this.endDate = moment(endOfMonth).format
         return endOfMonth;
       } else {
         return moment(this.modalData.end_date).format("YYYY-MM-DD HH:mm:ss");
       }
-    }
+    },
   },
   methods: {
     close() {
@@ -79,9 +77,10 @@ export default {
     async adminPwCheck() {
       const userData = {
         email: await this.$store.state.userinfo.userInfo.email,
-        password: this.adminPw
+        password: this.adminPw,
       };
       const { data } = await userPwCheck(userData);
+      console.log(data);
       if (data == "") {
         alert("비밀번호가 일치하지 않습니다.");
       } else {
@@ -95,15 +94,15 @@ export default {
           alert("구독 취소 실패");
         }
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
 h1 {
-    font-size: 4.5rem;
-    color:#000000D9;
+  font-size: 4.5rem;
+  color: #000000d9;
 }
 .modal-mask {
   position: fixed;
@@ -182,8 +181,7 @@ button {
   width: 90%;
   max-width: 95%;
 }
-input{
-     outline:none;
-
+input {
+  outline: none;
 }
 </style>

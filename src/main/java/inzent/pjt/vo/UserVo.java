@@ -76,4 +76,12 @@ public class UserVo {
   public String getAdmin_type() {
     return admin_type;
   }
+  @Override
+  public String toString() {
+    return "UserVo [no=" + no + ", email=" + email + ", name=" + name + ", co_name=" + co_name
+        + ", co_location=" + co_location + ", co_tel=" + co_tel + ", co_number=" + co_number
+        + ", manager_type=" + manager_type + ", reg_date=" + reg_date + ", admin_type=" + admin_type
+        + "]";
+  }
+  
 }
