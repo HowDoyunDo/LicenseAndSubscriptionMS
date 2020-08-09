@@ -234,7 +234,7 @@ public class LicenseController {
 	
 	// 활성화 변경
 	@GetMapping("/userActive")
-	public boolean changeActive(
+	public char changeActive(
 			@RequestParam(value = "licenseNo") int licenseNo,
 			@RequestParam(value = "activeUsrs") String activeUsrs
 			) {

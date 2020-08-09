@@ -179,7 +179,7 @@ public class LicenseService {
 		return licenseDao.getLicenseAdminUser(vo);
 	}
 
-	public boolean changeActive(int licenseNo, String activeUsrs) {
+	public char changeActive(int licenseNo, String activeUsrs) {
 		return licenseDao.changeActive(licenseNo, activeUsrs);
 	}
 

@@ -246,23 +246,28 @@ public class LicenseDao {
 		return sqlSession.selectList("license.getLicenseAdminUser", vo);
 	}
 
-	public boolean changeActive(int licenseNo, String activeUsrs) {
+	public char changeActive(int licenseNo, String activeUsrs) {
 		int cnt = 0;
 		for(int i=0; i<activeUsrs.length(); i++) {
 			if(activeUsrs.charAt(i) == ',' ) 
 				cnt++;
 		}
 		
-		if(activeUsrs.indexOf(")") != -1) {
-			Map<String, Object> map = new HashMap<String, Object>();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("activeUsrs", activeUsrs);
+		map.put("licenseNo", licenseNo);
+		sqlSession.update("license.changeActive", map);
+		sqlSession.update("license.updateCnt", licenseNo);
+		
+		if((int) sqlSession.selectOne("license.getCurCnt", map.get("licenseNo")) > (int) sqlSession.selectOne("license.getMaxCnt", map.get("licenseNo"))) {
 			map.put("activeUsrs", activeUsrs);
 			map.put("licenseNo", licenseNo);
 			sqlSession.update("license.changeActive", map);
 			sqlSession.update("license.updateCnt", licenseNo);
 			
-			return true;
+			return 'M';
 		} else {
-			return false;
+			return 'T';
 		}
 	}
 
