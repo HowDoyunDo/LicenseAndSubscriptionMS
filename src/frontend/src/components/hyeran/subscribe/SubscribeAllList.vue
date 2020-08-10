@@ -28,7 +28,7 @@
         style="cursor:pointer"
         v-for="(list, index) in paginatedData"
         :key="list.no"
-        @click="listClick(index)"
+        @click="listClick(list.no)"
       >
         <td>{{ index+1 }}</td>
         <td style="text-align: left;">
@@ -43,30 +43,21 @@
         <td>{{ list.reg_date | formatDate }}</td>
       </tr>
     </table>
-    <div v-if="filteredList.length === 0" style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;">존재하지 않습니다.</div>
-    <hr>
+    <div
+      v-if="filteredList.length === 0"
+      style="text-align:center; width:100%; height: 50px; display:inline-block; padding-top:20px; font-size:15px;"
+    >존재하지 않습니다.</div>
+    <hr />
 
     <!-- 페이징 -->
-      <br />
-      <div class="btn-cover" style="text-align: center">
-        <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
-          이전
-        </button>
-        <span class="page-count" v-if="filteredList.length === 0">
-          {{ pageNum + 1 }} / 1
-        </span>
-        <span class="page-count" v-else>
-          {{ pageNum + 1 }} / {{ pageCount }}
-        </span>
-        <button
-          :disabled="pageNum >= pageCount - 1"
-          @click="nextPage"
-          class="page-btn"
-        >
-          다음
-        </button>
-      </div>
-      <!-- 페이징 -->
+    <br />
+    <div class="btn-cover" style="text-align: center">
+      <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">이전</button>
+      <span class="page-count" v-if="filteredList.length === 0">{{ pageNum + 1 }} / 1</span>
+      <span class="page-count" v-else>{{ pageNum + 1 }} / {{ pageCount }}</span>
+      <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn">다음</button>
+    </div>
+    <!-- 페이징 -->
   </div>
 </template>
 
@@ -123,7 +114,7 @@ export default {
     },
     listClick(index) {
       // 클릭한 해당 구독정책번호
-      const subscribeNo = this.subAllList[index].no;
+      const subscribeNo = index;
       this.$router.push({
         name: "subscribeInfo",
         params: { subscribe_no: subscribeNo },
@@ -136,11 +127,10 @@ export default {
     prevPage() {
       this.pageNum -= 1;
     },
-    resetPageNum(){
+    resetPageNum() {
       this.pageNum = 0;
-    }
+    },
     /////////////////////////////페이징////////////////////
-    
   },
 };
 </script>
