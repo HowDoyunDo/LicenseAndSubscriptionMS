@@ -13,8 +13,7 @@
                   v-for="list in categoryList"
                   :value="list.no"
                   :key="list.no"
-                  >{{ list.title }}</option
-                >
+                >{{ list.title }}</option>
               </select>
             </td>
           </tr>
@@ -39,8 +38,7 @@
                 @change="inputProductImage"
                 accept="image/gif, image/jpeg, image/png, image/jpg"
               />
-              <br />
-              [현재 이미지]
+              <br />[현재 이미지]
               <br />
               <img :src="this.product_image" width="100px" height="auto" />
             </td>
@@ -54,8 +52,7 @@
                 @change="inputInfoImage"
                 accept="image/gif, image/jpeg, image/png, image/jpg"
               />
-              <br />
-              [현재 이미지]
+              <br />[현재 이미지]
               <br />
               <img :src="this.info_image" width="100px" height="auto" />
             </td>
@@ -64,7 +61,7 @@
 
         <br />
         <div style="text-align: center;">
-          <input class="cssbtn" type="submit" value="수정" style="border-radius: 4px"/>
+          <input class="cssbtn" type="submit" value="수정" style="border-radius: 4px" />
           <input
             type="button"
             value="취소"
@@ -119,8 +116,6 @@ export default {
         this.name == "" ||
         this.comments == null ||
         this.comments == "" ||
-        this.price == null ||
-        this.price == "" ||
         this.category_no == null ||
         this.category_no == ""
       ) {
@@ -150,22 +145,10 @@ export default {
       }
       if (e.target.files.length > 0) {
         if (
-          e.target.files[0].name
-            .split(".")
-            .pop()
-            .toLowerCase() == "gif" ||
-          e.target.files[0].name
-            .split(".")
-            .pop()
-            .toLowerCase() == "jpg" ||
-          e.target.files[0].name
-            .split(".")
-            .pop()
-            .toLowerCase() == "jpeg" ||
-          e.target.files[0].name
-            .split(".")
-            .pop()
-            .toLowerCase() == "png"
+          e.target.files[0].name.split(".").pop().toLowerCase() == "gif" ||
+          e.target.files[0].name.split(".").pop().toLowerCase() == "jpg" ||
+          e.target.files[0].name.split(".").pop().toLowerCase() == "jpeg" ||
+          e.target.files[0].name.split(".").pop().toLowerCase() == "png"
         ) {
           const file = e.target.files[0];
           const reader = new FileReader();
@@ -186,22 +169,10 @@ export default {
       }
       if (e.target.files.length > 0) {
         if (
-          e.target.files[0].name
-            .split(".")
-            .pop()
-            .toLowerCase() == "gif" ||
-          e.target.files[0].name
-            .split(".")
-            .pop()
-            .toLowerCase() == "jpg" ||
-          e.target.files[0].name
-            .split(".")
-            .pop()
-            .toLowerCase() == "jpeg" ||
-          e.target.files[0].name
-            .split(".")
-            .pop()
-            .toLowerCase() == "png"
+          e.target.files[0].name.split(".").pop().toLowerCase() == "gif" ||
+          e.target.files[0].name.split(".").pop().toLowerCase() == "jpg" ||
+          e.target.files[0].name.split(".").pop().toLowerCase() == "jpeg" ||
+          e.target.files[0].name.split(".").pop().toLowerCase() == "png"
         ) {
           const file = e.target.files[0];
           const reader = new FileReader();
@@ -221,7 +192,7 @@ export default {
     },
   },
   computed: {
-    dataInfo: function() {
+    dataInfo: function () {
       return this.$route.params.data;
     },
   },
@@ -248,10 +219,10 @@ export default {
 </script>
 
 <style scoped>
-  h1 {
-      font-size: 4.5rem;
-      color:#000000D9;
-  }
+h1 {
+  font-size: 4.5rem;
+  color: #000000d9;
+}
 .cssbtn {
   background-color: #3498db;
   color: #ffffff;
