@@ -11,5 +11,5 @@ module.exports = {
                 pathRewrite: { '^/api' : '' } // URL ^/api -> 공백 변경
             },
         },
-    }
+    },
 }

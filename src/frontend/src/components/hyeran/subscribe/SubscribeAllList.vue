@@ -28,7 +28,7 @@
         style="cursor:pointer"
         v-for="(list, index) in paginatedData"
         :key="list.no"
-        @click="listClick(index)"
+        @click="listClick(list.no)"
       >
         <td>{{ index+1 }}</td>
         <td style="text-align: left;">
@@ -123,7 +123,7 @@ export default {
     },
     listClick(index) {
       // 클릭한 해당 구독정책번호
-      const subscribeNo = this.subAllList[index].no;
+      const subscribeNo = index;
       this.$router.push({
         name: "subscribeInfo",
         params: { subscribe_no: subscribeNo },

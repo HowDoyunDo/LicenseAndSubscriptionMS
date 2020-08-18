@@ -119,8 +119,6 @@ export default {
         this.name == "" ||
         this.comments == null ||
         this.comments == "" ||
-        this.price == null ||
-        this.price == "" ||
         this.category_no == null ||
         this.category_no == ""
       ) {
